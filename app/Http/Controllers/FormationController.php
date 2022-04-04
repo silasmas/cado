@@ -15,7 +15,27 @@ class FormationController extends Controller
      */
     public function index()
     {
-        //
+        return view('client.pages.home');
+    }
+    public function profil()
+    {
+        return view('client.pages.profil');
+    }
+    public function panier()
+    {
+        return view('client.pages.panier');
+    }
+    public function mesCours()
+    {
+        return view('client.pages.mesCours');
+    }
+    public function favorie()
+    {
+        return view('client.pages.favoris');
+    }
+    public function couple()
+    {
+        return view('client.pages.couple');
     }
 
     /**

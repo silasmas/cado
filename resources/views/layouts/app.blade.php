@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         
-        <title>{{ config('app.name', 'CADO') }}</title>
+        <title>{{ config('app.name', 'CADO') }} developpement</title>
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/logo/logoan.png') }}">
 
         <!-- Fonts -->
