@@ -1,4 +1,4 @@
-@extends('client.templates.main_template',['titre'=>"Home"])
+@extends('client.templates.main_template',['titre'=>"Home dev"])
 
 @section('content')
 <section class="home-banner-area" id="home-banner-area">
@@ -14,7 +14,7 @@
                 style="padding: 50px 0 50px;">
                     <div class="input-group">
                         <input type="text" class="form-control" name="query" placeholder="What do you want to learn?" />
-                        <div class="input-group-append p-6px bg-white">
+                        <div class="bg-white input-group-append p-6px">
                             <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
 <div class="container-lg">
     <div class="row">
         <div class="col-md-4 d-flex">
-            <div class="home-fact-box mr-md-auto mr-auto">
+            <div class="mr-auto home-fact-box mr-md-auto">
                 <i class="fas fa-bullseye float-start"></i>
                 <div class="text-box">
                     <h4>14 Online courses</h4>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="col-md-4 d-flex">
-            <div class="home-fact-box mr-md-auto mr-auto">
+            <div class="mr-auto home-fact-box mr-md-auto">
                 <i class="fa fa-check float-start"></i>
                 <div class="text-box">
                     <h4>Expert instruction</h4>
@@ -69,7 +69,7 @@
         </div>
 
         <div class="col-md-4 d-flex">
-            <div class="home-fact-box mr-md-auto mr-auto">
+            <div class="mr-auto home-fact-box mr-md-auto">
                 <i class="fa fa-clock float-start"></i>
                 <div class="text-box">
                     <h4>Lifetime access</h4>
@@ -83,9 +83,9 @@
 
 <section class="mb-5">
 <div class="container-lg">
-    <h3 class="course-carousel-title my-4">Top categories</h3>
+    <h3 class="my-4 course-carousel-title">Top categories</h3>
     <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fab fa-css3-alt"></i>
@@ -96,7 +96,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fas fa-volleyball-ball"></i>
@@ -107,7 +107,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fas fa-code"></i>
@@ -118,7 +118,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fab fa-wordpress"></i>
@@ -129,7 +129,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="far fa-object-group"></i>
@@ -140,7 +140,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fas fa-pencil-alt"></i>
@@ -151,7 +151,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fas fa-mobile-alt"></i>
@@ -162,7 +162,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fas fa-object-group"></i>
@@ -173,7 +173,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fab fa-audible"></i>
@@ -184,7 +184,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fas fa-barcode"></i>
@@ -195,7 +195,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="far fa-lightbulb"></i>
@@ -206,7 +206,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-3">
+        <div class="mb-3 col-md-6 col-lg-4 col-xl-3">
             <a href="#" class="top-categories">
                 <div class="category-icon">
                     <i class="fas fa-home"></i>
@@ -225,7 +225,7 @@
 <div class="container-lg">
     <div class="row">
         <div class="col">
-            <h3 class="course-carousel-title mb-4">Top courses</h3>
+            <h3 class="mb-4 course-carousel-title">Top courses</h3>
 
             <!-- page loader -->
             <div class="animated-loader"><div class="spinner-border text-secondary" role="status"></div></div>
@@ -286,7 +286,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">Free</p>
+                                    <p class="text-right price d-inline-block float-end">Free</p>
                                 </div>
                             </div>
                         </div>
@@ -380,7 +380,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">$80</p>
+                                    <p class="text-right price d-inline-block float-end">$80</p>
                                 </div>
                             </div>
                         </div>
@@ -475,7 +475,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">$70</p>
+                                    <p class="text-right price d-inline-block float-end">$70</p>
                                 </div>
                             </div>
                         </div>
@@ -562,7 +562,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">$90</p>
+                                    <p class="text-right price d-inline-block float-end">$90</p>
                                 </div>
                             </div>
                         </div>
@@ -647,7 +647,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">Free</p>
+                                    <p class="text-right price d-inline-block float-end">Free</p>
                                 </div>
                             </div>
                         </div>
@@ -730,7 +730,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">$199</p>
+                                    <p class="text-right price d-inline-block float-end">$199</p>
                                 </div>
                             </div>
                         </div>
@@ -812,7 +812,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">$120</p>
+                                    <p class="text-right price d-inline-block float-end">$120</p>
                                 </div>
                             </div>
                         </div>
@@ -898,7 +898,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">Free</p>
+                                    <p class="text-right price d-inline-block float-end">Free</p>
                                 </div>
                             </div>
                         </div>
@@ -982,7 +982,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$80</small>$45</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$80</small>$45</p>
                                 </div>
                             </div>
                         </div>
@@ -1064,7 +1064,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$130</small>$30</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$130</small>$30</p>
                                 </div>
                             </div>
                         </div>
@@ -1149,7 +1149,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$50</small>$20</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$50</small>$20</p>
                                 </div>
                             </div>
                         </div>
@@ -1231,7 +1231,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$110</small>$45</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$110</small>$45</p>
                                 </div>
                             </div>
                         </div>
@@ -1318,7 +1318,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$40</small>$20</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$40</small>$20</p>
                                 </div>
                             </div>
                         </div>
@@ -1366,7 +1366,7 @@
 <div class="container-lg">
     <div class="row">
         <div class="col">
-            <h3 class="course-carousel-title mb-4">Top 10 Latest courses</h3>
+            <h3 class="mb-4 course-carousel-title">Top 10 Latest courses</h3>
 
             <!-- page loader -->
             <div class="animated-loader"><div class="spinner-border text-secondary" role="status"></div></div>
@@ -1416,7 +1416,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$40</small>$20</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$40</small>$20</p>
                                 </div>
                             </div>
                         </div>
@@ -1498,7 +1498,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$110</small>$45</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$110</small>$45</p>
                                 </div>
                             </div>
                         </div>
@@ -1585,7 +1585,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$50</small>$20</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$50</small>$20</p>
                                 </div>
                             </div>
                         </div>
@@ -1668,7 +1668,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$130</small>$30</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$130</small>$30</p>
                                 </div>
                             </div>
                         </div>
@@ -1754,7 +1754,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end"><small>$80</small>$45</p>
+                                    <p class="text-right price d-inline-block float-end"><small>$80</small>$45</p>
                                 </div>
                             </div>
                         </div>
@@ -1836,7 +1836,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">Free</p>
+                                    <p class="text-right price d-inline-block float-end">Free</p>
                                 </div>
                             </div>
                         </div>
@@ -1920,7 +1920,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">$120</p>
+                                    <p class="text-right price d-inline-block float-end">$120</p>
                                 </div>
                             </div>
                         </div>
@@ -2006,7 +2006,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">$199</p>
+                                    <p class="text-right price d-inline-block float-end">$199</p>
                                 </div>
                             </div>
                         </div>
@@ -2088,7 +2088,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">Free</p>
+                                    <p class="text-right price d-inline-block float-end">Free</p>
                                 </div>
                             </div>
                         </div>
@@ -2171,7 +2171,7 @@
                                         />
                                     </div>
 
-                                    <p class="price text-right d-inline-block float-end">$90</p>
+                                    <p class="text-right price d-inline-block float-end">$90</p>
                                 </div>
                             </div>
                         </div>
@@ -2221,14 +2221,14 @@
 <div class="container-lg">
     <div class="row">
         <div class="col">
-            <h3 class="text-center mb-5">Featured instructor</h3>
+            <h3 class="mb-5 text-center">Featured instructor</h3>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-9 col-lg-7">
             <div class="animated-loader"><div class="spinner-border text-secondary" role="status"></div></div>
             <div class="top-istructor-slick shown-after-loading" style="display: none;">
-                <div class="d-sm-flex text-center text-md-start">
+                <div class="text-center d-sm-flex text-md-start">
                     <div class="top-instructor-img ms-auto me-auto">
                         <a href="instructor.html">
                             <img src="assets/images/uploads/user_image/0269091217f95c25ac4f77c1bd69879a.jpg" alt="instructor" style="width: 100%;" />
@@ -2238,19 +2238,19 @@
                         <a class="text-decoration-none" href="instructor.html">
                             <h4 class="mb-1 fw-700">Dave Franco</h4>
                             <span class="fw-500 text-muted text-14px"></span>
-                            <p class="text-12px fw-500 text-muted my-3">Hi, I'm Dave! I have been identified as one of the Edustar Top Instructors and all my premium co...</p>
+                            <p class="my-3 text-12px fw-500 text-muted">Hi, I'm Dave! I have been identified as one of the Edustar Top Instructors and all my premium co...</p>
 
-                            <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
+                            <!--                                                                           <span class="py-2 my-1 badge badge-sub-warning text-12px"></span>
                          -->
                         </a>
 
-                        <p class="top-instructor-arrow my-3">
+                        <p class="my-3 top-instructor-arrow">
                             <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-prev').click();"><i class="fas fa-angle-left"></i></span>
                             <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-next').click();"><i class="fas fa-angle-right"></i></span>
                         </p>
                     </div>
                 </div>
-                <div class="d-sm-flex text-center text-md-start">
+                <div class="text-center d-sm-flex text-md-start">
                     <div class="top-instructor-img ms-auto me-auto">
                         <a href="instructor.html">
                             <img src="assets/images/uploads/user_image/48a153e87c587ffe79d6e8609e59124b.jpg" alt="user_image" style="width: 100%;" />
@@ -2260,13 +2260,13 @@
                         <a class="text-decoration-none" href="instructor.html">
                             <h4 class="mb-1 fw-700">John David</h4>
                             <span class="fw-500 text-muted text-14px"></span>
-                            <p class="text-12px fw-500 text-muted my-3">Johns David has a BS and MS in Mechanical Engineering from Santa Clara University and years of exper...</p>
+                            <p class="my-3 text-12px fw-500 text-muted">Johns David has a BS and MS in Mechanical Engineering from Santa Clara University and years of exper...</p>
 
-                            <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
+                            <!--                                                                           <span class="py-2 my-1 badge badge-sub-warning text-12px"></span>
                          -->
                         </a>
 
-                        <p class="top-instructor-arrow my-3">
+                        <p class="my-3 top-instructor-arrow">
                             <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-prev').click();"><i class="fas fa-angle-left"></i></span>
                             <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-next').click();"><i class="fas fa-angle-right"></i></span>
                         </p>
@@ -2279,15 +2279,15 @@
 </section>
 
 <div class="container-xl">
-<div class="row py-3 mb-4">
-    <div class="col-md-6 mt-3 mt-md-0">
-        <div class="become-user-label text-center mt-3">
+<div class="py-3 mb-4 row">
+    <div class="mt-3 col-md-6 mt-md-0">
+        <div class="mt-3 text-center become-user-label">
             <h3 class="pb-4">Join now to start learning</h3>
             <a href="sign_up.html">Get started</a>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="become-user-label text-center mt-3">
+        <div class="mt-3 text-center become-user-label">
             <h3 class="pb-4">Become instructor</h3>
             <a href="sign_up.html">Join now</a>
         </div>
