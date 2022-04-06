@@ -1,0 +1,108 @@
+body{
+    overflow-x: hidden;
+}
+.block-login{
+    position: relative;
+}
+.block-login .bg{
+    background: #1c1b1a;
+    flex-direction: column;
+    color: #fff;
+    position: fixed;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.block-login .bg::before{
+    content: '';
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    right: 100px;
+    bottom: 100px;
+    background: rgba(255, 255, 255, 0.014);
+    border-radius: 12px;
+}
+.block-login .bg h2{
+    font-size: 50px;
+    font-weight: 700;
+}
+.block-login .card{
+    border-radius: 0;
+    border: none;
+    padding: 100px 50px;
+}
+.block-login .card .form-control{
+    height: 75px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    font-size: 20px;
+    color: #1c1b1a;
+}
+.block-login .card .form-control::placeholder{
+    color: rgba(0, 0, 0, 0.3);
+}
+.block-login .card .btn{
+    width: 100%;
+    background: #1c1b1a;
+    color: #fff;
+    height: 75px;
+    font-size: 20px;
+    transition: .5s;
+    font-weight: 600;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.block-login .card .btn:hover{
+    background: #e68640;
+}
+.block-login .card .reset{
+    color: #1c1b1a;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+}
+.block-login .card h1{
+    color: #1c1b1a;
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.block-login .card .reset:hover{
+    color: #e68640;
+}
+.block-login .card .col-lg-12{
+    position: relative;
+}
+.block-login .card .col-lg-12 .icon{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    color: #1c1b1a;
+    opacity: .6;
+    right: 30px;
+    transition: .3s;
+}
+.block-login .card .col-lg-12 .form-control:focus{
+    box-shadow: none;
+}
+.block-login .card .col-lg-12 .form-control:focus ~ .icon{
+    opacity: 1;
+}
+.block-login .card .col-lg-12 .line{
+    position: absolute;
+    width: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    height: 1px;
+    background: #1c1b1a;
+    transition: .5s;
+}
+.block-login .card .col-lg-12 .form-control:focus ~ .line{
+    width: 93%;
+}

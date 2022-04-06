@@ -17,7 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
-
+Route::get('/loginnew', function () {
+    return view('client.pages.loginnew');
+});
+Route::get('/registerUser', function () {
+    return view('client.pages.registerUser');
+});
 Route::get('/dashboard', function () {
     return view('client/pages/home');
 })->middleware(['auth'])->name('dashboard');
@@ -28,17 +33,17 @@ Route::middleware(['auth'])->group( function (){
     Route::get('favorie', [FormationController::class,'favorie'])->name('favorie');
     Route::get('couple', [FormationController::class,'couple'])->name('couple');
     Route::get('homes', [FormationController::class,'index'])->name('homes');
-   
-    
+
+
         Route::get('profil', [FormationController::class,'profil'])->name('profil');
         Route::get('panier', [FormationController::class,'panier'])->name('panier');
 
     Route::get('formationBy/{id}', [EtudiantController::class,'show'])->name('formationBy');
-    
+
     Route::get('/inscription', function () {
         return view('pages/welcome');
     })->name('inscription');
-    
+
     Route::get('/allFormation', function () {
         return view('pages/allFormation');
     })->name('allFormation');
