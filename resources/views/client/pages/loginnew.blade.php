@@ -47,7 +47,7 @@
                                 <div class="col-lg-12 text-center">
                                     <button class="btn mb-4">Se connecter</button>
                                     <p>Ou</p>
-                                    <a href="#" class="reset">S'inscrire</a>
+                                    <a href="/registerUser" class="reset">S'inscrire</a>
                                 </div>
                             </div>
                         </form>
