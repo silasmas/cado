@@ -32,7 +32,7 @@ body{
 .block-login .card{
     border-radius: 0;
     border: none;
-    padding: 100px 50px;
+    padding: 100px 100px;
 }
 .block-login .card .form-control{
     height: 75px;
@@ -47,16 +47,18 @@ body{
 }
 .block-login .card .btn{
     width: 100%;
-    background: #1c1b1a;
-    color: #fff;
+    background: transparent;
+    color: #e68640;
     height: 75px;
     font-size: 20px;
     transition: .5s;
     font-weight: 600;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e68640;
 }
 .block-login .card .btn:hover{
     background: #e68640;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: #fff;
 }
 .block-login .card .reset{
     color: #1c1b1a;
@@ -105,4 +107,76 @@ body{
 }
 .block-login .card .col-lg-12 .form-control:focus ~ .line{
     width: 93%;
+}
+.block-login .card h2,.block-login .card img{
+    display: none;
+}
+@media (max-width: 576px){
+    .block-login{
+        overflow: hidden;
+    }
+    .block-login .bg{
+        width: 100%;
+    }
+    .block-login .bg::before{
+        display: none;
+    }
+    .block-login .bg img, .block-login .bg h2{
+        display: none;
+    }
+    .block-login .card{
+        z-index: 500;
+        background: transparent;
+        padding: 30px 0px;
+        min-height: 100vh;
+        align-items: center;
+    }
+    .block-login .card h2{
+        color: #fff;
+        display: block;
+        font-size: 26px;
+        font-weight: 600;
+    }
+    .block-login .card img{
+        display: block;
+        width: 80px;
+        height: auto;
+    }
+    .block-login .card h1{
+        color: #fff;
+        font-size: 24px;
+    }
+    .block-login .card .form-control{
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.26);
+        color: #fff;
+        height: 55px;
+        font-size: 16px;
+    }
+    .block-login .card .col-lg-12 .line{
+        background: #e68640;
+    }
+    .block-login .card .col-lg-12 .form-control:focus ~ .line{
+        width: 88%;
+    }
+    .block-login .card .btn{
+        height: 55px;
+        font-size: 16px;
+        background: #e68640;
+        color: #fff;
+    }
+    .block-login .card .form-control::placeholder{
+        color: rgba(255, 255, 255, 0.39);
+    }
+    .block-login .card .reset{
+        color: #fff;
+        font-size: 16px;
+    }
+    .block-login .card p{
+        color: rgba(255, 255, 255, 0.397);
+    }
+    .block-login .card .col-lg-12 .icon{
+        color: #fff;
+        font-size: 22px;
+    }
 }
