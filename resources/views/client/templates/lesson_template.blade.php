@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/lessons/css/custom.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/lessons/css/mystyle.css') }}" />
         <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
 
         <!-- Lesson page specific styles are here -->
@@ -84,7 +85,7 @@
         </style>
     </head>
     <body class="gray-bg">
-       
+
 @yield('content')
 
         <script src="{{ asset('assets/js/vendor/modernizr-3.5.0.min.js') }}"></script>
@@ -106,7 +107,7 @@
             }
         </script>
 
-       
+
 
     </body>
 </html>

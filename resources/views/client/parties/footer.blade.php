@@ -1,10 +1,10 @@
 <footer class="footer-area d-print-none bg-gray mt-5">
-   
-    <div class="border-top">
+
+    <div class="border-top" style="border: none!important">
         <div class="container-xl">
             <div class="row mt-3 py-1">
                 <div class="col-6 col-sm-6 col-md-3 text-muted text-13px">
-                    &copy; 2021 Momentu, All rights reserved
+                    &copy; 2022 Cado, All rights reserved
                 </div>
 
                 <div class="col-6 col-sm-6 col-md-3 d-none d-md-block"></div>

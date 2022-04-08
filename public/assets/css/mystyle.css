@@ -1,5 +1,135 @@
 body{
     overflow-x: hidden;
+    background: #fff!important;
+}
+.menu-area{
+    background: #1c1b1a!important;
+    box-shadow: none;
+}
+.menu-area .navbar-brand img{
+    width: 70px;
+
+}
+.menu-icon-box .icon a{
+    color: #fff;
+}
+.menu-icon-box .icon a:hover{
+    color: #e68640;
+}
+.menu-icon-box .icon .number{
+    background: #e68640;
+}
+.home-banner-area .block-card{
+    background: #fff4df;
+    margin: 30px 0;
+    margin-bottom: 70px;
+    border-radius: 12px;
+    padding: 70px 70px;
+    position: relative;
+    z-index: 1;
+}
+.home-banner-area .block-card::before{
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    border: 10px solid transparent;
+    border-left: 10px solid #e68640;
+    border-bottom: 10px solid #e68640;
+    top: 0;
+    right: 0;
+    z-index: -1;
+}
+.home-banner-area .block-card::after{
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 10px solid transparent;
+    border-right: 10px solid #e68640;
+    border-bottom: 10px solid #e68640;
+    bottom: 20px;
+    left: 20px;
+    z-index: -1;
+}
+.home-banner-area .block-card .img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.home-banner-area .block-card .box-img{
+    width: 100%;
+    height: 350px;
+}
+.home-banner-area .block-card .box-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0 -50px;
+    border-radius: 12px;
+}
+.home-banner-area .block-card h2{
+    color: #e68640;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.home-banner-area .block-card h1{
+    color: #1c1b1a;
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 100%;
+    margin-bottom: 20px;
+}
+.home-banner-area .block-card p{
+    color: #212529;
+    font-size: 18px;
+    width: 470px;
+    margin-bottom: 30px;
+    line-height: 150%;
+}
+.home-banner-area .block-card .btn{
+    background: #e68640;
+    padding: 10px 25px;
+    color: #fff;
+    font-weight: 600;
+    margin-right: 20px;
+}
+.home-banner-area .carousel-control-next, .home-banner-area .carousel-control-prev{
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    bottom: 0;
+    transform: translateY(-50%);
+    background: #fff;
+    opacity: 1;
+    border-radius: 100%;
+    color: #1c1b1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 700;
+}
+.home-banner-area .carousel-control-next{
+    right: -95px;
+}
+.home-banner-area .carousel-control-prev{
+    left: -95px;
+}
+.course-box{
+    border-radius: 12px;
+}
+.course-box .course-image{
+    height: 220px;
+}
+.course-box .course-image img{
+    border-radius: 12px;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
 }
 .block-login{
     position: relative;
@@ -111,7 +241,76 @@ body{
 .block-login .card h2,.block-login .card img{
     display: none;
 }
+.btn-plus{
+    color: #e68640!important;
+    font-weight: 600;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+.btn-plus .bi{
+    margin-left: 7px;
+    transition: .5s;
+}
+.btn-plus:hover .bi{
+    margin-left: 10px;
+}
 @media (max-width: 576px){
+    .navbar-brand{
+        margin-right: 0;
+    }
+    .mobile-search-trigger{
+        display: none;
+    }
+    .navbar .ms-auto.d-flex{
+        margin-left: 0!important;
+        justify-content: center;
+        width: 100%;
+    }
+    .home-banner-area{
+        padding: 30px 0!important;
+    }
+    .home-banner-area .carousel-control-next, .home-banner-area .carousel-control-prev{
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+    .home-banner-area .carousel-control-next{
+        right: -30px;
+    }
+    .home-banner-area .carousel-control-prev{
+        left: -30px;
+    }
+    .home-banner-area .block-card{
+        margin-top: 0px;
+        padding: 30px 20px;
+        margin-bottom: 20px;
+    }
+    .home-banner-area .block-card::before{
+        width: 70px;
+        height: 70px;
+    }
+    .home-banner-area .block-card::after{
+        right: 20px;
+        left: auto;
+    }
+    .home-banner-area .block-card h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .home-banner-area .block-card p{
+        width: 100%;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .home-banner-area .block-card h2{
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+    .home-banner-area .block-card .box-img{
+        height: 190px;
+        margin-bottom: 30px;
+    }
     .block-login{
         overflow: hidden;
     }
