@@ -46,7 +46,7 @@
                                     <div class="line"></div>
                                 </div>
                                 <div class="col-lg-12">
-                                   <a href="#" class="reset">Mot de passe oubliez ?</a>
+                                   <a href="{{ route('password.request') }}" class="reset">Mot de passe oubliez ?</a>
                                 </div>
                                 <div class="col-lg-12 text-center">
                                     <button class="btn mb-4">Se connecter</button>
