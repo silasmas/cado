@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-lg-12 text-center">
 <<<<<<< HEAD
-                                    <button class="btn mb-4">Inscription</button>
+                                    {{-- <button class="btn mb-4">Inscription</button> --}}
 =======
                                     <button class="btn mb-4">S'inscrire</button>
 >>>>>>> ad9b3595bd0c200854a41b16281ead2f90adf38a

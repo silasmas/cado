@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('client.pages.loginnew');
+    // return view('auth.login');
 });
 
 Route::get('/registerUser', function () {
     return view('client.pages.registerUser');
-});
+})->name('registerUser');
 Route::get('/dashboard', function () {
     return view('client/pages/home');
 })->middleware(['auth'])->name('dashboard');
