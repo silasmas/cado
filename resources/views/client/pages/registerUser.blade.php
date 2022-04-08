@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,9 +56,9 @@
                                     <div class="line"></div>
                                 </div>
                                 <div class="col-lg-12 text-center">
-                                    <button class="btn mb-4">Se connecter</button>
+                                    <button class="btn mb-4">Inscription</button>
                                     <p>Ou</p>
-                                    <a href="/loginnew" class="reset">Se connecter</a>
+                                    <a href="/" class="reset">Se connecter</a>
                                 </div>
                             </div>
                         </form>

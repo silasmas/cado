@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
-Route::get('/loginnew', function () {
-    return view('client.pages.loginnew');
-});
+
 Route::get('/registerUser', function () {
     return view('client.pages.registerUser');
 });
