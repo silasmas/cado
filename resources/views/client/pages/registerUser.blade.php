@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{{ config('app.name') }} Inscription</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/mystyle.css') }}" />
@@ -29,42 +29,51 @@
                             </a>
                             <h2 class="mb-5">Bienvenue à Cado</h2>
                         <h1>Inscription</h1>
-                        <form action="">
+                        <div class="col-md-12  text-danger mb-5">
+                            @foreach ($errors->all() as $err)
+                                {{$err}}
+                            @endforeach
+                        </div>
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
                             <div class="form-group row g-5">
                                 <div class="col-lg-12">
-                                    <input type="text" class="form-control" placeholder="Nom">
+                                    <input type="text" class="form-control"  id="name" value="{{ old('name') }}" 
+                                     name="name"placeholder="Nom" required>
                                     <div class="icon">
                                         <i class="bi bi-person"></i>
                                     </div>
                                     <div class="line"></div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="email" class="form-control" placeholder="Email">
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Email"
+                                     value="{{ old('email') }}" required>
                                     <div class="icon">
                                        @
                                     </div>
                                     <div class="line"></div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="password" class="form-control" placeholder="Mot de passe">
+                                    <input id="password" class="form-control" placeholder="Mot de passe" type="password"
+                                    name="password"
+                                    required autocomplete="new-password">
                                     <div class="icon">
                                         <i class="bi bi-key"></i>
                                     </div>
                                     <div class="line"></div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <input type="password" class="form-control" placeholder=" Confirmer le mot de passe">
+                                    <input type="password" id="password_confirmation"
+                                    name="password_confirmation" required 
+                                     class="form-control" placeholder=" Confirmer le mot de passe">
                                     <div class="icon">
                                         <i class="bi bi-key"></i>
                                     </div>
                                     <div class="line"></div>
                                 </div>
                                 <div class="col-lg-12 text-center">
-<<<<<<< HEAD
                                     {{-- <button class="btn mb-4">Inscription</button> --}}
-=======
                                     <button class="btn mb-4">S'inscrire</button>
->>>>>>> ad9b3595bd0c200854a41b16281ead2f90adf38a
                                     <p>Ou</p>
                                     <a href="/" class="reset">Se connecter</a>
                                 </div>
