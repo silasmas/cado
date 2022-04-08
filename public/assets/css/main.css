@@ -68,8 +68,8 @@ label {
 }
 .btn.red{
     color: #fff;
-    background-color: #ec5252;
-    border-color: #ec5252;
+    background-color: #e68640;
+    border-color: #e68640;
     padding: 11px 12px;
     font-size: 15px;
     border-radius: 2px;
@@ -78,8 +78,8 @@ label {
 }
 .btn.red:hover,
 .btn.red:focus {
-    background-color: #c33333 !important;
-    border-color: #c3333300 !important;
+    background-color: #e68640 !important;
+    border-color: #e6864000 !important;
     color: #fff;
 }
 .btn.green{
@@ -232,8 +232,8 @@ menu code was here
     padding: 5px 9px 5px 10px !important;
 }
 .search-box button{
-    background-color: #ec5252 !important;
-    border-color: #ec5252;
+    background-color: #e68640!important;
+    border-color: #e68640;
     color: #fff;
     padding: 1px 6px;
     border-radius: 6px;
@@ -287,7 +287,7 @@ menu code was here
     position: absolute;
     top: 14px;
     right: 2px;
-    background-color: #ec5252;
+    background-color: #e68640;
     border-radius: 15px;
     color: #fff;
     font-size: 10px;
@@ -386,7 +386,7 @@ menu code was here
     font-size: 13px;
 }
 .course-list-dropdown .item-list .item .item-details .current-price {
-    color: #ec5252;
+    color: #e68640;
     font-size: 18px;
     font-weight: 600;
     margin-right: 5px;
@@ -400,7 +400,7 @@ menu code was here
     font-size: 13px;
 }
 .course-list-dropdown .item-list .item .item-details .current-price {
-    color: #ec5252;
+    color: #e68640;
     font-size: 18px;
     font-weight: 600;
     margin-right: 5px;
@@ -451,7 +451,7 @@ menu code was here
     margin-top: 8px;
 }
 .course-list-dropdown .dropdown-footer .cart-total-price .current-price {
-    color: #ec5252;
+    color: #e68640;
     font-size: 18px;
     font-weight: 600;
     margin-right: 5px;
@@ -665,13 +665,13 @@ menu code was here
 }
 .sign-in-box .btn-sign-up{
     color: #fff;
-    background-color: #ec5252;
-    border: 1px solid #ec5252;
+    background-color: #e68640;
+    border: 1px solid #e68640;
 }
 .sign-in-box .btn-sign-up:hover,
 .sign-in-box .btn-sign-up:focus{
-    background-color: #c33333;;
-    border-color: #c33333;;
+    background-color: #e68640;;
+    border-color: #e68640;;
 }
 
 
@@ -809,8 +809,8 @@ menu code was here
 }
 .sign-in-modal form button[type="submit"]{
     color: #fff;
-    background-color: #ec5252;
-    border-color: #ec5252;
+    background-color: #e68640;
+    border-color: #e68640;
     font-size: 16px;
     font-weight: 700;
     height: 50px;
@@ -1016,18 +1016,18 @@ homepage styles
 }
 .home-banner-wrap .btn{
     font-size: 14px;
-    background: #ec5252;
+    background: #e68640;
     border-radius: 5px;
     color: #ffffff;
     padding: 6px 15px;
 }
 .home-banner-wrap .btn:hover{
-    background: #c33333;
-    border-color: #c33333;
+    background: #e68640;
+    border-color: #e68640;
     color: #fff;
 }
 .home-fact-area{
-    background-color: #ec5252;
+    background-color: #e68640;
     color: #fff;
     padding: 15px 0;
     margin-bottom: 60px
@@ -1292,7 +1292,7 @@ homepage styles
     margin-top: 2px;
 }
 .course-box .course-details .your-rating-box:hover .your-rating-text {
-    color: #ec5252;
+    color: #e68640;
 }
 .course-box .course-details .your-rating-box .your-rating-text .edit {
     display: none;
@@ -1348,7 +1348,7 @@ homepage styles
     background: #f4c150
 }
 .course-badge.hot-new{
-    background: #ec5252;
+    background: #e68640;
     color: #fff;
 }
 .course-badge.position{
@@ -1385,7 +1385,7 @@ homepage styles
 .course-box .wishlist-add.wishlisted button i,
 .course-box .favorite-add button:hover i,
 .course-box .favorite-add.added button i{
-    color:#ec5252;
+    color:#e68640;
 }
 .course-box .wishlist-add button i,
 .course-box .favorite-add button i{
@@ -1566,7 +1566,7 @@ homepage styles
     top: -4px;
     font-size: 50px;
     line-height: 0;
-    color: #ec525233;
+    color: #e6864033;
 }
 
 .course-popover-content .popover-btns {
@@ -1584,14 +1584,14 @@ homepage styles
 }
 
 .addedToCart {
-    color: #ec5252;
+    color: #e68640;
     background-color: #ffffff;
-    border-color: #ec5252;
+    border-color: #e68640;
 }
 .addedToCart:hover {
-    color: #ec5252;
+    color: #e68640;
     background-color: #ffffff;
-    border-color: #ec5252;
+    border-color: #e68640;
 }
 
 .course-popover-content .popover-btns .wishlist-btn {
@@ -1599,7 +1599,7 @@ homepage styles
     right: 8px;
     background: none;
     font-size: 20px;
-    border: 1px solid #ec5252;
+    border: 1px solid #e68640;
     border-radius: 50%;
     width: 48px;
     height: 48px;
@@ -1609,13 +1609,13 @@ homepage styles
 }
 .course-popover-content .popover-btns .wishlist-btn i {
     color: transparent;
-    text-stroke: 1px #ec5252;
-    -webkit-text-stroke: 1px #ec5252;
+    text-stroke: 1px #e68640;
+    -webkit-text-stroke: 1px #e68640;
 }
 
 .course-popover-content .popover-btns .wishlist-btn.active i,
 .course-popover-content .popover-btns .wishlist-btn:hover i{
-    color: #ec5252;
+    color: #e68640;
 }
 .webui-popover.left>.webui-arrow,
 .webui-popover.left-top>.webui-arrow,
@@ -1840,16 +1840,16 @@ course sidebar
 }
 
 .course-sidebar-text-box .buy-btns .btn-add-wishlist {
-    color: #ec5252;
+    color: #e68640;
     background-color: #ffffff;
-    border-color: #ec5252;
+    border-color: #e68640;
     border-radius: 10px;
 }
 
 .course-sidebar-text-box .buy-btns .btn-add-wishlist:hover,.course-sidebar-text-box .buy-btns .btn-add-wishlist:focus {
     color: #fff !important;
-    background-color: #ec5252 !important;
-    border-color: #ec5252 !important;
+    background-color: #e68640!important;
+    border-color: #e68640!important;
     border-radius: 10px;
 }
 
@@ -2139,7 +2139,7 @@ course content
     border: 0;
     background: 0;
     font-size: 17px;
-    color: #ec5252;
+    color: #e68640;
     cursor: pointer;
 }
 
@@ -2296,7 +2296,7 @@ course content
 }
 .student-feedback-box .individual-rating ul li .progress-bar{
     border-radius: 5px;
-    background-color: #ec5252;
+    background-color: #e68640;
     font-size: 11px;
 }
 .student-feedback-box .individual-rating .rating i {
@@ -2414,7 +2414,7 @@ course content
     position: relative;
     padding: 10px 30px 10px 45px;
     background: #fff;
-     border-bottom: 1px solid #e1e1e1; 
+     border-bottom: 1px solid #e1e1e1;
     cursor: pointer;
     height: auto;
     color: #505763;
@@ -2900,8 +2900,8 @@ ul.pagination .page-item.disabled .page-link {
 }
 ul.pagination .page-item.active a,
 ul.pagination .page-item.active .page-link {
-    background-color: #ec5252;
-    border-color: #ec5252;
+    background-color: #e68640;
+    border-color: #e68640;
     color: #fff;
 }
 ul.pagination .page-item a,
@@ -2920,8 +2920,8 @@ ul.pagination .page-item .page-link {
 }
 ul.pagination .page-item a:hover,
 ul.pagination .page-item .page-link:hover {
-    background-color: #ec5252;
-    border-color: #ec5252;
+    background-color: #e68640;
+    border-color: #e68640;
     position: relative;
     color: #fff;
     z-index: 1;
@@ -3134,13 +3134,13 @@ section.my-courses-area {
     font-size: 15px;
     line-height: 1.35135;
     border-radius: 2px;
-    background-color: #ec5252;
-    border-color: #ec5252;
+    background-color: #e68640;
+    border-color: #e68640;
     font-weight: 600;
 }
 .edit-rating-modal .modal-footer button:hover,.edit-rating-modal .modal-footer button:focus {
-    background-color: #c33333 !important;
-    border-color: #c33333 !important;
+    background-color: #e68640 !important;
+    border-color: #e68640 !important;
 }
 .edit-rating-modal .modal-footer button.previous {
     color: #007791;
@@ -3349,7 +3349,7 @@ section.cart-list-area {
 .cart-sidebar .total-price {
     font-size: 30px;
     line-height: 49px;
-    color: #ec5252;
+    color: #e68640;
     font-weight: 600;
 }
 .cart-sidebar .total-original-price {
@@ -3365,14 +3365,14 @@ section.cart-list-area {
     line-height: 1.35135;
     border-radius: 2px;
     color: #fff;
-    background-color: #ec5252;
-    border-color: #ec5252;
+    background-color: #e68640;
+    border-color: #e68640;
     font-weight: 600;
     padding: 16px 12px;
 }
 .cart-sidebar .checkout-btn:hover,.cart-sidebar .checkout-btn:focus {
-    background-color: #c33333 !important;
-    border-color: #c33333 !important;
+    background-color: #e68640 !important;
+    border-color: #e68640 !important;
 }
 .cart-sidebar .coupon-field input {
     padding: 14px 12px;
@@ -3406,7 +3406,7 @@ section.cart-list-area {
     color: #686f7a;
 }
 .cart-sidebar .coupon-list ul li:hover {
-    color: #ec5252;
+    color: #e68640;
 }
 .cart-sidebar .coupon-list ul li i {
     font-size: 11px;
@@ -3525,8 +3525,8 @@ section.user-dashboard-area {
 
 .user-dashboard-content .content-update-box button {
     color: #fff;
-    background-color: #ec5252;
-    border-color: #ec5252;
+    background-color: #e68640;
+    border-color: #e68640;
     padding: 11px 12px;
     font-size: 15px;
     border-radius: 2px;
@@ -3736,8 +3736,8 @@ my message page
 }
 .message-details-box .message-details .message-footer .send-btn {
     color: #fff;
-    background-color: #ec5252;
-    border-color: #ec5252;
+    background-color: #e68640;
+    border-color: #e68640;
     padding: 11px 12px;
     font-size: 15px;
     border-radius: 2px;
@@ -3748,8 +3748,8 @@ my message page
 }
 .message-details-box .message-details .message-footer .send-btn:hover,
 .message-details-box .message-details .message-footer .send-btn:focus {
-    background-color: #c33333;
-    border-color: #c33333;
+    background-color: #e68640;
+    border-color: #e68640;
 }
 
 
@@ -4240,7 +4240,7 @@ border: none;
 }
 .back_to_home_btn:hover, .back_to_home_btn:focus {
 background-color: #ffffff;
-border-color: #c33333;
+border-color: #e68640;
 color: #2a303b;
 }
 
@@ -4318,7 +4318,7 @@ color: #2a303b;
     box-shadow: 0px 15px 20px -5px #00000052;
     overflow-y: hidden;
     max-height: 5000px;
-    
+
     /* approximate max height */
     box-sizing: border-box;
     transition-property: all;
@@ -4383,8 +4383,8 @@ color: #2a303b;
     color: #087791;
 }
 
-.bundle-bg-image { 
-    position: relative; 
+.bundle-bg-image {
+    position: relative;
     height: 45vh;
     width: 100%;
     display: flex;
@@ -4424,7 +4424,7 @@ color: #2a303b;
         bottom: 0;
         right: 0;
         margin-bottom: 10px;
-        
+
         color: #fff;
         margin-right: 5px;
         text-align: center;
@@ -4445,7 +4445,7 @@ color: #2a303b;
         bottom: 0;
         right: 0;
         margin-bottom: 10px;
-        
+
         color: #fff;
         margin-right: 5px;
         text-align: center;
@@ -4468,7 +4468,7 @@ color: #2a303b;
         bottom: 0;
         right: 0;
         margin-bottom: 10px;
-        
+
         color: #fff;
         margin-right: 5px;
         text-align: center;
@@ -4479,7 +4479,7 @@ color: #2a303b;
     }
 }
 .course-bundle-box{
-    background-color: #ec52520d;
+    background-color: #e686400d;
 }
 .text-ccc{
     color: #ccc !important;

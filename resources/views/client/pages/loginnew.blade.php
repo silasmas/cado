@@ -17,7 +17,7 @@
                 <div class="col-lg-6 ps-0 col-md-6">
                     <div class="bg d-flex justify-content-center align-items-center">
                         <a href="/" class="me-auto ms-auto mb-3">
-                            <img src="{{ asset('assets/logo/logoan.png') }}" height="100" width="100"/>
+                            <img src="{{ asset('assets/logo/logo-white.png') }}" height="100" width="100"/>
                         </a>
                         <h2>Bienvenue à Cado</h2>
                     </div>
@@ -25,7 +25,7 @@
                 <div class="col-lg-6 d-flex justify-content-center align-items-center col-md-6">
                     <div class="card card-login">
                         <a href="/" class="me-auto ms-auto mb-2">
-                            <img src="{{ asset('assets/logo/logoan.png') }}" height="100" width="100"/>
+                            <img src="{{ asset('assets/logo/logo-white.png') }}" height="100" width="100"/>
                         </a>
                         <h2 class="mb-5">Bienvenue à Cado</h2>
                         <h1>Connexion</h1>

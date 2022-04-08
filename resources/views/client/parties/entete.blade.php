@@ -14,7 +14,7 @@
         <meta name="description" content="price ever!" />
 
         <link rel="shortcut icon" type="image/rdp-icon" href="{{ asset('assets/logos/LOGOTYPE-17.png') }}">
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <link rel="stylesheet" href="{{ asset('assets/css/jquery.webui-popover.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/slick-theme.css') }}" />
@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/mystyle.css') }}" />
         <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
 
         @yield("autres_style")
