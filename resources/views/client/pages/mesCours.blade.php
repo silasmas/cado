@@ -1,4 +1,4 @@
-@extends('templates.main_template',['titre'=>"Mes formation"])
+@extends('client.templates.main_template',['titre'=>"Mes formation"])
 
 
 @section('content')

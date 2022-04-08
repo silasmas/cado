@@ -37,7 +37,8 @@ Route::middleware(['auth'])->group( function (){
         Route::get('profil', [FormationController::class,'profil'])->name('profil');
         Route::get('panier', [FormationController::class,'panier'])->name('panier');
 
-    Route::get('formationBy/{id}', [EtudiantController::class,'show'])->name('formationBy');
+    Route::get('formationBy/{id}', [FormationController::class,'show'])->name('formationBy');
+    Route::get('detailFormation/{id}', [FormationController::class,'detailFormation'])->name('detailFormation');
 
     Route::get('/inscription', function () {
         return view('pages/welcome');

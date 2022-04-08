@@ -116,5 +116,52 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $(function () {
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });
+</script>
 
+<script type="text/javascript">
+    function isTouchDevice() {
+        return "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    }
+
+    function viewMore(element, visibility) {
+        if (visibility == "hide") {
+            $(element).parent(".view-more-parent").addClass("expanded");
+            $(element).remove();
+        } else if ($(element).hasClass("view-more")) {
+            $(element).parent(".view-more-parent").addClass("expanded has-hide");
+            $(element).removeClass("view-more").addClass("view-less").html("- View less");
+        } else if ($(element).hasClass("view-less")) {
+            $(element).parent(".view-more-parent").removeClass("expanded has-hide");
+            $(element).removeClass("view-less").addClass("view-more").html("+ View more");
+        }
+    }
+
+    //Event call after loading page
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+            setTimeout(function () {
+                $(".animated-loader").hide();
+                $(".shown-after-loading").show();
+            });
+        },
+        false
+    );
+
+    function check_action(e, url) {
+        var tag = $(e).prop("tagName").toLowerCase();
+        if (tag == "a") {
+            return true;
+        } else if (tag != "a" && url) {
+            $(location).attr("href", url);
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
 @endsection

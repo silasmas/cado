@@ -35,7 +35,7 @@
                                         </a>
                                     </div>
                                     <div class="details">
-                                        <a href="course-details.html">
+                                        <a href="{{ route('detailFormation', ['id'=>1]) }}">
                                             <div class="name">Character Art School: Complete Character Drawing Course</div>
                                         </a>
 
@@ -85,7 +85,7 @@
                                         </a>
                                     </div>
                                     <div class="details">
-                                        <a href="course-details.html">
+                                        <a href="{{ route('detailFormation', ['id'=>1]) }}">
                                             <div class="name">The Complete Sketch 5 Course - Design Apps & Websites 2021</div>
                                         </a>
 
@@ -123,7 +123,7 @@
                                         </a>
                                     </div>
                                     <div class="details">
-                                        <a href="course-details.html">
+                                        <a href="{{ route('detailFormation', ['id'=>1]) }}">
                                             <div class="name">Adobe After Effects CC: Complete Course - Novice to Expert</div>
                                         </a>
 

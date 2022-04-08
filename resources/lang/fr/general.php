@@ -10,11 +10,11 @@ return [
         'rechercheBar'=>'chercher un cour',
         'btnFavoris'=>'Page favoris',
         'btnAddPanier'=>'Ajouter aupanier',
-        'btnPanier'=>'Voir le panier',
+        'btnPanier'=>'',
         'mesFavoris'=>'Mes favoris',
         'formation'=>'Coaching',
         'mesCours'=>'Mes conférences',
-        'home'=>'CADO',
+        'home'=>'CADO ET COACHING DES COUPLES',
         'achatStorie'=>'Historique d\'achats',
         'profil'=>'Profil',
         'titreMenu'=>'Menus',
@@ -46,5 +46,7 @@ return [
     'autre' =>[
         'btnAddFavori'=>'Ajouter au favoris',
         'btnAddPanier'=>'Ajouter au panier',
+        'achat'=>'Acheter',
+        'free'=>'Participer',
     ],
 ];
