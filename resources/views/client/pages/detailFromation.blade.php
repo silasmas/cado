@@ -1,4 +1,4 @@
-@extends('templates.lesson_template',['titre'=>"Detail formation"])
+@extends('client.templates.lesson_template',['titre'=>"Detail formation"])
 
 
 @section('autres_style')
@@ -15,7 +15,7 @@
         <div class="col-md-12 col-lg-5 col-xl-3 course_header_col text-right">
             <a href="javascript::" class="course_btn" onclick="toggle_lesson_view()"><i class="fa fa-arrows-alt-h"></i></a>
             <a href="{{ route('mesCours') }}" class="course_btn"> <i class="fa fa-chevron-left"></i> Mes cours</a>
-            <a href="{{ route('formationBy', ['id'=>1]) }}" class="course_btn">Detail du cours <i class="fa fa-chevron-right"></i></a>
+            <a href="{{ route('detailFormation', ['id'=>1]) }}" class="course_btn">Detail du cours <i class="fa fa-chevron-right"></i></a>
         </div>
     </div>
 

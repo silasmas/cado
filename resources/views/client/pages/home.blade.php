@@ -13,10 +13,10 @@
                   <div class="row align-items-center">
                     <div class="col-lg-6 order-2 order-lg-1">
                       <div class="text-star text-white">
-                        <h2>Bienvenu à CADO</h2>
-                        <h1>un cabinet conseil en <br> stratégies et  management</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At possimus dolorum reiciendis dolore tempore assumenda quis molestiae quo provident iure.</p>
-                        <a href="#about" class="btn btn-1 scrollTop">Savoir plus</a>
+                        <h2>Prochain coaching des couple</h2>
+                        <h1>Gestion de l'argent </h1>
+                        <p> Court descriptionLorem <br>ipsum dolor sit amet consectetur adipisicing elit. At possimus dolorum reiciendis dolore tempore assumenda quis molestiae quo provident iure.</p>
+                        <a href="#about" class="btn btn-1 scrollTop">Prendre part</a>
                       </div>
                     </div>
                     <div class="col-lg-6 order-1 order-lg-2">
@@ -32,10 +32,10 @@
                   <div class="row align-items-center">
                     <div class="col-lg-6 order-2 order-lg-1">
                       <div class="text-star text-white">
-                        <h2>Bienvenu à CADO</h2>
-                        <h1>un cabinet conseil en <br> stratégies et  management</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At possimus dolorum reiciendis dolore tempore assumenda quis molestiae quo provident iure.</p>
-                        <a href="#about" class="btn btn-1 scrollTop">Savoir plus</a>
+                        <h2>Prochaine CADO</h2>
+                        <h1>Titre de la conférence </h1>
+                        <p> Court description <br> Lorem ipsum dolor sit amet consectetur adipisicing elit. At possimus dolorum reiciendis dolore tempore assumenda quis molestiae quo provident iure.</p>
+                        <a href="{{ route('panier') }}" class="btn btn-1 scrollTop">Réserver</a>
                       </div>
                     </div>
                     <div class="col-lg-6 order-1 order-lg-2">
@@ -70,14 +70,14 @@
 <div class="container-lg">
     <div class="row">
         <div class="col">
-            <h3 class="mb-4 course-carousel-title">Top courses</h3>
+            <h3 class="mb-4 course-carousel-title">Nos conférences CADO</h3>
 
             <!-- page loader -->
             <div class="animated-loader"><div class="spinner-border text-secondary" role="status"></div></div>
 
             <div class="course-carousel shown-after-loading" style="display: none;">
                 <div class="course-box-wrap">
-                    <a href="" class="has-popover">
+                    <a href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_1.jpg" alt="" class="img-fluid" />
@@ -164,14 +164,14 @@
                                 </ul>
                             </div>
                             <div class="popover-btns">
-                                <a href="#" class="btn green radius-10" onclick="handleEnrolledButton()">Get enrolled</a>
+                                <a href="#" class="btn green radius-10" onclick="handleEnrolledButton()">S'enroller</a>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)" id="1"><i class="fas fa-heart"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_3.jpg" alt="" class="img-fluid" />
@@ -257,16 +257,16 @@
                                 </ul>
                             </div>
                             <div class="popover-btns">
-                                <button type="button" class="btn red add-to-cart-btn big-cart-button-3" onclick="handleCartItems(this)">
-                                    Add to cart
-                                </button>
+                                <a href="{{ route('panier') }}" class="btn red add-to-cart-btn big-cart-button-3" >
+                                 @lang('general.autre.achat')
+                                </a>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_4.jpg" alt="" class="img-fluid" />
@@ -354,16 +354,16 @@
                                 </ul>
                             </div>
                             <div class="popover-btns">
-                                <button type="button" class="btn red add-to-cart-btn big-cart-button-4" onclick="handleCartItems(this)">
-                                    Add to cart
-                                </button>
+                                <a href="{{ route('panier') }}" class="btn red add-to-cart-btn big-cart-button-3" >
+                                    @lang('general.autre.achat')
+                                   </a>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_5.jpg" alt="" class="img-fluid" />
@@ -439,16 +439,16 @@
                                 </ul>
                             </div>
                             <div class="popover-btns">
-                                <button type="button" class="btn red add-to-cart-btn big-cart-button-5" onclick="handleCartItems(this)">
-                                    Add to cart
-                                </button>
+                               <a href="{{ route('panier') }}" class="btn red add-to-cart-btn big-cart-button-3" >
+                                 @lang('general.autre.achat')
+                                </a>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_6.jpg" alt="" class="img-fluid" />
@@ -531,7 +531,7 @@
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_7.jpg" alt="" class="img-fluid" />
@@ -605,7 +605,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-7" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -613,7 +613,7 @@
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_8.jpg" alt="" class="img-fluid" />
@@ -691,7 +691,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-8" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -699,7 +699,7 @@
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_9.jpg" alt="" class="img-fluid" />
@@ -783,7 +783,7 @@
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_10.jpg" alt="" class="img-fluid" />
@@ -857,7 +857,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-10" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -865,7 +865,7 @@
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_11.jpg" alt="" class="img-fluid" />
@@ -943,7 +943,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-11" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -951,7 +951,7 @@
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_12.jpg" alt="" class="img-fluid" />
@@ -1025,7 +1025,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-12" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1033,7 +1033,7 @@
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_13.jpg" alt="" class="img-fluid" />
@@ -1112,7 +1112,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-13" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1120,7 +1120,7 @@
                     </div>
                 </div>
                 <div class="course-box-wrap">
-                    <a  href="" class="has-popover">
+                    <a  href="{{ route('detailFormation', ['id'=>1]) }}" class="has-popover">
                         <div class="course-box">
                             <div class="course-image">
                                 <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_14.jpg" alt="" class="img-fluid" />
@@ -1194,7 +1194,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-14" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1204,7 +1204,7 @@
             </div>
         </div>
     </div>
-    <a href="#" class="btn btn-plus">Plus de cours <i class="bi bi-arrow-right"></i></a>
+    <a href="#" class="btn btn-plus">Toutes les conférences <i class="bi bi-arrow-right"></i></a>
 </div>
 </section>
 
@@ -1212,7 +1212,7 @@
 <div class="container-lg">
     <div class="row">
         <div class="col">
-            <h3 class="mb-4 course-carousel-title">Top 10 Latest courses</h3>
+            <h3 class="mb-4 course-carousel-title">Nos coaching pour les couples</h3>
 
             <!-- page loader -->
             <div class="animated-loader"><div class="spinner-border text-secondary" role="status"></div></div>
@@ -1293,7 +1293,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-14" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1380,7 +1380,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-13" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1462,7 +1462,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-12" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1548,7 +1548,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-11" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1630,7 +1630,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-10" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1800,7 +1800,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-8" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -1882,7 +1882,7 @@
                             </div>
                             <div class="popover-btns">
                                 <button type="button" class="btn red add-to-cart-btn big-cart-button-7" onclick="handleCartItems(this)">
-                                    Add to cart
+                                 @lang('general.autre.achat')
                                 </button>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
@@ -2049,9 +2049,9 @@
                                 </ul>
                             </div>
                             <div class="popover-btns">
-                                <button type="button" class="btn red add-to-cart-btn big-cart-button-5" onclick="handleCartItems(this)">
-                                    Add to cart
-                                </button>
+                               <a href="{{ route('panier') }}" class="btn red add-to-cart-btn big-cart-button-3" >
+                                 @lang('general.autre.achat')
+                                </a>
                                 <button type="button" class="wishlist-btn" title="Add to wishlist" onclick="handleWishList(this)"><i class="fas fa-heart"></i></button>
                             </div>
                         </div>
@@ -2060,70 +2060,70 @@
             </div>
         </div>
     </div>
-    <a href="#" class="btn btn-plus">Plus de cours <i class="bi bi-arrow-right"></i></a>
+    <a href="#" class="btn btn-plus">Voir plus <i class="bi bi-arrow-right"></i></a>
 </div>
 </section>
 
 <section class="featured-instructor">
-<div class="container-lg">
-    <div class="row">
-        <div class="col">
-            <h3 class="mb-5 text-center">Featured instructor</h3>
+    <div class="container-lg">
+        <div class="row">
+            <div class="col">
+                <h3 class="text-center mb-5">Ce que dit les participants</h3>
+            </div>
         </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-9 col-lg-7">
-            <div class="animated-loader"><div class="spinner-border text-secondary" role="status"></div></div>
-            <div class="top-istructor-slick shown-after-loading" style="display: none;">
-                <div class="text-center d-sm-flex text-md-start">
-                    <div class="top-instructor-img ms-auto me-auto">
-                        <a href="instructor.html">
-                            <img src="assets/images/uploads/user_image/0269091217f95c25ac4f77c1bd69879a.jpg" alt="instructor" style="width: 100%;" />
-                        </a>
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-7">
+                <div class="animated-loader"><div class="spinner-border text-secondary" role="status"></div></div>
+                <div class="top-istructor-slick shown-after-loading" style="display: none;">
+                    <div class="d-sm-flex text-center text-md-start">
+                        <div class="top-instructor-img ms-auto me-auto">
+                            <a href="instructor.html">
+                                <img src="assets/images/uploads/user_image/0269091217f95c25ac4f77c1bd69879a.jpg" alt="instructor" style="width: 100%;" />
+                            </a>
+                        </div>
+                        <div class="top-instructor-details">
+                            <a class="text-decoration-none" href="instructor.html">
+                                <h4 class="mb-1 fw-700">Dave Franco</h4>
+                                <span class="fw-500 text-muted text-14px"></span>
+                                <p class="text-12px fw-500 text-muted my-3">Hi, I'm Dave! I have been identified as one of the Edustar Top Instructors and all my premium co...</p>
+    
+                                <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
+                             -->
+                            </a>
+    
+                            <p class="top-instructor-arrow my-3">
+                                <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-prev').click();"><i class="fas fa-angle-left"></i></span>
+                                <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-next').click();"><i class="fas fa-angle-right"></i></span>
+                            </p>
+                        </div>
                     </div>
-                    <div class="top-instructor-details">
-                        <a class="text-decoration-none" href="instructor.html">
-                            <h4 class="mb-1 fw-700">Dave Franco</h4>
-                            <span class="fw-500 text-muted text-14px"></span>
-                            <p class="my-3 text-12px fw-500 text-muted">Hi, I'm Dave! I have been identified as one of the Edustar Top Instructors and all my premium co...</p>
-
-                            <!--                                                                           <span class="py-2 my-1 badge badge-sub-warning text-12px"></span>
-                         -->
-                        </a>
-
-                        <p class="my-3 top-instructor-arrow">
-                            <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-prev').click();"><i class="fas fa-angle-left"></i></span>
-                            <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-next').click();"><i class="fas fa-angle-right"></i></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="text-center d-sm-flex text-md-start">
-                    <div class="top-instructor-img ms-auto me-auto">
-                        <a href="instructor.html">
-                            <img src="assets/images/uploads/user_image/48a153e87c587ffe79d6e8609e59124b.jpg" alt="user_image" style="width: 100%;" />
-                        </a>
-                    </div>
-                    <div class="top-instructor-details">
-                        <a class="text-decoration-none" href="instructor.html">
-                            <h4 class="mb-1 fw-700">John David</h4>
-                            <span class="fw-500 text-muted text-14px"></span>
-                            <p class="my-3 text-12px fw-500 text-muted">Johns David has a BS and MS in Mechanical Engineering from Santa Clara University and years of exper...</p>
-
-                            <!--                                                                           <span class="py-2 my-1 badge badge-sub-warning text-12px"></span>
-                         -->
-                        </a>
-
-                        <p class="my-3 top-instructor-arrow">
-                            <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-prev').click();"><i class="fas fa-angle-left"></i></span>
-                            <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-next').click();"><i class="fas fa-angle-right"></i></span>
-                        </p>
+                    <div class="d-sm-flex text-center text-md-start">
+                        <div class="top-instructor-img ms-auto me-auto">
+                            <a href="instructor.html">
+                                <img src="assets/images/uploads/user_image/48a153e87c587ffe79d6e8609e59124b.jpg" alt="user_image" style="width: 100%;" />
+                            </a>
+                        </div>
+                        <div class="top-instructor-details">
+                            <a class="text-decoration-none" href="instructor.html">
+                                <h4 class="mb-1 fw-700">John David</h4>
+                                <span class="fw-500 text-muted text-14px"></span>
+                                <p class="text-12px fw-500 text-muted my-3">Johns David has a BS and MS in Mechanical Engineering from Santa Clara University and years of exper...</p>
+    
+                                <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
+                             -->
+                            </a>
+    
+                            <p class="top-instructor-arrow my-3">
+                                <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-prev').click();"><i class="fas fa-angle-left"></i></span>
+                                <span class="cursor-pointer" onclick="$('.top-istructor-slick .slick-next').click();"><i class="fas fa-angle-right"></i></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</section>
+    </section>
 
 <script>
 $(document).ready(function () {

@@ -65,9 +65,13 @@ class FormationController extends Controller
      * @param  \App\Models\formation  $formation
      * @return \Illuminate\Http\Response
      */
-    public function show(formation $formation)
+    public function show($id)
     {
-        //
+        return view('client.pages.detailFromation');
+    }
+    public function detailFormation($id)
+    {
+        return view('client.pages.detail');
     }
 
     /**
