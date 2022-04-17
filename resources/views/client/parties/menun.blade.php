@@ -23,82 +23,15 @@
 
                 <ul class="mobile-main-nav">
                     <li class="mobile-menu-helper-top"></li>
-                    <li class="has-children text-nowrap fw-bold">
+                    {{-- <li class="has-children text-nowrap fw-bold">
                         <a href="">
                             <i class="fas fa-th d-inline text-20px"></i>
                             <span class="fw-500">@lang('general.menu.titreMenu')</span>
                             <span class="has-sub-category"><i class="fas fa-angle-right"></i></span>
                         </a>
 
-                        <ul class="category corner-triangle top-left is-hidden pb-0">
-                            <li class="go-back">
-                                <a href=""><i class="fas fa-angle-left"></i>@lang('general.menu.titreMenuMobile')</a>
-                            </li>
-
-                            <li class="has-children">
-                                <a href="course-grid.html" class="py-2">
-                                    <span class="icon"><i class="fas fa-pencil-alt"></i></span>
-                                    <span>Catégorie 1</span>
-                                    <span class="has-sub-category"><i class="fas fa-angle-right"></i></span>
-                                </a>
-                                <ul class="sub-category is-hidden">
-                                    <li class="go-back-menu">
-                                        <a href=""><i
-                                                class="fas fa-angle-left"></i>@lang('general.menu.titreMenuMobile')</a>
-                                    </li>
-                                    <li class="go-back">
-                                        <a href="">
-                                            <i class="fas fa-angle-left"></i>
-                                            <span class="icon"><i class="fas fa-pencil-alt"></i></span>
-                                            Catégorie 1 mobile
-                                        </a>
-                                    </li>
-                                    <li><a href="course-grid.html">Photoshop</a></li>
-                                    <li><a href="course-grid.html">Adobe Illustrator</a></li>
-                                    <li><a href="course-grid.html">Drawing</a></li>
-                                    <li><a href="course-grid.html">Logo Design</a></li>
-                                    <li><a href="course-grid.html">Digital Art</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-children">
-                                <a href="course-grid.html" class="py-2">
-                                    <span class="icon"><i class="fas fa-male"></i></span>
-                                    <span>Catégorie 2</span>
-                                    <span class="has-sub-category"><i class="fas fa-angle-right"></i></span>
-                                </a>
-                                <ul class="sub-category is-hidden">
-                                    <li class="go-back-menu">
-                                        <a href=""><i
-                                                class="fas fa-angle-left"></i>@lang('general.menu.titreMenuMobile')</a>
-                                    </li>
-                                    <li class="go-back">
-                                        <a href="">
-                                            <i class="fas fa-angle-left"></i>
-                                            <span class="icon"><i class="fas fa-male"></i></span>
-                                            Catégorie 2 mobile
-                                        </a>
-                                    </li>
-                                    <li><a href="course-grid.html">User Experience Design</a></li>
-                                    <li><a href="course-grid.html">Mobile App Design</a></li>
-                                    <li><a href="course-grid.html">User Interface</a></li>
-                                    <li><a href="course-grid.html">Design Thinking</a></li>
-                                    <li><a href="course-grid.html">Figma</a></li>
-                                    <li><a href="course-grid.html">Prototyping</a></li>
-                                </ul>
-                            </li>
-                            <li class="all-category-devided mb-0 p-0">
-                                <a href="{{ route('allFormation') }}"
-                                    class="py-2"><span>@lang('general.menu.formAll')</span></a>
-                                    @if (Auth::guest())
-                                <a href="{{ route('login') }}"
-                                    class="py-2"><span>@lang('general.menu.login') </span></a>
-                                <a href="{{ route('register') }}"
-                                    class="py-2"><span>@lang('general.menu.inscription') </span>
-                                </a>
-                                @endif
-                            </li>
-                        </ul>
-                    </li>
+                       
+                    </li> --}}
 
                     <li class="mobile-menu-helper-bottom"></li>
                 </ul>
