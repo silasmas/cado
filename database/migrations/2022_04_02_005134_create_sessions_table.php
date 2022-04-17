@@ -19,6 +19,8 @@ return new class extends Migration
             $table->date('date_debut')->nullable();
             $table->date('date_fin')->nullable();
             $table->string('cover')->nullable();
+            $table->string('context')->nullable();//ce champ permet de specifié si c'est dans le cadre de CADO ou des couples
+            $table->enum('type', array('payant','free'))->default('free');
             $table->string('spote')->nullable();
             $table->string('prix')->nullable();
             $table->string('monaie')->nullable();

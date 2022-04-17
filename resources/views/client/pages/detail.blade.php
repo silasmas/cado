@@ -8,8 +8,8 @@
         <div class="row align-items-end">
             <div class="col-lg-8">
                 <div class="course-header-wrap">
-                    <h1 class="title">Learn to draw fashion with Adobe Illustrator CC - Beginners</h1>
-                    <p class="subtitle">Illustrator training specifically tailored for fashion designers</p>
+                    <h1 class="title">{{ $detail->titre }}</h1>
+                    <p class="subtitle">{{ $detail->sous_titre }}</p>
                     <div class="rating-row">
                         <span class="course-badge best-seller">Beginner</span>
                         <i class="fas fa-star filled" style="color: #f5c85b;"></i>
@@ -19,12 +19,17 @@
                         <i class="fas fa-star"></i>
                         <span class="d-inline-block average-rating">4</span><span>(1 Ratings)</span>
                         <span class="enrolled-num"> 1 Students enrolled </span>
-                        <span class="comment"><i class="fas fa-comment"></i>English</span>
+                        <span class="comment"><i class="fas fa-comment"></i>Français</span>
                     </div>
                     <div class="created-row">
                         <span class="created-by"> Created by <a class="text-14px fw-600 text-decoration-none" href="instructor.html">Dave Franco</a> </span>
                         <br />
-                        <span class="last-updated-date d-inline-block mt-2">Last updated Thu, 27-May-2021</span>
+                        <span class="last-updated-date d-inline-block mt-2">
+                            A eu lieu Du
+                            {{ \Carbon\Carbon::parse($detail->session->date_debut)->isoFormat('LL') }}
+                            au {{ \Carbon\Carbon::parse($detail->session->date_fin)->isoFormat('LL') }}
+                        
+                        </span>
                     </div>
                 </div>
             </div>
@@ -37,16 +42,15 @@
         <div class="row">
             <div class="col-lg-8 order-last order-lg-first radius-10 mt-4 bg-white p-30-40">
                 <div class="description-box view-more-parent">
-                    <div class="view-more" onclick="viewMore(this,'hide')">+ View more</div>
-                    <div class="description-title">Course overview</div>
+                    <div class="view-more" onclick="viewMore(this,'hide')">+ Voir plus</div>
+                    <div class="description-title">Aperçu du cours</div>
                     <div class="description-content-wrap">
                         <div class="description-content">
                             <div data-purpose="safely-set-inner-html:description:description" xss="removed">
                                 <p xss="removed">
-                                    Learn how to use Adobe Illustrator to draw fashion flats. Develop your skills to enable you to produce creative, accurate product designs quickly and to standards required for retail and
-                                    manufacturing.
+                                   {{ $detail->description }}
                                 </p>
-                                <p xss="removed"><strong xss="removed">In this beginners level course, you will learn all the core tools and features that make up the basic fashion drawing toolbox.</strong></p>
+                                <p xss="removed">{{ $detail->presentation }}</strong></p>
                                 <ul xss="removed">
                                     <li xss="removed">For beginners that have not used Adobe Illustrator before</li>
                                     <li xss="removed">Overview of Illustrator terminology</li>
@@ -93,14 +97,13 @@
                     </div>
                 </div>
 
-                <h4 class="py-3">What will i learn?</h4>
+                <h4 class="py-3">Que vais-je apprendre?</h4>
                 <div class="what-you-get-box">
                     <ul class="what-you-get__items">
-                        <li>You will have a good foundation in drawing fashion flats</li>
-                        <li>You will be ready to progress to the intermediate and advanced training with the details and links to these additional online courses provided in the course</li>
-                        <li>You will be well on your way to becoming a fashion designer with expert skills in Adobe Illustrator.</li>
-                        <li>You will stand out from the thousands of fashion design graduates and make yourself more attractive to potential employers.</li>
-                    </ul>
+                        @foreach ($chapitres as $d)                            
+                        <li>{{ $d->titre }}</li>
+                        @endforeach
+                     </ul>
                 </div>
 
                 <div class="requirements-box">
@@ -369,7 +372,7 @@
                                     <div class="col-auto">
                                         <div class="reviewer-details clearfix">
                                             <div class="reviewer-img">
-                                                <img src="{{ asset('assets/images/uploads/user_image/placeholder.png') }}" alt="" />
+                                                <img src="{{ asset('assets/images/form/'.$detail->cover) }}" alt="" />
                                             </div>
                                         </div>
                                     </div>
@@ -404,46 +407,50 @@
                 <div class="course-sidebar natural">
                     <div class="preview-video-box">
                         <a data-bs-toggle="modal" data-bs-target="#CoursePreviewModal">
-                            <img src="{{ asset('assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_12.jpg') }}" alt="" class="w-100" />
+                            <img src="{{ asset('assets/images/form/'.$detail->cover) }}" alt="" class="w-100" />
                             <span class="preview-text">Preview this course</span>
                             <span class="play-btn"></span>
                         </a>
                     </div>
                     <div class="course-sidebar-text-box">
                         <div class="price text-center">
-                            <span class="original-price">$50</span>
-                            <span class="current-price"><span class="current-price">$20</span></span>
-                            <input type="hidden" id="total_price_of_checking_out" value="$20" />
+                            {{-- <span class="original-price">$50</span> --}}
+                            @if ($detail->session->type=='payant')                                
+                            <span class="current-price"><span class="current-price">${{ $detail->session->prix }}</span></span>
+                            <input type="hidden" id="total_price_of_checking_out" value="{{ $detail->session->prix }}" />
+                            @endif
                         </div>
 
                         <!-- WISHLIST BUTTON -->
+                        @if ($detail->session->type=='payant')
+                        <div class="buy-btns">
+                            <a class="btn btn-buy-now" href="{{ route('panier') }}" id="12" onclick="handleCartItems(this)">
+                                @lang('general.autre.achat')
+                            </a>
+                        </div>
+                        @else
+                        <div class="buy-btns">
+                            <a class="btn btn-buy-now" href="{{ route('detailFormation') }}" id="12" onclick="handleCartItems(this)">
+                               Commencer
+                            </a>
+                        </div>
+                        @endif
                         <div class="buy-btns">
                             <button class="btn btn-add-wishlist" type="button" id="12" onclick="handleAddToWishlist(this)">
                                 @lang('general.autre.btnAddFavori')
                             </button>
                         </div>
 
-                        <div class="buy-btns">
-                            <a class="btn btn-buy-now" href="{{ route('panier') }}" id="12" onclick="handleCartItems(this)">
-                                @lang('general.autre.achat')
-                            </a>
-                        </div>
+           
 
                         <div class="includes">
-                            <div class="title"><b>Includes:</b></div>
+                            <div class="title"><b>Inclus :</b></div>
                             <ul>
-                                <li><i class="far fa-file-video"></i> 00:43:50 Hours On demand videos</li>
-                                <li><i class="far fa-file"></i>7 Lessons</li>
-                                <li><i class="fas fa-mobile-alt"></i>Access on mobile and tv</li>
-                                <li><i class="far fa-compass"></i>Full lifetime access</li>
-                                <li class="text-center pt-3">
-                                    <a
-                                        class="badge-sub-warning text-decoration-none fw-600 hover-shadow-1 d-inline-block"
-                                        href="compare.html"
-                                    >
-                                        <i class="fas fa-balance-scale"></i> Compare this course with other
-                                    </a>
-                                </li>
+                                {{-- <li><i class="far fa-file-video"></i> 00:43:50 Hours On demand videos</li> --}}
+                                <li><i class="far fa-file"></i>{{ $detail->count().' Chapitre(s)' }}</li>
+                                <li><i class="fas fa-mobile-alt"></i>Adaptable sur mobile et TV</li>
+                                <li><i class="far fa-compass"></i>Accès illimité</li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -458,7 +465,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content course-preview-modal">
             <div class="modal-header">
-                <h5 class="modal-title"><span>Course preview:</span>Learn to draw fashion with Adobe Illustrator CC - Beginners</h5>
+                <h5 class="modal-title"><span>Présentation :</span>{{ $detail->titre }}</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -476,7 +483,7 @@
                         <div class="plyr__video-embed" id="player">
                             <iframe
                                 height="500"
-                                src="https://youtu.be/Ib8UBwu3yGA?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
+                                src="{{ $detail->session->spote }}"
                                 allowfullscreen
                                 allowtransparency
                                 allow="autoplay"

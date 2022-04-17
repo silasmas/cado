@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\formation;
 use App\Http\Requests\StoreformationRequest;
 use App\Http\Requests\UpdateformationRequest;
+use App\Models\session;
 
 class FormationController extends Controller
 {
@@ -13,8 +14,11 @@ class FormationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+   
     public function index()
     {
+        // $allform=session::all();
+        // dd($allform);
         return view('client.pages.home');
     }
     public function profil()
@@ -71,7 +75,12 @@ class FormationController extends Controller
     }
     public function detailFormation($id)
     {
-        return view('client.pages.detail');
+        // $detail=session::with('formation')->find($id);
+        $detail=formation::with(['formateur','session'])->where('session_id',$id)->first();
+        $chapitres=formation::where('session_id',$id)->get();
+        // dd($detail);
+      
+        return view('client.pages.detail',compact('detail','chapitres'));
     }
 
     /**
