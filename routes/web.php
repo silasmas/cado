@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FormationController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,9 +23,6 @@ Route::get('/', function () {
 Route::get('/registerUser', function () {
     return view('client.pages.registerUser');
 })->name('registerUser');
-Route::get('/dashboard', function () {
-    return view('client/pages/home');
-})->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth'])->group( function (){
     // Route::get('/dashboard', [EtudiantController::class,'index'])->name('dashboard');
@@ -34,8 +32,8 @@ Route::middleware(['auth'])->group( function (){
     Route::get('homes', [FormationController::class,'index'])->name('homes');
 
 
-        Route::get('profil', [FormationController::class,'profil'])->name('profil');
-        Route::get('panier', [FormationController::class,'panier'])->name('panier');
+    Route::get('profil', [FormationController::class,'profil'])->name('profil');
+    Route::get('panier', [FormationController::class,'panier'])->name('panier');
 
     Route::get('formationBy/{id}', [FormationController::class,'show'])->name('formationBy');
     Route::get('detailFormation/{id}', [FormationController::class,'detailFormation'])->name('detailFormation');
@@ -50,5 +48,8 @@ Route::middleware(['auth'])->group( function (){
     Route::get('/detail', function () {
         return view('pages/detailFromation');
     })->name('detail');
+
+    Route::get('dashboard', [FormationController::class,'index'])->name('dashboard');
+
 });
 require __DIR__.'/auth.php';

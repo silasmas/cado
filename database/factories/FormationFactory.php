@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\formation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class FormationFactory extends Factory
 {
+
+    protected $formation= formation::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,13 @@ class FormationFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'titre' => $this->faker->sentence,
+            'sous_titre' => $this->faker->sentence,
+            'video' => "https://youtu.be/_QFs1KM31-s",
+            'description' => $this->faker->paragraph,
+            'cover' => "default.jpg",
+            'presentation' => $this->faker->sentence,
+            'session_id' => 1,
         ];
     }
 }

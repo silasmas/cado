@@ -17,7 +17,8 @@ class FormationFormateurFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'formateur_id' => 2,
+            'formation_id' => 1,
         ];
     }
 }
