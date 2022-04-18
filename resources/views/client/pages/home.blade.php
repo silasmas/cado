@@ -1,7 +1,7 @@
 @extends('client.templates.main_template',['titre'=>"Home dev"])
 
 @section('content')
-{{-- {{ dd($allform[0]->formation[0]->formateur[0]->formation) }} --}}
+{{-- {{ dd($allform[0]->formation) }} --}}
     <section class="home-banner-area" id="home-banner-area">
         {{-- <img src="{{ asset('assets/images/img-float.png') }}" alt="" class="img-float"> --}}
         {{-- <div class="cropped-home-banner"></div> --}}
@@ -78,120 +78,112 @@
                         <div class="spinner-border text-secondary" role="status"></div>
                     </div>
 
-                    @foreach ($allform as $form)
-                        <div class="course-carousel shown-after-loading" style="display: none;">
-                            <div class="course-box-wrap">
-                                <a href="{{ route('detailFormation', ['id' => $form->id]) }}" class="has-popover">
-                                    <div class="course-box">
-                                        <div class="course-image">
-                                            <img src="{{ asset('assets/images/form/' . $form->cover) }}" alt=""
-                                                class="img-fluid" />
-                                        </div>
-                                        <div class="course-details">
-                                            <h5 class="title">
-                                                {{ $form->titre }}
-                                            </h5>
-                                            <div class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <div class="d-inline-block">
-                                                    <span class="text-dark ms-1 text-15px">(5)</span>
-                                                    <span class="text-dark text-12px text-muted ms-2">(1 Reviews)</span>
-                                                </div>
+                    <div class="course-carousel shown-after-loading" style="display: none;">
+                            @foreach ($allform as $form)
+                                <div class="course-box-wrap">
+                                    <a href="{{ route('detailFormation', ['id' => $form->id]) }}" class="has-popover">
+                                        <div class="course-box">
+                                            <div class="course-image">
+                                                <img src="{{ asset('assets/images/form/' . $form->cover) }}" alt=""
+                                                    class="img-fluid" />
                                             </div>
-                                            <div class="d-flex text-dark">
-                                                <div class="">
-                                                    <i class="far fa-calendar text-14px"></i>
-                                                    <span class="text-muted text-12px">
-                                                        Du
-                                                        {{ \Carbon\Carbon::parse($form->date_debut)->isoFormat('LL') }}
-                                                        au {{ \Carbon\Carbon::parse($form->date_fin)->isoFormat('LL') }}
-                                                    </span>
+                                            <div class="course-details">
+                                                <h5 class="title">
+                                                    {{ $form->titre }}
+                                                </h5>
+                                                <div class="rating">
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <i class="fas fa-star filled"></i>
+                                                    <div class="d-inline-block">
+                                                        <span class="text-dark ms-1 text-15px">(5)</span>
+                                                        <span class="text-dark text-12px text-muted ms-2">(1 Reviews)</span>
+                                                    </div>
                                                 </div>
-                                                
-                                            </div>
-
-                                            <hr class="divider-1" />
-
-                                            <div class="d-block">
-                                                <div class="floating-user d-inline-block">  
-                                                    @forelse ($form->formation as $f)
-                                                    @foreach ($f->formateur  as $fr)                                                        
-                                                    <img style="margin-left: 0px; width: 30px; " class="position-absolute"
-                                                    src="{{ asset('assets/images/form/'.$fr->photo) }}"
-                                                    alt="user_image" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="{{ $fr->prenom.' '.$fr->nom.$fr->count() }}"
-                                                    onclick="return check_action(this,'instructor.html');" />
-                                                    @endforeach
-                                                  
-                                                  
-                                                    {{-- <img style="margin-left: 17px; width: 30px;" class="position-absolute"
-                                                        src="assets/images/uploads/user_image/0269091217f95c25ac4f77c1bd69879a.jpg"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Dave Franco"
-                                                        onclick="return check_action(this,'instructor.html');" /> --}}
-                                                        @empty
-                                                                
-                                                        @endforelse
-                                                </div>
-                                                <p class="text-right price d-inline-block float-end">
-                                                    {{ $form->type == 'payant' ? '$' . $form->prix : $form->type }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <div class="webui-popover-content">
-                                    <div class="course-popover-content">
-                                        <div class="last-updated">
-                                            A eu lieu Du
-                                            {{ \Carbon\Carbon::parse($form->date_debut)->isoFormat('LL') }}
-                                            au {{ \Carbon\Carbon::parse($form->date_fin)->isoFormat('LL') }}
-                                        </div>
-
-                                        <div class="course-title">
-                                            <a class="text-decoration-none text-15px"
-                                                href="{{ route('detailFormation', ['id' => $form->id]) }}">
-                                                {{ $form->titre }}
-                                            </a>
-                                        </div>
-                                        <div class="course-meta">
-                                            <span class=""><i class="fas fa-play-circle"></i> {{ $form->formation->count() }} Lessons
-                                            </span>
-                                            {{-- <span class=""><i class="far fa-clock"></i> 01:10:09 Hours
-                                            </span> --}}
-                                            <span class=""><i
-                                                    class="fas fa-closed-captioning"></i>Français</span>
-                                        </div>
-                                        <div class="course-subtitle">{{ $form->description }}</div>
-                                        <div class="what-will-learn">
-                                            <ul>
-                                                @forelse ($form->formation as $f)
-                                                <li>{{ $f->titre }}/li>
-                                                @empty
+                                                <div class="d-flex text-dark">
+                                                    <div class="">
+                                                        <i class="far fa-calendar text-14px"></i>
+                                                        <span class="text-muted text-12px">
+                                                            Du
+                                                            {{ \Carbon\Carbon::parse($form->date_debut)->isoFormat('LL') }}
+                                                            au {{ \Carbon\Carbon::parse($form->date_fin)->isoFormat('LL') }}
+                                                        </span>
+                                                    </div>
                                                     
-                                                @endforelse
-                                               
-                                               
-                                            </ul>
+                                                </div>
+
+                                                <hr class="divider-1" />
+
+                                                <div class="d-block">
+                                                    <div class="floating-user d-inline-block">  
+                                                        @forelse ($form->formation as $f)
+                                                            @foreach ($f->formateur  as $fr)                                                        
+                                                            <img style="margin-left: 0px; width: 30px; " class="position-absolute"
+                                                            src="{{ asset('assets/images/form/'.$fr->photo) }}"
+                                                            alt="user_image" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="{{ $fr->prenom.' '.$fr->nom.$fr->count() }}"
+                                                            onclick="return check_action(this,'instructor.html');" />
+                                                            @endforeach                                                 
+                                                            @empty
+                                                                    
+                                                            @endforelse
+                                                    </div>
+                                                    <p class="text-right price d-inline-block float-end">
+                                                        {{ $form->type == 'payant' ? '$' . $form->prix : $form->type }}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="popover-btns">
-                                            <a href="{{ route('panier') }}"
-                                                class="btn {{ $form->type == 'payant' ? 'red' : 'green' }} radius-10"
-                                                onclick="handleEnrolledButton()">{{ $form->type == 'payant' ? 'Acheter' : "s'enroller" }}</a>
-                                            <button type="button" class="wishlist-btn" title="Add to wishlist"
-                                                onclick="handleWishList(this)" id="1"><i
-                                                    class="fas fa-heart"></i></button>
+                                    </a>
+
+                                    <div class="webui-popover-content">
+                                        <div class="course-popover-content">
+                                            <div class="last-updated">
+                                                A eu lieu Du
+                                                {{ \Carbon\Carbon::parse($form->date_debut)->isoFormat('LL') }}
+                                                au {{ \Carbon\Carbon::parse($form->date_fin)->isoFormat('LL') }}
+                                            </div>
+
+                                            <div class="course-title">
+                                                <a class="text-decoration-none text-15px"
+                                                    href="{{ route('detailFormation', ['id' => $form->id]) }}">
+                                                    {{ $form->titre }}
+                                                </a>
+                                            </div>
+                                            <div class="course-meta">
+                                                <span class=""><i class="fas fa-play-circle"></i> {{ $form->formation->count() }} Lessons
+                                                </span>
+                                                {{-- <span class=""><i class="far fa-clock"></i> 01:10:09 Hours
+                                                </span> --}}
+                                                <span class=""><i
+                                                        class="fas fa-closed-captioning"></i>Français</span>
+                                            </div>
+                                            <div class="course-subtitle">{{ $form->description }}</div>
+                                            <div class="what-will-learn">
+                                                <ul>
+                                                    @forelse ($form->formation->sortBy('titre') as $f)
+                                                    <li>{{ $f->titre }}/li>
+                                                    @empty
+                                                        
+                                                    @endforelse
+                                                
+                                                
+                                                </ul>
+                                            </div>
+                                            <div class="popover-btns">
+                                                <a href="{{ route($form->type == 'payant' ? 'panier' : 'formationBy',['id'=>$form->id])  }}"
+                                                    class="btn {{ $form->type == 'payant' ? 'red' : 'green' }} radius-10"
+                                                    onclick="handleEnrolledButton()">{{ $form->type == 'payant' ? 'Acheter' : "s'enroller" }}</a>
+                                                <button type="button" class="wishlist-btn" title="Add to wishlist"
+                                                    onclick="handleWishList(this)" id="1"><i
+                                                        class="fas fa-heart"></i></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-
-                        </div>
-                    @endforeach
+                            @endforeach
+                    </div>
                 </div>
             </div>
             <a href="#" class="btn btn-plus">Toutes les conférences <i class="bi bi-arrow-right"></i></a>
@@ -308,7 +300,7 @@
                                         </ul>
                                     </div>
                                     <div class="popover-btns">
-                                        <a href="{{ route('panier') }}"
+                                        <a href="{{ route($form->type == 'payant' ? 'panier' : 'formationBy',['id'=>$form->id]) }}"
                                             class="btn {{ $form->type == 'payant' ? 'red' : 'green' }} radius-10"
                                             onclick="handleEnrolledButton()">{{ $form->type == 'payant' ? 'Acheter' : "s'enroller" }}</a>
                                         <button type="button" class="wishlist-btn" title="Add to wishlist"

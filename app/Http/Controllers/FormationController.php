@@ -71,16 +71,46 @@ class FormationController extends Controller
      */
     public function show($id)
     {
-        return view('client.pages.detailFromation');
+        $chapitre=formation::with(['session','formateur'])->where('id',$id)->first();
+        $chapitres=formation::whereBelongsTo($chapitre->session,'session')->get();
+        //  dd($chapitres);
+        return view('client.pages.detailFromation', compact('chapitre','chapitres'));
     }
     public function detailFormation($id)
     {
         // $detail=session::with('formation')->find($id);
         $detail=formation::with(['formateur','session'])->where('session_id',$id)->first();
         $chapitres=formation::where('session_id',$id)->get();
-        // dd($detail);
+        
+        $total = 0;
+ 
+// Loop the data items
+foreach( $chapitres as $element):
+     
+    // Explode by separator :
+    $temp = explode(":", $element->nbrHeure);
+     
+    // Convert the hours into seconds
+    // and add to total
+    $total+= (int) $temp[0] * 3600;
+     
+    // Convert the minutes to seconds
+    // and add to total
+    $total+= (int) $temp[1] * 60;
+     
+    // Add the seconds to total
+    $total+= (int) $temp[2];
+    endforeach;
+ 
+// Format the seconds back into HH:MM:SS
+    $formatted = sprintf('%02d:%02d:%02d',
+                ($total / 3600),
+                ($total / 60 % 60),
+                $total % 60);
+
+        //  dd($formatted);
       
-        return view('client.pages.detail',compact('detail','chapitres'));
+        return view('client.pages.detail',compact('detail','chapitres','formatted'));
     }
 
     /**

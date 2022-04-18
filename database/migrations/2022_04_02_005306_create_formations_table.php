@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('titre')->nullable();
             $table->string('sous_titre')->nullable();
-            $table->string('video')->nullable();
+            $table->string('video')->nullable();            
+            $table->time('nbrHeure')->nullable();
             $table->text('description')->nullable();
             $table->string('cover')->nullable();
             $table->string('presentation')->nullable();

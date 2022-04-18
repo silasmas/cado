@@ -19,14 +19,15 @@ class FormationFactory extends Factory
      */
     public function definition()
     {
+        $i=0;
         return [
-            'titre' => $this->faker->sentence,
+            'titre' => "Chapitre ".$this->faker->randomDigit(),
             'sous_titre' => $this->faker->sentence,
-            'video' => "https://youtu.be/_QFs1KM31-s",
+            'video' => "https://www.youtube.com/watch?v=RHP88LS-FJs",
             'description' => $this->faker->paragraph,
-            'cover' => "default.jpg",
+            'nbrHeure' => $this->faker->randomElement(["00:03:00","00:05:00","00:06:00","00:04:00","00:09:00","00:10:00","00:08:00",]),
             'presentation' => $this->faker->sentence,
-            'session_id' => 1,
+            'session_id' => $this->faker->randomElement([1,7,9,10]),
         ];
     }
 }

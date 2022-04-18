@@ -19,10 +19,10 @@ class SessionFactory extends Factory
     public function definition()
     {
         return [
-                'titre' => $this->faker->sentence,
-                'date_debut' => $this->faker->date,
-                'date_fin' => '2022-05-10',
-                'cover' => "default.jpg",
+                'titre' => "Parlon du culte",
+                'date_debut' => '2022-04-20',
+                'date_fin' => '2022-04-21',
+                'cover' => "fr.jpg",
                 'context' => 'CADO',
                 'type' => 'free',
                 'spote' => "https://youtu.be/_QFs1KM31-s",

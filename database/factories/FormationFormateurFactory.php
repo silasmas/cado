@@ -17,8 +17,8 @@ class FormationFormateurFactory extends Factory
     public function definition()
     {
         return [
-            'formateur_id' => 2,
-            'formation_id' => 1,
-        ];
+            'formateur_id' => $this->faker->randomElement([1,2]),
+            'formation_id' => $this->faker->randomElement([1,2,3,4,5,6,7,8,9,10]),
+        ]; 
     }
 }

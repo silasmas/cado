@@ -8,7 +8,7 @@
         <div class="row align-items-end">
             <div class="col-lg-8">
                 <div class="course-header-wrap">
-                    <h1 class="title">{{ $detail->titre }}</h1>
+                    <h1 class="title">{{ $detail->session->titre }}</h1>
                     <p class="subtitle">{{ $detail->sous_titre }}</p>
                     <div class="rating-row">
                         <span class="course-badge best-seller">Beginner</span>
@@ -17,13 +17,12 @@
                         <i class="fas fa-star filled" style="color: #f5c85b;"></i>
                         <i class="fas fa-star filled" style="color: #f5c85b;"></i>
                         <i class="fas fa-star"></i>
-                        <span class="d-inline-block average-rating">4</span><span>(1 Ratings)</span>
+                        <span class="d-inline-block average-rating">4</span>
                         <span class="enrolled-num"> 1 Students enrolled </span>
                         <span class="comment"><i class="fas fa-comment"></i>Français</span>
                     </div>
                     <div class="created-row">
-                        <span class="created-by"> Created by <a class="text-14px fw-600 text-decoration-none" href="instructor.html">Dave Franco</a> </span>
-                        <br />
+                        
                         <span class="last-updated-date d-inline-block mt-2">
                             A eu lieu Du
                             {{ \Carbon\Carbon::parse($detail->session->date_debut)->isoFormat('LL') }}
@@ -97,143 +96,65 @@
                     </div>
                 </div>
 
-                <h4 class="py-3">Que vais-je apprendre?</h4>
-                <div class="what-you-get-box">
-                    <ul class="what-you-get__items">
-                        @foreach ($chapitres as $d)                            
-                        <li>{{ $d->titre }}</li>
-                        @endforeach
-                     </ul>
-                </div>
-
-                <div class="requirements-box">
-                    <div class="requirements-title">Requirements</div>
-                    <div class="requirements-content">
-                        <ul class="requirements__list">
-                            <li>
-                                You should have Adobe Illustrator installed. The training is designed around the latest Adobe Creative Cloud version of Illustrator, however you can still follow the training with older versions of
-                                Illustrator as many of the techniques will be the same. You should be aware though that there may be some functions featured that will not be available in older versions.
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
                 <div class="course-curriculum-box">
-                    <div class="course-curriculum-title clearfix mt-5 mb-3">
+                    {{-- <div class="course-curriculum-title clearfix mt-5 mb-3">
                         <div class="title float-start">Curriculum for this course</div>
                         <div class="float-end mt-2">
                             <span class="total-lectures"> 7 Lessons </span>
                             <span class="total-time"> 00:43:50 Hours </span>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="course-curriculum-accordion">
                         <div class="lecture-group-wrapper">
                             <div class="lecture-group-title clearfix" style="border-radius: 10px 10px 0px 0px;" data-bs-toggle="collapse" data-bs-target="#collapse91" aria-expanded="true">
                                 <div class="title float-start">
-                                    Introduction
+                                    Table des matières
                                 </div>
                                 <div class="float-end">
-                                    <span class="total-lectures"> 5 Lessons </span>
-                                    <span class="total-time"> 00:29:14 Hours </span>
+                                    <span class="total-lectures " style="color: #000000"> {{ $chapitres->count() }} Chapitre(s) </span>
+                                    <span class="total-time"> {{ $formatted}} </span>
                                 </div>
                             </div>
 
                             <div id="collapse91" class="lecture-list collapse show">
                                 <ul>
-                                    <li class="lecture has-preview text-14px">
-                                        <span class="lecture-title" onclick="go_course_playing_page('12', '157')">Course Overview</span>
+                                    @forelse ($chapitres->sortBy('titre') as $d)
+                                       <li class="lecture has-preview text-14px">
+                                        <span class="lecture-title" onclick="go_course_playing_page('12', '157')">{{ $d->titre }}</span>
 
                                         <div class="lecture-info float-lg-end">
-                                            <span class="lecture-time ps-2"> 00:16:30 </span>
+                                            <span class="lecture-time ps-2"> {{ $d->nbrHeure }}</span>
                                         </div>
-                                    </li>
-                                    <li class="lecture has-preview text-14px">
-                                        <span class="lecture-title" onclick="go_course_playing_page('12', '287')">Illustrator Fashion Design Tutorial: How to Draw a Fashion</span>
-
-                                        <div class="lecture-info float-lg-end">
-                                            <span class="lecture-time ps-2"> 00:10:08 </span>
-                                        </div>
-                                    </li>
-                                    <li class="lecture has-preview text-14px">
-                                        <span class="lecture-title" onclick="go_course_playing_page('12', '289')">Fundamental HTML Block is known as </span>
-
-                                        <div class="lecture-info float-lg-end">
-                                            <span class="lecture-time ps-2"> 00:00:00 </span>
-                                        </div>
-                                    </li>
-                                    <li class="lecture has-preview text-14px">
-                                        <span class="lecture-title text-primary" onclick="go_course_playing_page('12', '286')">Design and Product Development Workflow</span>
-
-                                        <div class="lecture-info float-lg-end">
-                                            <span class="lecture-preview" onclick="lesson_preview('#', 'Lesson: Design and Product Development Workflow')">
-                                                <i class="fas fa-eye"></i>
-                                                Preview
-                                            </span>
-
-                                            <span class="lecture-time ps-2"> 00:02:36 </span>
-                                        </div>
-                                    </li>
-                                    <li class="lecture has-preview text-14px">
-                                        <span class="lecture-title" onclick="go_course_playing_page('12', '288')">Color Fashion Sketches in Illustrator</span>
-
-                                        <div class="lecture-info float-lg-end">
-                                            <span class="lecture-time ps-2"> <span class="opacity-0">.</span> </span>
-                                        </div>
-                                    </li>
+                                    </li> 
+                                    @empty
+                                        
+                                    @endforelse
+                                    
                                 </ul>
                             </div>
                         </div>
-                        <div class="lecture-group-wrapper">
-                            <div class="lecture-group-title clearfix" style="border-radius: 0px 0px 10px 10px;" data-bs-toggle="collapse" data-bs-target="#collapse96" aria-expanded="">
-                                <div class="title float-start">
-                                    Fashion Drawing Workshops
-                                </div>
-                                <div class="float-end">
-                                    <span class="total-lectures"> 2 Lessons </span>
-                                    <span class="total-time"> 00:14:36 Hours </span>
-                                </div>
-                            </div>
-
-                            <div id="collapse96" class="lecture-list collapse">
-                                <ul>
-                                    <li class="lecture has-preview text-14px">
-                                        <span class="lecture-title" onclick="go_course_playing_page('12', '290')">Web technologies pop quiz</span>
-
-                                        <div class="lecture-info float-lg-end">
-                                            <span class="lecture-time ps-2"> 00:00:00 </span>
-                                        </div>
-                                    </li>
-                                    <li class="lecture has-preview text-14px">
-                                        <span class="lecture-title" onclick="go_course_playing_page('12', '160')">Illustrator Shading Tutorial: Make Your Fashion Drawings 3D with Folds and Shadows</span>
-
-                                        <div class="lecture-info float-lg-end">
-                                            <span class="lecture-time ps-2"> 00:14:36 </span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
 
-                <div class="compare-box view-more-parent">
-                    <div class="view-more" onclick="viewMore(this)">+ View more</div>
-                    <div class="compare-title">Other related courses</div>
-                    <div class="compare-courses-wrap"></div>
-                </div>
-
+               
                 <div class="about-instructor-box">
                     <div class="about-instructor-title">
-                        About instructor
+                     Apropo du coach
                     </div>
+                    @forelse ($detail->formateur as $f)
                     <div class="row justify-content-center">
+                        
                         <div class="col-md-4 top-instructor-img w-sm-100">
                             <a href="instructor.html">
-                                <img src="{{ asset('assets/images/uploads/user_image/0269091217f95c25ac4f77c1bd69879a.jpg') }}" width="100%" />
+                                <img src="{{ asset('assets/images/form/'.$f->photo) }}" width="100%" />
                             </a>
                         </div>
+
                         <div class="col-md-8 top-instructor-details text-center text-md-start">
-                            <h4 class="mb-1 fw-600 v"><a class="text-decoration-none" href="instructor.html">Dave Franco</a></h4>
+                            <h4 class="mb-1 fw-600 v"><a class="text-decoration-none" href="">
+                                {{ $f->prenom.' '.$f->nom }}
+                            </a></h4>
                             <p class="fw-500 text-14px w-100"></p>
                             <div class="rating">
                                 <div class="d-inline-block">
@@ -247,167 +168,28 @@
                             <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
 
                             <div class="description">
-                                Hi, I'm Dave! I have been identified as one of the Edustar Top Instructors and all my premium courses have recently earned them best-selling status for outstanding performance ...
+                             {{ $f->biographie }}
                             </div>
                         </div>
-                    </div>
+                    </div><br>
+                    @empty
+                        <h1>Aucun coach</h1>
+                    @endforelse                    
+                   
+                </div>
+                <div class="compare-box view-more-parent">
+                    <div class="view-more" onclick="viewMore(this)">+ Voir plus</div>
+                    <div class="compare-title">Des formations similaire </div>
+                    <div class="compare-courses-wrap"></div>
                 </div>
 
-                <div class="student-feedback-box mt-5 pb-3">
-                    <div class="student-feedback-title">
-                        Student feedback
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="average-rating ms-auto me-auto float-md-start mb-sm-4">
-                                <div class="num">
-                                    4
-                                </div>
-                                <div class="rating">
-                                    <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                    <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                    <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                    <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                    <i class="fas fa-star" style="color: #abb0bb;"></i>
-                                </div>
-                                <div class="title text-15px fw-700">1 Reviews</div>
-                            </div>
-                            <div class="individual-rating">
-                                <ul>
-                                    <li>
-                                        <div>
-                                            <span class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star filled"></i>
-                                            </span>
-                                        </div>
-                                        <div class="progress ms-2 mt-1">
-                                            <div class="progress-bar" style="width: 0%;"></div>
-                                        </div>
-                                        <span class="d-inline-block ps-2 text-15px fw-500">
-                                            (0)
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <span class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                            </span>
-                                        </div>
-                                        <div class="progress ms-2 mt-1">
-                                            <div class="progress-bar" style="width: 0%;"></div>
-                                        </div>
-                                        <span class="d-inline-block ps-2 text-15px fw-500">
-                                            (0)
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <span class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                            </span>
-                                        </div>
-                                        <div class="progress ms-2 mt-1">
-                                            <div class="progress-bar" style="width: 0%;"></div>
-                                        </div>
-                                        <span class="d-inline-block ps-2 text-15px fw-500">
-                                            (0)
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <span class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                            </span>
-                                        </div>
-                                        <div class="progress ms-2 mt-1">
-                                            <div class="progress-bar" style="width: 100%;"></div>
-                                        </div>
-                                        <span class="d-inline-block ps-2 text-15px fw-500">
-                                            (1)
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <span class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                            </span>
-                                        </div>
-                                        <div class="progress ms-2 mt-1">
-                                            <div class="progress-bar" style="width: 0%;"></div>
-                                        </div>
-                                        <span class="d-inline-block ps-2 text-15px fw-500">
-                                            (0)
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="reviews mt-5">
-                        <h3>Reviews</h3>
-                        <ul>
-                            <li>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div class="reviewer-details clearfix">
-                                            <div class="reviewer-img">
-                                                <img src="{{ asset('assets/images/form/'.$detail->cover) }}" alt="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="review-time">
-                                            <div class="reviewer-name fw-500">
-                                                Ben Hanson
-                                            </div>
-                                            <div class="time text-11px text-muted">01/06/2021</div> 
-                                        </div>
-                                        <div class="review-details">
-                                            <div class="rating">
-                                                <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                                <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                                <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                                <i class="fas fa-star filled" style="color: #f5c85b;"></i>
-                                                <i class="fas fa-star" style="color: #abb0bb;"></i>
-                                            </div>
-                                            <div class="review-text text-13px">
-                                                Future updates will make this course better.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
 
             <div class="col-lg-4 order-first order-lg-last">
                 <div class="course-sidebar natural">
                     <div class="preview-video-box">
                         <a data-bs-toggle="modal" data-bs-target="#CoursePreviewModal">
-                            <img src="{{ asset('assets/images/form/'.$detail->cover) }}" alt="" class="w-100" />
+                            <img src="{{ asset('assets/images/form/'.$detail->session->cover) }}" alt="" class="w-100" />
                             <span class="preview-text">Preview this course</span>
                             <span class="play-btn"></span>
                         </a>
@@ -424,13 +206,13 @@
                         <!-- WISHLIST BUTTON -->
                         @if ($detail->session->type=='payant')
                         <div class="buy-btns">
-                            <a class="btn btn-buy-now" href="{{ route('panier') }}" id="12" onclick="handleCartItems(this)">
+                            <a class="btn btn-buy-now" href="{{ route('panier',['id'=>$detail->session->id]) }}" id="12" onclick="handleCartItems(this)">
                                 @lang('general.autre.achat')
                             </a>
                         </div>
                         @else
                         <div class="buy-btns">
-                            <a class="btn btn-buy-now" href="{{ route('detailFormation') }}" id="12" onclick="handleCartItems(this)">
+                            <a class="btn btn-buy-now" href="{{ route('formationBy',['id'=>$detail->session->id]) }}" id="12" onclick="handleCartItems(this)">
                                Commencer
                             </a>
                         </div>
@@ -465,7 +247,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content course-preview-modal">
             <div class="modal-header">
-                <h5 class="modal-title"><span>Présentation :</span>{{ $detail->titre }}</h5>
+                <h5 class="modal-title"><span>Présentation :</span>{{ $detail->session->titre }}</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

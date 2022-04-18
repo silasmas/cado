@@ -239,7 +239,7 @@
                                     <!-- <span class="original-price">$94.99</span> -->
                                 </div>
                             </div>
-                            <a href="{{ route('panier') }}">@lang('general.menu.btnPanier')</a>
+                            <a href="{{ route('panier',['id'=>1]) }}">@lang('general.menu.btnPanier')</a>
                         </div>
                     </div>
                     <div class="empty-box text-center d-none">
@@ -288,7 +288,7 @@
                                     class="far fa-heart"></i>@lang('general.menu.mesFavoris')</a>
                         </li>
                         <li class="user-dropdown-menu-item">
-                            <a href="{{ route('panier') }}"><i
+                            <a href="{{ route('panier',['id'=>2]) }}"><i
                                     class="fas fa-shopping-cart"></i>@lang('general.menu.achatStorie')</a>
                         </li>
                         <li class="user-dropdown-menu-item">
