@@ -109,7 +109,6 @@ foreach( $chapitres as $element):
                 ($total / 60 % 60),
                 $total % 60);
 
-        //  dd($formatted);
       
         return view('client.pages.detail',compact('detail','chapitres','formatted'));
     }
