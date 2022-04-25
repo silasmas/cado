@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\favorie;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -41,7 +41,10 @@ class User extends Authenticatable
 
     protected $with=['session'];
     public function session(){
-        return $this->belongsToMany(session::class,'session_users');
+        return $this->belongsToMany(session::class,'session_users','user_id','session_id')->withPivot('session_id','user_id','etat','reference');
+    }
+    public function favorie(){
+        return $this->belongsToMany(session::class,'favories','user_id','session_id');
     }
     
 }

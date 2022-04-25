@@ -47,6 +47,7 @@ return [
         'btnAddFavori'=>'Ajouter au favoris',
         'btnAddPanier'=>'Ajouter au panier',
         'achat'=>'Acheter',
-        'free'=>'Participer',
+        'free'=>'Commencer',
+        'achatFait'=>'Déjà achété',
     ],
 ];

@@ -6,6 +6,7 @@ use App\Models\formation;
 use App\Http\Requests\StoreformationRequest;
 use App\Http\Requests\UpdateformationRequest;
 use App\Models\session;
+use Illuminate\Support\Facades\Auth;
 
 class FormationController extends Controller
 {
@@ -71,9 +72,9 @@ class FormationController extends Controller
      */
     public function show($id)
     {
-        $chapitre=formation::with(['session','formateur'])->where('id',$id)->first();
-        $chapitres=formation::whereBelongsTo($chapitre->session,'session')->get();
-        //  dd($chapitres);
+        $chapitre=formation::with('session')->where('id',$id)->first();
+        $chapitres=formation::whereBelongsTo($chapitre,'session')->get();
+         //dd($chapitre);
         return view('client.pages.detailFromation', compact('chapitre','chapitres'));
     }
     public function detailFormation($id)
@@ -81,7 +82,7 @@ class FormationController extends Controller
         // $detail=session::with('formation')->find($id);
         $detail=formation::with(['formateur','session'])->where('session_id',$id)->first();
         $chapitres=formation::where('session_id',$id)->get();
-        
+        // dd($detail->session->load('user')->user()->wherePivot('session_id',9)->get());
         $total = 0;
  
 // Loop the data items

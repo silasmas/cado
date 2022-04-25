@@ -196,20 +196,36 @@
                     </div>
                     <div class="course-sidebar-text-box">
                         <div class="price text-center">
-                            {{-- <span class="original-price">$50</span> --}}
-                            @if ($detail->session->type=='payant')                                
-                            <span class="current-price"><span class="current-price">${{ $detail->session->prix }}</span></span>
+                            {{-- <span class="original-price">{{ $userForm->pivot->etat }}</span> --}}
+                            @if ($detail->session->type=='payant')  
+                                                   
+                            @if ($detail->session->id!=$userForm->pivot->session_id)                           
+                            <span class="current-price"><span class="current-price">                              
+                                ${{ $detail->session->prix }}
+                            </span></span>
                             <input type="hidden" id="total_price_of_checking_out" value="{{ $detail->session->prix }}" />
+                           
+                            @endif
                             @endif
                         </div>
 
                         <!-- WISHLIST BUTTON -->
+                      
                         @if ($detail->session->type=='payant')
-                        <div class="buy-btns">
-                            <a class="btn btn-buy-now" href="{{ route('panier',['id'=>$detail->session->id]) }}" id="12" onclick="handleCartItems(this)">
-                                @lang('general.autre.achat')
-                            </a>
-                        </div>
+                            @if ($detail->session->id==$userForm->pivot->session_id && $userForm->pivot->etat=='Payer')
+                            <div class="buy-btns">
+                                <a class="btn btn-buy-now" href="{{ route('formationBy',['id'=>$detail->session->id]) }}" id="12" onclick="handleCartItems(this)">
+                                Commencer
+                                </a>
+                            </div>
+                            @else
+                            <div class="buy-btns">
+                                <a class="btn btn-buy-now" href="{{ route('panier',['id'=>$detail->session->id]) }}" id="12" onclick="handleCartItems(this)">
+                                    @lang('general.autre.achat')
+                                </a>
+                            </div>
+                            @endif  
+           
                         @else
                         <div class="buy-btns">
                             <a class="btn btn-buy-now" href="{{ route('formationBy',['id'=>$detail->session->id]) }}" id="12" onclick="handleCartItems(this)">

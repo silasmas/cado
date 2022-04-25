@@ -45,9 +45,7 @@ Route::middleware(['auth'])->group( function (){
     Route::get('/allFormation', function () {
         return view('pages/allFormation');
     })->name('allFormation');
-    Route::get('/detail', function () {
-        return view('pages/detailFromation');
-    })->name('detail');
+  
 
     Route::get('dashboard', [FormationController::class,'index'])->name('dashboard');
 
