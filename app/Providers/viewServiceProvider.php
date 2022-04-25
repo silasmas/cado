@@ -51,7 +51,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('Myform',$Myform);
         });
         View::composer('client.pages.*', function ($view) {
-            if(Auth::user()->id){
+            if(!Auth::guest()){
                 $userForm=User::find(Auth::user()->id)->load('session')->session()->first();
                 $userFavorie=User::find(Auth::user()->id)->load('favorie')->favorie()->get();
                 //dd($userFavorie[0]->formation[0]->formateur);
