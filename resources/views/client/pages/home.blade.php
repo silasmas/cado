@@ -133,16 +133,17 @@
                                                 </div>
                                                 <p class="text-right price d-inline-block float-end">
                                                     @if ($form->type == 'payant')
-                                                    @if ($userForm!=null)
-                                                          @if ($form->id == $userForm->pivot->session_id && $userForm->pivot->etat == 'Payer')
-                                                            @lang('general.autre.achatFait')
+                                                        @if ($userForm != null)
+                                                            @if ($form->id == $userForm->pivot->session_id && $userForm->pivot->etat == 'Payer')
+                                                                @lang('general.autre.achatFait')
+                                                            @else
+                                                                {{ '$' . $form->prix }}
+                                                            @endif
                                                         @else
                                                             {{ '$' . $form->prix }}
                                                         @endif
-                                                    @endif
-                                                      
                                                     @else
-                                                    {{ $form->type }}
+                                                        {{ $form->type }}
                                                     @endif
 
                                                 </p>
@@ -187,19 +188,24 @@
                                         </div>
                                         <div class="popover-btns">
                                             @if ($form->type == 'payant')
-                                            @if ($userForm!=null)
-                                                @if ($form->id == $userForm->pivot->session_id && $userForm->pivot->etat == 'Payer')
-                                                    <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
-                                                        class="btn  green radius-10" onclick="handleEnrolledButton()">
-                                                        @lang('general.autre.free')
-                                                    </a>
+                                                @if ($userForm != null)
+                                                    @if ($form->id == $userForm->pivot->session_id && $userForm->pivot->etat == 'Payer')
+                                                        <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
+                                                            class="btn  green radius-10" onclick="handleEnrolledButton()">
+                                                            @lang('general.autre.free')
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route('panier', ['id' => $form->id]) }}"
+                                                            class="btn red radius-10" onclick="handleEnrolledButton()">
+                                                            @lang('general.autre.achat')
+                                                        </a>
+                                                    @endif
                                                 @else
                                                     <a href="{{ route('panier', ['id' => $form->id]) }}"
                                                         class="btn red radius-10" onclick="handleEnrolledButton()">
                                                         @lang('general.autre.achat')
                                                     </a>
                                                 @endif
-                                            @endif
                                             @else
                                                 <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
                                                     class="btn  green radius-10" onclick="handleEnrolledButton()">
@@ -381,7 +387,7 @@
                                         of the Edustar Top Instructors and all my premium co...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                     -->
+                                             -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">
@@ -409,7 +415,7 @@
                                         Engineering from Santa Clara University and years of exper...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                     -->
+                                             -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">
