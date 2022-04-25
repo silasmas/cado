@@ -133,11 +133,14 @@
                                                 </div>
                                                 <p class="text-right price d-inline-block float-end">
                                                     @if ($form->type == 'payant')
-                                                        @if ($form->id == $userForm->pivot->session_id && $userForm->pivot->etat == 'Payer')
+                                                    @if ($userForm!=null)
+                                                          @if ($form->id == $userForm->pivot->session_id && $userForm->pivot->etat == 'Payer')
                                                             @lang('general.autre.achatFait')
                                                         @else
                                                             {{ '$' . $form->prix }}
                                                         @endif
+                                                    @endif
+                                                      
                                                     @else
                                                     {{ $form->type }}
                                                     @endif
@@ -184,6 +187,7 @@
                                         </div>
                                         <div class="popover-btns">
                                             @if ($form->type == 'payant')
+                                            @if ($userForm!=null)
                                                 @if ($form->id == $userForm->pivot->session_id && $userForm->pivot->etat == 'Payer')
                                                     <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
                                                         class="btn  green radius-10" onclick="handleEnrolledButton()">
@@ -195,6 +199,7 @@
                                                         @lang('general.autre.achat')
                                                     </a>
                                                 @endif
+                                            @endif
                                             @else
                                                 <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
                                                     class="btn  green radius-10" onclick="handleEnrolledButton()">
