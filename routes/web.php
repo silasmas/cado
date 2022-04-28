@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavorieController;
 use App\Http\Controllers\FormationController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,10 @@ Route::middleware(['auth'])->group( function (){
 
     Route::get('formationBy/{id}', [FormationController::class,'show'])->name('formationBy');
     Route::get('detailFormation/{id}', [FormationController::class,'detailFormation'])->name('detailFormation');
+   
+    
+    Route::get('addFavori/{id}', [FavorieController::class,'addFavori'])->name('addFavori');
+    Route::get('deleteFavorie/{id}', [FavorieController::class,'deleteFavorie'])->name('deleteFavorie');
 
     Route::get('/inscription', function () {
         return view('pages/welcome');

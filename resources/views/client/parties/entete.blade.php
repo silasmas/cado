@@ -5,7 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }} | {{ isset($titre) ? $titre : '' }}</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/mystyle.css') }}" />
+        <link href="{{ asset('js/sweetalert/sweetalert.css') }}" rel="stylesheet">
         <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
 
         @yield("autres_style")

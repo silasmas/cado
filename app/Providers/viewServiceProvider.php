@@ -55,7 +55,8 @@ class ViewServiceProvider extends ServiceProvider
                 $userForm=User::find(Auth::user()->id)->load('session')->session()->first();
                 $userFavorie=User::find(Auth::user()->id)->load('favorie')->favorie()->get();
                 //dd($userFavorie[0]->formation[0]->formateur);
-               // dd($userForm->pivot->session_id);
+                // dd($userFavorie->toArray());
+               //  dd(in_array(9,$userForm2->toArray(),true));
                  $view->with('userForm',$userForm);
                  $view->with('userFavorie',$userFavorie);
             }

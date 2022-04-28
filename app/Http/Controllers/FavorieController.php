@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\favorie;
 use App\Http\Requests\StorefavorieRequest;
 use App\Http\Requests\UpdatefavorieRequest;
+use Illuminate\Support\Facades\Auth;
 
 class FavorieController extends Controller
 {
@@ -26,6 +27,33 @@ class FavorieController extends Controller
     public function create()
     {
         //
+    }
+    public function addFavori($id)
+    {
+        $active=favorie::where([['user_id',Auth::user()->id],['session_id',$id]])->first();
+        if($active){         
+            return response()->json(['reponse' => false,'msg' =>'Cette formation est déjà dans vos favories!!']);          
+        }else{
+            $rap =favorie::updateOrCreate([
+                'session_id'=>$id,
+                'user_id'=>Auth::user()->id
+            ]);
+            if($rap){
+                return response()->json(['reponse' => true,'msg' =>"Session ajouter dans vos favories avec succès."]);
+            }else{
+                return response()->json(['reponse' => false,'msg' => "erreur !!"]);
+            }
+        }
+    }
+    public function deleteFavorie($id)
+    {
+        $active=favorie::where([['user_id',Auth::user()->id],['session_id',$id]])->first();
+        if($active){   
+            $active->delete();        
+            return response()->json(['reponse' => true,'msg' =>'Cette formation est supprimée de vos favories!!']);          
+        }else{
+                return response()->json(['reponse' => false,'msg' => "erreur !!"]);
+        }
     }
 
     /**

@@ -215,8 +215,10 @@
 
 
                                             <button type="button" class="wishlist-btn wishlist-add wishlisted"
-                                                title="Add to wishlist" onclick="handleWishList(this)" id="1"><i
-                                                    class="fas fa-heart"></i></button>
+                                                title="Add to wishlist" name="" onclick="handleWishList(this)" id="{{ $form->id }}">
+                                                <i class="fas fa-heart" @if (in_array($form->id,$userFavorie->toArray())==true)
+                                                    style="color: #ec5252"
+                                                @endif ></i></button>
                                         </div>
                                     </div>
                                 </div>
