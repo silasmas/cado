@@ -37,8 +37,8 @@
             </div>
         </div>
         <div class="row no-gutters" id="my_courses_area">*
- 
-            @forelse ($userForm->session as $fr)
+ @if (is_array($userForm->session) || is_object($userForm->session))
+      @forelse ($userForm->session as $fr)
                 <div class="col-lg-3">
                 <div class="course-box-wrap">
                     <div class="course-box">
@@ -114,6 +114,8 @@
             @empty
                 
             @endforelse
+ @endif
+           
           
 
            
