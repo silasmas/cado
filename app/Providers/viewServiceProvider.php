@@ -49,6 +49,7 @@ class ViewServiceProvider extends ServiceProvider
               
                  //dd($userForm->session);
                  $view->with('userForm',$userForm);
+                 $view->with('mesformations',$userForm->session);
             }
         });
 
