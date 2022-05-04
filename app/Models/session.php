@@ -15,14 +15,17 @@ class session extends Model
     protected $guarded=[];
     protected $dates=['created_at','updated_at','date_debut','date_fin'];
 
-    protected $with=['formation'];
+    protected $with=['formation','favorie'];
     public function user(){
-        return $this->belongsToMany(User::class,'session_users','session_id','user_id')->withPivot('session_id','user_id','etat','reference');
+        return $this->belongsToMany(User::class,"session_users")->withPivot('etat','reference','niveau');
     }
     public function favorie(){
-        return $this->belongsToMany(User::class,'favories','session_id','user_id');
+        return $this->hasMany(favorie::class);
+    } 
+    public function formateur(){
+        return $this->belongsToMany(formateur::class,'formateur_sessions');
     }
     public function formation(){
-        return $this->hasMany(formation::class,'session_id');
+        return $this->hasMany(formation::class);
     }
 }

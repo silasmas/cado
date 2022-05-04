@@ -30,7 +30,7 @@ class FavorieController extends Controller
     }
     public function addFavori($id)
     {
-        $active=favorie::where([['user_id',Auth::user()->id],['session_id',$id]])->first();
+        $active=favorie::where([['session_id',$id],['user_id',Auth::user()->id]])->first();
         if($active){         
             return response()->json(['reponse' => false,'msg' =>'Cette formation est déjà dans vos favories!!']);          
         }else{

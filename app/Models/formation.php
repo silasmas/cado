@@ -11,13 +11,10 @@ class formation extends Model
 {
     use HasFactory;
     protected $guarded=[];
-    //protected $with=['formateur','session'];
+    // protected $with=['session'];
    
     public function session(){
-        return $this->belongsTo(session::class,'session_id');
-    }
-    public function formateur(){
-        return $this->belongsToMany(formateur::class,'formation_formateurs');
+        return $this->belongsTo(session::class);
     }
   
 }

@@ -10,11 +10,12 @@ class favorie extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    //protected $with=['user','session'];
 
-    // public function user(){
-    //     return $this->hasMany(User::class,'session_id');
-    // }
-    // public function session(){
-    //     return $this->hasMany(session::class,'session_id');
-    // }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    public function session(){
+        return $this->belongsTo(session::class);
+    }
 }

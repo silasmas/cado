@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\formationFormateur>
  */
-class FormationFormateurFactory extends Factory
+class FormateurSessionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class FormationFormateurFactory extends Factory
     {
         return [
             'formateur_id' => $this->faker->randomElement([1,2]),
-            'formation_id' => $this->faker->randomElement([1,2,3,4,5,6,7,8,9,10]),
+            'session_id' => $this->faker->randomElement([6,7,8,9]),
         ]; 
     }
 }

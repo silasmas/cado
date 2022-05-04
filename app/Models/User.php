@@ -39,12 +39,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $with=['session'];
+    protected $with=['favorie'];
     public function session(){
-        return $this->belongsToMany(session::class,'session_users','user_id','session_id')->withPivot('session_id','user_id','etat','reference');
+        return $this->belongsToMany(session::class,"session_users")->withPivot('etat','reference','niveau');
     }
     public function favorie(){
-        return $this->belongsToMany(session::class,'favories','user_id','session_id');
+        return $this->hasMany(favorie::class);
     }
     
 }

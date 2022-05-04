@@ -20,43 +20,46 @@
             </div>
         </div>
         <div class="row no-gutters" id="my_wishlists_area">
-            @forelse ($userFavorie as $fav)
+            @forelse ($userForm->favorie->load('session') as $fav)
+   
                 <div class="col-lg-3">
                 <div class="course-box-wrap">
                     <div class="course-box">
                         <div class="course-image">
-                            <a href="{{ route('detailFormation', ['id' => $fav->id]) }}">
-                                <img src="{{ asset('assets/images/form/'.$fav->cover) }}" alt="" class="img-fluid" />
+                            <a href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
+                                <img src="{{ asset('assets/images/form/'.$fav->session->cover) }}" alt="" class="img-fluid" />
                             </a>
                            
                             <div class="wishlist-add wishlisted">
-                                <button type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="" style="cursor: auto;" onclick="handleWishList(this)" id="4">
+                                <button type="button" data-bs-toggle="tooltip" 
+                                onclick="handleWishList(this)" id="{{  $fav->session->id }}"
+                                data-bs-placement="left" title="" style="cursor: auto;">
                                     <i class="fas fa-heart"></i>
                                 </button>
                             </div>
                         </div>
                         <div class="course-details">
-                            <a href="{{ route('detailFormation', ['id' => $fav->id]) }}">
-                                <h5 class="title">{{ $fav->titre }}</h5>
+                            <a href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
+                                <h5 class="title">{{ $fav->session->titre }}</h5>
                             </a>
                             <p class="instructors">
-                                @foreach ($fav->formation as $for)
-                                @foreach ($for->formateur as $f)                                                        
+                                @foreach ($fav->session->formation as $for)
+                                @foreach ($for->session->formateur as $f)                                                        
                         <span>{{ $f->prenom.' '.$f->nom }}</span>; 
                         @endforeach
                             @endforeach
                             </p>
 
                             <p class="price text-right">
-                                @if ($fav->type == 'payant')
-                                @if ($fav->id==$userForm->pivot->session_id && $userForm->pivot->etat=='Payer')
+                                @if ($fav->session->type == 'payant')
+                                @if ($fav->session->id==$userForm->session_id && $userForm->etat=='Payer')
                            
                                         @lang('general.autre.achatFait')
                                     @else
-                                        {{ '$' . $fav->prix }}
+                                        {{ '$' . $fav->session->prix }}
                                     @endif
                                 @else
-                                        {{ $fav->type }}
+                                        {{ $fav->session->type }}
                                 @endif
                             </p>
                         </div>
@@ -75,9 +78,7 @@
     $(function () {
         $('[data-bs-toggle="tooltip"]').tooltip();
     });
-</script>
-
-<script type="text/javascript">
+    
     function isTouchDevice() {
         return "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
     }

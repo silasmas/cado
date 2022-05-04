@@ -21,6 +21,7 @@ return new class extends Migration
             ->onDelete('cascade');
             $table->enum('etat', array('Payer','En attente'))->default('En attente');
             $table->string('reference')->nullable();
+            $table->enum('niveau', array('commencer','En cour','Fini'))->default('commencer');
             $table->timestamps();
         });
     }

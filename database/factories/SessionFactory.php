@@ -19,7 +19,7 @@ class SessionFactory extends Factory
     public function definition()
     {
         return [
-                'titre' => "Parlon du culte",
+                'titre' => "Le combat spirituel et le culte",
                 'date_debut' => '2022-04-20',
                 'date_fin' => '2022-04-21',
                 'cover' => "fr.jpg",

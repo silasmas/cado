@@ -6,6 +6,7 @@ use App\Models\formation;
 use App\Http\Requests\StoreformationRequest;
 use App\Http\Requests\UpdateformationRequest;
 use App\Models\session;
+use App\Models\sessionUser;
 use Illuminate\Support\Facades\Auth;
 
 class FormationController extends Controller
@@ -26,9 +27,11 @@ class FormationController extends Controller
     {
         return view('client.pages.profil');
     }
-    public function panier()
+    public function panier($id)
     {
-        return view('client.pages.panier');
+        $session=session::with('formateur')->where('id',$id)->first();
+     //  dd($session);
+        return view('client.pages.panier', compact('session'));
     }
     public function mesCours()
     {
@@ -72,17 +75,35 @@ class FormationController extends Controller
      */
     public function show($id)
     {
-        $chapitre=formation::with('session')->where('id',$id)->first();
+        $r=sessionUser::where([['user_id',Auth::user()->id],['session_id',$id]])->first();
+        if ($r) {
+            if ($r->niveau!='En cour') {
+                $r->niveau='En cour';
+                $r->save();
+            }    
+        } else {
+            sessionUser::updateOrCreate([
+                "session_id"=>$id,
+                "user_id"=>Auth::user()->id,
+                "etat"=>"Payer",
+                "reference"=>"free",
+                "niveau"=>"En cour",
+            ]);          
+        }
+        
+        $chapitre=formation::with('session')->where('session_id',$id)->first();
         $chapitres=formation::whereBelongsTo($chapitre,'session')->get();
          //dd($chapitre);
         return view('client.pages.detailFromation', compact('chapitre','chapitres'));
     }
     public function detailFormation($id)
-    {
+    { 
         // $detail=session::with('formation')->find($id);
-        $detail=formation::with(['formateur','session'])->where('session_id',$id)->first();
+        $detail=formation::with('session')->where('session_id',$id)->first();
         $chapitres=formation::where('session_id',$id)->get();
-        // dd($detail->session->load('user')->user()->wherePivot('session_id',9)->get());
+        $formateur=session::with('formateur')->where('id',$id)->get();
+     
+        //    dd($detail);
         $total = 0;
  
 // Loop the data items
@@ -110,7 +131,7 @@ foreach( $chapitres as $element):
                 $total % 60);
 
       
-        return view('client.pages.detail',compact('detail','chapitres','formatted'));
+        return view('client.pages.detail',compact('detail','chapitres','formatted','formateur'));
     }
 
     /**

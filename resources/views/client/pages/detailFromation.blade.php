@@ -15,7 +15,7 @@
         <div class="col-md-12 col-lg-6 col-xl-4 course_header_col text-right">
             <a href="javascript::" class="course_btn" onclick="toggle_lesson_view()"><i class="fa fa-arrows-alt-h"></i></a>
             <a href="{{ route('mesCours') }}" class="course_btn"> <i class="fa fa-chevron-left"></i> Mes formations</a>
-            <a href="{{ route('detailFormation', ['id'=>$chapitre->id]) }}" class="course_btn">Detail du cours <i class="fa fa-chevron-right"></i></a>
+            <a href="{{ route('detailFormation', ['id'=>$chapitre->session_id]) }}" class="course_btn">Detail du cours <i class="fa fa-chevron-right"></i></a>
         </div>
     </div>
 

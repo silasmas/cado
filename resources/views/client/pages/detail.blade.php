@@ -170,38 +170,41 @@
                         <div class="about-instructor-title">
                             Apropo du coach
                         </div>
-                        @forelse ($detail->formateur as $f)
-                            <div class="row justify-content-center">
+                        @forelse ($formateur as $fr)
+                            @forelse ($fr->formateur as $f)
+                                <div class="row justify-content-center">
 
-                                <div class="col-md-4 top-instructor-img w-sm-100">
-                                    <a href="instructor.html">
-                                        <img src="{{ asset('assets/images/form/' . $f->photo) }}" width="100%" />
-                                    </a>
-                                </div>
+                                    <div class="col-md-4 top-instructor-img w-sm-100">
+                                        <a href="instructor.html">
+                                            <img src="{{ asset('assets/images/form/' . $f->photo) }}" width="100%" />
+                                        </a>
+                                    </div>
 
-                                <div class="col-md-8 top-instructor-details text-center text-md-start">
-                                    <h4 class="mb-1 fw-600 v"><a class="text-decoration-none" href="">
-                                            {{ $f->prenom . ' ' . $f->nom }}
-                                        </a></h4>
-                                    <p class="fw-500 text-14px w-100"></p>
-                                    <div class="rating">
-                                        <div class="d-inline-block">
-                                            <span class="text-dark fw-800 text-muted ms-1 text-13px">4 Reviews</span>
-                                            |
-                                            <span class="text-dark fw-800 text-13px text-muted mx-1"> 1 Students </span>
-                                            |
-                                            <span class="text-dark fw-800 text-14px text-muted"> 6 Courses </span>
+                                    <div class="col-md-8 top-instructor-details text-center text-md-start">
+                                        <h4 class="mb-1 fw-600 v"><a class="text-decoration-none" href="">
+                                                {{ $f->prenom . ' ' . $f->nom }}
+                                            </a></h4>
+                                        <p class="fw-500 text-14px w-100"></p>
+                                        <div class="rating">
+                                            <div class="d-inline-block">
+                                                <span class="text-dark fw-800 text-muted ms-1 text-13px">4 Reviews</span>
+                                                |
+                                                <span class="text-dark fw-800 text-13px text-muted mx-1"> 1 Students </span>
+                                                |
+                                                <span class="text-dark fw-800 text-14px text-muted"> 6 Courses </span>
+                                            </div>
+                                        </div>
+                                        <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
+
+                                        <div class="description">
+                                            {{ $f->biographie }}
                                         </div>
                                     </div>
-                                    <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-
-                                    <div class="description">
-                                        {{ $f->biographie }}
-                                    </div>
-                                </div>
-                            </div><br>
+                                </div><br>
+                            @empty
+                                <h1>Aucun coach</h1>
+                            @endforelse
                         @empty
-                            <h1>Aucun coach</h1>
                         @endforelse
 
                     </div>
@@ -227,14 +230,28 @@
                             <div class="price text-center">
                                 {{-- <span class="original-price">{{ $userForm->pivot->etat }}</span> --}}
                                 @if ($detail->session->type == 'payant')
-                                    @if ($userForm != null)
-                                        @if ($detail->session->id != $userForm->pivot->session_id)
-                                            <span class="current-price"><span class="current-price">
-                                                    ${{ $detail->session->prix }}
-                                                </span></span>
-                                            <input type="hidden" id="total_price_of_checking_out"
-                                                value="{{ $detail->session->prix }}" />
-                                        @endif
+                                    @if ($userForm->session->count() > 0)
+                                        @foreach ($userForm->session as $form)
+                                            @if ($detail->session->id == $form->id && $form->pivot->etat == 'Payer')
+                                                <span class="current-price"><span class="current-price">
+                                                        Déjà payé
+                                                    </span></span>
+                                            @else
+                                                <span class="current-price"><span class="current-price">
+                                                        ${{ $detail->session->prix }}
+                                                    </span></span>
+                                                <input type="hidden" id="total_price_of_checking_out"
+                                                    value="{{ $detail->session->prix }}" />
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <span class="current-price">
+                                            <span class="current-price">
+                                                ${{ $detail->session->prix }}
+                                            </span>
+                                        </span>
+                                        <input type="hidden" id="total_price_of_checking_out"
+                                            value="{{ $detail->session->prix }}" />
                                     @endif
                                 @endif
                             </div>
@@ -242,24 +259,36 @@
                             <!-- WISHLIST BUTTON -->
 
                             @if ($detail->session->type == 'payant')
-                                @if ($userForm != null)
-                                    @if ($detail->session->id == $userForm->pivot->session_id && $userForm->pivot->etat == 'Payer')
-                                        <div class="buy-btns">
-                                            <a class="btn btn-buy-now"
-                                                href="{{ route('formationBy', ['id' => $detail->session->id]) }}" id="12"
-                                                onclick="handleCartItems(this)">
-                                                Commencer
-                                            </a>
-                                        </div>
-                                    @else
-                                        <div class="buy-btns">
-                                            <a class="btn btn-buy-now"
-                                                href="{{ route('panier', ['id' => $detail->session->id]) }}" id="12"
-                                                onclick="handleCartItems(this)">
-                                                @lang('general.autre.achat')
-                                            </a>
-                                        </div>
-                                    @endif
+                                @if ($userForm->session->count() > 0)
+                                    @foreach ($userForm->session as $fr)
+                                        @if ($detail->session->id == $fr->id && $fr->pivot->etat == 'Payer')
+                                            {{-- @if ($fr->pivot->niveau == 'commencer') --}}
+                                                <div class="buy-btns">
+                                                    <a class="btn btn-buy-now"
+                                                        href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
+                                                        id="12" onclick="handleCartItems(this)">
+                                                        Commencer
+                                                    </a>
+                                                </div>
+                                            {{-- @else
+                                                <div class="buy-btns">
+                                                    <a class="btn btn-buy-now"
+                                                        href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
+                                                        id="12" onclick="handleCartItems(this)">
+                                                        Suivre
+                                                    </a>
+                                                </div> --}}
+                                            {{-- @endif --}}
+                                        @else
+                                            <div class="buy-btns">
+                                                <a class="btn btn-buy-now"
+                                                    href="{{ route('panier', ['id' => $detail->session->id]) }}" id="12"
+                                                    onclick="handleCartItems(this)">
+                                                    @lang('general.autre.achat')
+                                                </a>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 @else
                                     <div class="buy-btns">
                                         <a class="btn btn-buy-now"
@@ -279,9 +308,20 @@
                                 </div>
                             @endif
                             <div class="buy-btns">
-                                <button class="btn btn-add-wishlist" type="button" id="12"
-                                    onclick="handleAddToWishlist(this)">
-                                    @lang('general.autre.btnAddFavori')
+                                <button class="btn btn-add-wishlist" type="button" onclick="handleWishList3(this)"
+                                    id="{{ $detail->session->id }}">
+
+                                    @if ($detail->session->favorie->count() > 0)
+                                        @foreach ($detail->session->favorie as $r)
+                                            @if ($r->session_id == $detail->session->id)
+                                                {{ 'Déjà dans vos favories' }}
+                                            @else
+                                                {{ 'Ajouter dans vos favories' }}
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        {{ 'Ajouter dans vos favories' }}
+                                    @endif
                                 </button>
                             </div>
 
@@ -316,8 +356,8 @@
                     </button>
 
                     <!-- <button type="button" class="close" data-bs-dismiss="modal" onclick="pausePreview()">
-        <span aria-hidden="true">&times;</span>
-      </button> -->
+                                        <span aria-hidden="true">&times;</span>
+                                      </button> -->
                 </div>
                 <div class="modal-body">
                     <div class="course-preview-video-wrap">

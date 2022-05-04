@@ -17,12 +17,12 @@ class FormateurFactory extends Factory
     public function definition()
     {
         return [
-                'nom' => "Olondo",
-                'prenom' => "Shilo",
+                'nom' => "Mbuma",
+                'prenom' => "Athom's",
                 'sexe' => 'M',
-                'phone' => "+2430827839232",
+                'phone' => "+243827839232",
                 'email' => $this->faker->unique()->safeEmail(),
-                'photo' => 'shilo.jpg',
+                'photo' => 'profil.png',
                 'pays' => 'RDC',
                 'etat' => "interne",
                 'biographie' => $this->faker->paragraph,

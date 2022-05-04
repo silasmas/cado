@@ -38,8 +38,7 @@
         </div>
         <div class="row no-gutters" id="my_courses_area">*
  
-            @forelse ($Myform as $fr)
-            {{-- @foreach ($fr->formation as $form) --}}
+            @forelse ($userForm->session as $fr)
                 <div class="col-lg-3">
                 <div class="course-box-wrap">
                     <div class="course-box">
@@ -55,32 +54,34 @@
                                 <a href="{{route('detailFormation',['id'=>$fr->id])}}"><h5 class="title">
                                    {{ $fr->titre }}
                                 </h5></a>
+                                @if ($fr->pivot->niveau=='commencer')
+                                <small class="btn btn-plus">Pas encore commencer</small><br>
+                                @else
                                 <div class="progress" style="height: 5px;">
-                                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"
+                                     style="width: 50%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <small>0% Completed</small>
-                                <div class="rating your-rating-box" style="position: unset; margin-top: -18px;">
+                                <small>50% Terminée</small>  
+                                <span class="btn btn-plus">{{ $fr->pivot->niveau }}</span>                                       
+                                @endif
+                                {{-- <div class="rating your-rating-box" style="position: unset; margin-top: -18px;">
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <!-- <p class="your-rating-text" id = "1" onclick="getCourseDetailsForRatingModal(this.id)">
-                                      <span class="your">Your</span>
-                                      <span class="edit">Edit</span>
-                                      Rating                                          </p> -->
+                                    <i class="fas fa-star filled"></i>                                                                   
                                     <p class="your-rating-text">
                                         <a href="javascript::" id="edit_rating_btn_1" onclick="toggleRatingView('1')" style="color: #2a303b;">Edit rating</a>
                                         <a href="javascript::" class="hidden" id="cancel_rating_btn_1" onclick="toggleRatingView('1')" style="color: #2a303b;">Cancel rating</a>
                                     </p>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-12 px-4 py-2">
-                                    <a href="{{ route('detailFormation',['id'=>$fr->id]) }}" class="btn red radius-10 w-100">Course detail</a>
+                                    <a href="{{ route('detailFormation',['id'=>$fr->id]) }}" class="btn red radius-10 w-100">Voir en detail</a>
                                 </div>
                                 <div class="col-md-12 px-4 py-2">
-                                    <a href="{{ route('formationBy',['id'=>$fr->id]) }}" class="btn red radius-10 w-100">Start lesson</a>
+                                    <a href="{{ route('formationBy',['id'=>$fr->id]) }}" class="btn red radius-10 w-100">Commencer</a>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +110,6 @@
                     </div>
                 </div>
             </div> 
-            {{-- @endforeach --}}
            
             @empty
                 

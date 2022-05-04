@@ -8,9 +8,7 @@
 
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
-<script src="{{ asset('js/sweetalert/sweetalert.min.js') }}"></script>ript>
-
-
+<script src="{{ asset('js/sweetalert/sweetalert.min.js') }}"></script>
 <script>
     function isTouchDevice() {
         return "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
@@ -27,27 +25,27 @@
         },
         false
     );
-    $(document).ready(function() {
-        $("#addFavorie").on("click", function(e) {
-            e.preventDefault();
 
 
-            // add("#formFidel", '#tab-fidel', 'debutCvc');
-        });
-    });
+    function handleWishList2(id) {
+        deleteFavorie(id.id,  "../deleteFavorie/");
+    }
+    function handleWishList3(id) {
+        add(id.id, 'autre', "addFavori");
+    }
 
     function handleWishList(id) {
-        // alert(id.id);
         add(id.id, "", "addFavori");
     }
 
     function add(form, idLoad, url) {
+        var autre = idLoad == '' ? '' : '../';
         swal({
             title: 'Merci de patienter...',
             icon: 'info'
         })
         $.ajax({
-            url: url + '/' + form,
+            url: autre+url + '/' + form,
             method: "GET",
             data: {
                 idform: form
@@ -55,22 +53,8 @@
             success: function(data) {
                 // console.log(data);
                 if (!data.reponse) {
-                    swal({
-                        title: "Supprimer de vos favories",
-                        text: "Cette formation est parmie vos favories, voulez-vous la supprimée?",
-                        icon: 'warning',
-                        dangerMode: true,
-                        buttons: {
-                            cancel: 'Non',
-                            delete: 'OUI'
-                        }
-                    }).then(function(willDelete) {
-                        if (willDelete) {
-                            deleteFavorie(form)
-                        } else {
-                            
-                        }
-                    });
+                    deleteFavorie(form, autre + 'deleteFavorie/');
+
                 } else {
                     swal({
                         title: data.msg,
@@ -83,30 +67,45 @@
 
     }
 
-    function deleteFavorie(form) {
+    function deleteFavorie(form, url) {
+        swal({
+            title: "Supprimer de vos favories",
+            text: "Cette formation est parmie vos favories, voulez-vous la supprimée?",
+            icon: 'warning',
+            dangerMode: true,
+            buttons: {
+                cancel: 'Non',
+                delete: 'OUI'
+            }
+        }).then(function(willDelete) {
+            if (willDelete) {
+                $.ajax({
+                    url: url + form,
+                    method: "GET",
+                    data: {
+                        idform: form
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        if (!data.reponse) {
+                            swal({
+                                title: data.msg,
+                                icon: 'warning'
+                            })
+                        } else {
+                            swal({
+                                title: data.msg,
+                                icon: 'success'
+                            })
+                            actualiser();
+                        }
+                    },
+                });
+            } else {
 
-        $.ajax({
-            url:  'deleteFavorie/' + form,
-            method: "GET",
-            data: {
-                idform: form
-            },
-            success: function(data) {
-                // console.log(data);
-                if (!data.reponse) {
-                    swal({
-                        title: data.msg,
-                        icon: 'warning'
-                    })
-                } else {
-                    swal({
-                        title: data.msg,
-                        icon: 'success'
-                    })
-                    actualiser();
-                }
-            },
+            }
         });
+
 
     }
 

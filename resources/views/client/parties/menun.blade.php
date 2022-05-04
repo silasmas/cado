@@ -59,51 +59,44 @@
             </div> --}}
                     <div class="wishlist-box  menu-icon-box" id="wishlist_items">
                         <div class="icon">
-                            <a href=""><i class="far fa-heart"></i></a>
-                            <span class="number">{{ $userFavorie->count() }}</span>
+                            <a href=""><i class="fas fa-heart"></i></a>
+                            <span class="number">{{ $userForm->favorie->count() }}</span>
                         </div>
                         <div class="dropdown course-list-dropdown corner-triangle top-right">
                             <div class="list-wrapper">
                                 <div class="item-list">
                                     <ul>
-                                        @forelse ($userFavorie as $fav)
+                                        @forelse ($userForm->favorie->load('session') as $fav)
                                             <li>
                                                 <div class="item clearfix">
                                                     <div class="item-image">
                                                         <a href="">
-                                                            <img src="{{ asset('assets/images/form/' . $fav->cover) }}"
+                                                            <img src="{{ asset('assets/images/form/' . $fav->session->cover) }}"
                                                                 alt="" class="img-fluid" />
                                                         </a>
                                                     </div>
                                                     <div class="item-details">
-                                                        <a href="{{ route('detailFormation', ['id' => $fav->id]) }}">
+                                                        <a href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
                                                             <div class="course-name">
-                                                                {{ $fav->titre }}
+                                                                {{ $fav->session->titre }}
                                                             </div>
-                                                            {{-- <div class="instructor-name">
-                                                                By @foreach ($fav->formation as $for)
-                                                                    @foreach ($for->formateur as $f)                                                        
-                                                            <span>{{ $f->prenom.' '.$f->nom }}</span>; S
-                                                            @endforeach
-                                                                @endforeach
-                                                            </div> --}}
 
                                                             <div class="item-price">
 
-                                                                @if ($fav->type == 'payant')
-                                                                @if ($fav->id==$userForm->pivot->session_id && $userForm->pivot->etat=='Payer')
+                                                                @if ($fav->session->type == 'payant')
+                                                                @if ($fav->session->id==$userForm->session_id && $userForm->etat=='Payer')
                                                            
                                                                     <span class="current-price">
                                                                         @lang('general.autre.achatFait')
                                                                     </span>
                                                                     @else
                                                                     <span class="current-price">
-                                                                        {{ '$' . $fav->prix }}
+                                                                        {{ '$' . $fav->session->prix }}
                                                                     </span>
                                                                     @endif
                                                                 @else
                                                                     <span class="current-price">
-                                                                        {{ $fav->type }}
+                                                                        {{ $fav->session->type }}
                                                                     </span>
                                                                 @endif
 
@@ -111,8 +104,8 @@
                                                         </a>
                                                         @if ($fav->type == 'payant')
 
-                                                            @if ($fav->id==$userForm->pivot->session_id && $userForm->pivot->etat=='Payer')
-                                                            <a href="{{ route('detailFormation', ['id' => $fav->id]) }}">
+                                                            @if ($fav->session->id==$userForm->session_id && $userForm->etat=='Payer')
+                                                            <a href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
                                                                 <button
                                                                     onclick="handleCartItems(this)"
                                                                     class="addedToCart">
@@ -121,7 +114,7 @@
                                                             </a>
                                                                 
                                                         @else
-                                                        <a href="{{ route('panier', ['id' => $fav->id]) }}">
+                                                        <a href="{{ route('panier', ['id' => $fav->session->id]) }}">
                                                             <button onclick="handleCartItems(this)"
                                                                 class="addedToCart">
                                                                 @lang('general.autre.achat')
@@ -129,7 +122,7 @@
                                                             </a>
                                                         @endif 
                                                         @else 
-                                                            <a href="{{ route('detailFormation', ['id' => $fav->id]) }}">
+                                                            <a href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
                                                                 <button
                                                                     onclick="handleCartItems(this)"
                                                                     class="addedToCart">
@@ -188,12 +181,12 @@
                                 </li>
 
                                 <li class="user-dropdown-menu-item">
-                                    <a href="{{ route('mesCours', ['id' => Auth::user()->id]) }}"><i
-                                            class="far fa-gem"></i>@lang('general.menu.mesCours')</a>
+                                    <a href="{{ route('mesCours') }}"><i
+                                            class="fas fa-gem"></i>@lang('general.menu.mesCours')</a>
                                 </li>
                                 <li class="user-dropdown-menu-item">
                                     <a href="{{ route('favorie') }}"><i
-                                            class="far fa-heart"></i>@lang('general.menu.mesFavoris')</a>
+                                            class="fas fa-heart"></i>@lang('general.menu.mesFavoris')</a>
                                 </li>
                                 <li class="user-dropdown-menu-item">
                                     <a href="{{ route('panier', ['id' => 2]) }}"><i
