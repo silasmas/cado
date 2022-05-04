@@ -114,6 +114,9 @@
             @empty
                 
             @endforelse
+@else
+<h3>Erreur des données</h3>
+
  @endif
            
           
