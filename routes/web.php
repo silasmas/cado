@@ -58,5 +58,9 @@ Route::middleware(['auth'])->group( function (){
     Route::post('payerForm', [SessionUserController::class,'store'])->name('payerForm');
     Route::post('paie', [SessionUserController::class,'store'])->name('paie');
 
+    Route::get('/retour', [SessionUserController::class,'index'])->name('retour');
+    Route::post('/retour', [SessionUserController::class,'retour'])->name('retour');
+    Route::post('/notify', [SessionUserController::class,'notify'])->name('notify');
+
 });
 require __DIR__.'/auth.php';
