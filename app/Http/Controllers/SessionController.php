@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\session;
 use App\Http\Requests\StoresessionRequest;
 use App\Http\Requests\UpdatesessionRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class SessionController extends Controller
 {
@@ -16,6 +18,16 @@ class SessionController extends Controller
     public function index()
     {
         //
+    }
+    public function retour(Request $reques)
+    {
+        
+        
+    }
+    public function notify(Request $reques)
+    {
+        
+
     }
 
     /**

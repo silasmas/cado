@@ -46,6 +46,22 @@
                                     <div class="line"></div>
                                 </div>
                                 <div class="col-lg-12">
+                                    <input type="text" class="form-control"  id="prenom" value="{{ old('prenom') }}" 
+                                     name="prenom"placeholder="Prenom" required>
+                                    <div class="icon">
+                                        <i class="bi bi-person"></i>
+                                    </div>
+                                    <div class="line"></div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control"  id="phone" value="{{ old('phone') }}" 
+                                     name="phone"placeholder="Telephone (+2438200000000)" required>
+                                    <div class="icon">
+                                        <i class="bi bi-phone"></i>
+                                    </div>
+                                    <div class="line"></div>
+                                </div>
+                                <div class="col-lg-12">
                                     <input type="email" id="email" name="email" class="form-control" placeholder="Email"
                                      value="{{ old('email') }}" required>
                                     <div class="icon">
