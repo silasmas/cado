@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\session;
+use App\Rules\PhoneNumber;
 use App\Models\sessionUser;
-use App\Http\Requests\StoresessionUserRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdatesessionUserRequest;
 
 class SessionUserController extends Controller
@@ -27,16 +33,147 @@ class SessionUserController extends Controller
     {
         //
     }
+    public function genererChaineAleatoire($longueur = 10)
+    {
+        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $longueurMax = strlen($caracteres);
+        $chaineAleatoire = '';
+        for ($i = 0; $i < $longueur; $i++) {
+            $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
+        }
+        return $chaineAleatoire;
+    }
+    public function initInfo($request){
+        $transaction_id = $this->genererChaineAleatoire();
+        $session= session::find($request->formation_id)->first();
 
+
+        if ($request->channels=="MOBILE_MONEY") {
+           $cinetpay_data =  [
+            "amount" => $session->prix,
+            "currency" => $session->monaie,
+            "apikey" => env("CINETPAY_APIKEY"),
+            "site_id" => env("CINETPAY_SERVICD_ID"),
+            "transaction_id" => $transaction_id,
+            "description" => "Achat formation",
+            "return_url" => env("RETURN_URL"),
+            "notify_url" => env("NOTIFY_URL"),
+            'channels' => $request["channels"],
+           ];
+           return $cinetpay_data;
+        } else {
+            $cinetpay_data =  [
+                "amount" => $session->prix,
+                "currency" => $session->monaie,
+                "apikey" => env("CINETPAY_APIKEY"),
+                "site_id" => env("CINETPAY_SERVICD_ID"),
+                "transaction_id" => $transaction_id,
+                "description" => "Achat formation",
+                "return_url" => env("RETURN_URL"),
+                "notify_url" => env("NOTIFY_URL"),
+                'channels' => $request["channels"],                
+                'customer_name' => Auth::user()->nom,
+                'customer_surname' => Auth::user()->prenom,
+                'customer_email' => Auth::user()->email,
+                'customer_phone_number' => Auth::user()->phone,
+                'customer_address' => $request["adresse"],
+                'customer_city' => $request["ville"],
+                'customer_country' => $request["customer_country"],
+                'customer_state' => $request["customer_state"],
+                'customer_zip_code' => $request["customer_zip_code"],
+            ];
+            return $cinetpay_data;
+        }
+    }
+    public function initPaie($cinetpay_data,$request){   
+      //  dd($request);   
+        $transaction_id = $this->genererChaineAleatoire();
+
+            $url = 'https://api-checkout.cinetpay.com/v2/payment';
+            $response = Http::asJson()->post($url, $cinetpay_data);
+
+            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
+            if ($response->status() === 200) {
+            $register = sessionUser::create([
+                "session_id" => $request['formation_id'],
+                "user_id" => Auth::user()->id,
+                "reference" => $transaction_id,
+                "description" => "Achat formation",
+                "token" => $response_body["data"]["payment_token"],               
+                'customer_address' => $request["customer_address"],
+                'customer_city' => $request["customer_city"],
+                'operateur' => $request["channels"],
+                'customer_country' => $request["customer_country"],
+                'customer_state' => $request["customer_state"],
+                'customer_zip_code' => $request["customer_zip_code"],
+                'etat' => "En attente",
+            ]);
+            if ($register) {
+                
+               // dd($response_body);
+                    if ((int)$response_body["code"] === 201) {
+                        $payment_link = $response_body["data"]["payment_url"];
+                       // dd($payment_link);
+                        return  redirect($payment_link);
+                        // return  Redirect::to($payment_link);
+                    }else{
+                        dd($response_body);
+                    }
+                
+            }else{
+                dd("Erreur d'enregistrement!");
+            }
+        } else {
+            dd($response_body);
+        }
+        
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoresessionUserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoresessionUserRequest $request)
+    public function store(Request $request)
     {
-        //
+        // dd($request->toArray());
+        if (isset($request->formation_id)) {
+            if ($request->channels=="MOBILE_MONEY") {
+            $ok=Validator::make($request->all(),[
+                'channels' => ['required', 'string', 'max:255'],
+            ]);
+    
+            if (!$ok->fails()) {
+           $init= self::initInfo($request);
+                self::initPaie($init,$request->toArray());
+            } else {
+                return back()->with('message',$ok->getMessageBag());;
+               // return response()->json(['reponse' => false,'msg' => $ok->getMessageBag()]);
+            }
+        } else {
+            $ok= Validator::make($request->all(),[
+                'channels' => ['required', 'string', 'max:255'],
+                'customer_country' => ['required', 'string', 'max:255'],
+                'customer_zip_code' => ['required', 'string', 'max:255'],
+                'customer_state' => ['required', 'string', 'max:255'],
+                'customer_address' => ['required', 'string', 'max:255'],
+                'customer_city' => ['required', 'string', 'max:255'],
+            ]);
+    
+            if (!$ok->fails()) {
+                $init= self::initInfo($request);
+                self::initPaie($init,$request->toArray());
+            } else {
+            return back()->with('message',$ok->getMessageBag());
+             // return response()->json(['reponse' => false,'msg' => $ok->getMessageBag()]);
+            }
+        }
+        } else {
+            return back();
+           // return response()->json(['reponse' => false,'msg' => "Formation non trouvée merci d'actualiser la page!"]);
+        }
+        
+      
     }
 
     /**

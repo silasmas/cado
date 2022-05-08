@@ -18,7 +18,18 @@
             </nav>
         </div>
     </section>
-
+<div class="container">
+    <div class="row">
+        <div class="col-md-12  text-danger mb-5">
+           @if (session()->has('message'))
+           {{ session()->get('message') }}
+           @endif
+            @foreach ($errors->all() as $err)
+                {{$err}}
+            @endforeach
+        </div>
+    </div>
+</div>
     <section class="cart-list-area">
         <div class="container">
             <div class="row" id="cart_items_details">
@@ -102,20 +113,28 @@
                         </div>
                     </div> --}}
                         <div class="col-6 col-sm-6 col-md-3 input-group  mb-3 text-center text-md-start">
-                            <form>
-                                <div class="form-group mb-3" >
+                            <form id="form_paie" method="POST" action="{{ url('payerForm') }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">
+                                        formation id :</label>
+                                    <input type="text" name="formation_id" class="form-control"
+                                        value="{{ $session->id }}">
+                                </div>
+                                <div class="form-group mb-3">
                                     <label for="login-email">Moyen de paiement</label>
                                     <div class="input-group">
-                                        <select class="form-select" onchange="switch_modepaie(this.value)">
-                                            <option value="">Selectionnez le moyen de paiement</option>
+                                        <select class="form-select" name="channels"
+                                            onchange="switch_modepaie(this.value)" required>
+                                            <option disabled value="" selected> Selectionnez le moyen de paiement</option>
                                             <option value="MOBILE_MONEY">Mobile money</option>
                                             <option value="CREDIT_CARD">Carte bancaire</option>
-                                            <option value="ALL">Les deux</option>
+                                            {{-- <option value="ALL">Les deux</option> --}}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="" id="carte" style="display: none">
-                                    
+
                                     <div class="form-group mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Selectionnez votre pays
                                         </label>
@@ -127,30 +146,29 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">
                                             Code postal (pour la cartebancaire) :</label>
-                                        <input type="text" name="customer_zip_code" class="form-control" required>
+                                        <input type="text" name="customer_zip_code" class="form-control">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">votre Etat (obligatoire si
                                             vous êtes au canada ou aux USA)</label>
                                         <input type="text" name="customer_state" value="californi" class="form-control"
-                                            required>
+                                            >
                                     </div>
                                     <div class="form-group mb-3 ">
-                                        <label for="login-email">Etat</label>
+                                        <label for="login-email">Ville</label>
                                         <div class="input-group">
-                                            <input type="text" name="email" class="form-control" placeholder="Etat"
-                                                aria-label="Email" aria-describedby="Email" id="login-email" required />
+                                            <input type="text" name="customer_city" class="form-control" placeholder="Etat"
+                                                aria-label="Email" aria-describedby="Email" id="login-email"  />
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 ">
                                         <label for="login-email">Adresse</label>
                                         <div class="input-group">
-                                            <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="Adresse"></textarea>
+                                            <textarea name="customer_address" id="" cols="30" rows="5" class="form-control" placeholder="Adresse"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn red w-100 radius-10 mb-3"
-                                    onclick="handleCheckOut()">Payer</button>
+                                <button type="submit" class="btn red w-100 radius-10 mb-3">Payer</button>
                             </form>
                         </div>
                     </div>
@@ -164,12 +182,12 @@
         function switch_modepaie(val) {
             switch (val) {
                 case "MOBILE_MONEY":
-                // document.getElementById('carte').setAttribute('hidden');
-                document.getElementById('carte').style.display = "none";
+                    // document.getElementById('carte').setAttribute('hidden');
+                    document.getElementById('carte').style.display = "none";
                     break;
                 case "CREDIT_CARD":
-                document.getElementById('carte').style.display = "block";
-                // document.getElementById('carte').removeAttribute('hidden');
+                    document.getElementById('carte').style.display = "block";
+                    // document.getElementById('carte').removeAttribute('hidden');
                     break;
                 case "ALL":
                     alert("tout");
@@ -177,19 +195,25 @@
             }
         }
 
-        function deleteFavorie(form, url) {
+        // $(document).ready(function() {
+        //     $("#form_paie").on("submit", function(e) {
+        //         e.preventDefault();
+        //         payer("#form_paie", 'paie');
+        //     });
+        // });
+
+        function payer(form, url) {
+            var u=url;
             $.ajax({
-                url: url + form,
-                method: "GET",
-                data: {
-                    idform: form
-                },
+                url:u,
+                method: "POST",
+                data: $(form).serialize(),
                 success: function(data) {
                     // console.log(data);
                     if (!data.reponse) {
                         swal({
                             title: data.msg,
-                            icon: 'warning'
+                            icon: 'error'
                         })
                     } else {
                         swal({

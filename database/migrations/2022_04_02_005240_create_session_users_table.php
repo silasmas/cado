@@ -21,17 +21,17 @@ return new class extends Migration
             ->onDelete('cascade');
             $table->enum('etat', array('Payer','En attente'))->default('En attente');
             $table->string('reference')->nullable();
-            // $table->string('transaction_id');
             $table->string('token')->nullable();
             $table->string('operateur')->nullable();
             $table->string('message')->nullable();
             $table->string('description')->nullable();
+            $table->string('customer_address')->nullable();
             $table->string('customer_city')->nullable();
             $table->string('customer_country')->nullable();
             $table->string('customer_state')->nullable();
             $table->string('customer_zip_code')->nullable();
             $table->string('reponse')->nullable();
-            $table->enum('niveau', array('commencer','En cour','Fini'))->default('commencer');
+            $table->enum('niveau', array("En cour d\'achat",'commencer','En cour','Fini'))->default("En cour d\'achat");
             $table->timestamps();
         }); 
     }

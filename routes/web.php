@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FavorieController;
 use App\Http\Controllers\FormationController;
+use App\Http\Controllers\SessionUserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,9 @@ Route::middleware(['auth'])->group( function (){
   
 
     Route::get('dashboard', [FormationController::class,'index'])->name('dashboard');
+
+    Route::post('payerForm', [SessionUserController::class,'store'])->name('payerForm');
+    Route::post('paie', [SessionUserController::class,'store'])->name('paie');
 
 });
 require __DIR__.'/auth.php';

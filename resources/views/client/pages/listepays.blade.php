@@ -1,5 +1,5 @@
-<select name="customer_country" class="form-select" required>
-    <option value="" selected>Selectionnez votre pays</option>
+<select name="customer_country" class="form-select" >
+    <option value=" " selected>Selectionnez votre pays</option>
 	<option value="AF">Afghanistan</option>
 	<option value="AX">Åland Islands</option>
 	<option value="AL">Albania</option>
