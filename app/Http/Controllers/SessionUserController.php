@@ -33,6 +33,70 @@ class SessionUserController extends Controller
     {
         //
     }
+    public function notify(Request $request)
+    {
+        $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
+        $retour=sessionUser::where([["token",$request->token],["reference",$request->transaction_id]])->first();
+        if($retour){
+            $cinetpay_verify=  [
+                "apikey" => env("CINETPAY_APIKEY"),
+                "site_id" => env("CINETPAY_SERVICD_ID"),
+                "transaction_id" => $request->reference,
+            ];
+            $response = Http::asJson()->post($url, $cinetpay_verify);
+
+            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
+            
+            if ((int)$response_body["code"] === 201) {
+                $retour->etat=$response_body['data']['status'];
+                $retour->operateur=$response_body['data']['payment_method'];
+                $retour->message=$response_body['message'];
+                $retour->save();
+                $data=$response_body;
+                return view('notify',compact('data'));
+            }else{
+                $retour->etat=$response_body['data']['status'];
+                $retour->operateur=$response_body['data']['payment_method'];
+                $retour->message=$response_body['message'];
+                $retour->save();
+                $data=$response_body;
+                return view('client.pages.notify',compact('data'));
+            }
+        }
+        
+    }
+    public function retour(Request $request)
+    {
+        // dd($request);
+        $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
+        $retour=sessionUser::where([["token",$request->token],["reference",$request->transaction_id]])->first();
+        if($retour){
+            $cinetpay_verify=  [
+                "apikey" => env("CINETPAY_APIKEY"),
+                "site_id" => env("CINETPAY_SERVICD_ID"),
+                "transaction_id" => $request->reference,
+            ];
+            $response = Http::asJson()->post($url, $cinetpay_verify);
+
+            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
+            
+            if ((int)$response_body["code"] === 201) {
+                $retour->etat=$response_body['data']['status'];
+                $retour->operateur=$response_body['data']['payment_method'];
+                $retour->message=$response_body['message'];
+                $retour->save();
+                $data=$response_body;
+                return view('notify',compact('data'));
+            }else{
+                $retour->etat=$response_body['data']['status'];
+                $retour->operateur=$response_body['data']['payment_method'];
+                $retour->message=$response_body['message'];
+                $retour->save();
+                $data=$response_body;
+                return view('client.pages.notify',compact('data'));
+            }
+        }
+    }
     public function genererChaineAleatoire($longueur = 10)
     {
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -145,7 +209,7 @@ class SessionUserController extends Controller
     
             if (!$ok->fails()) {
            $init= self::initInfo($request);
-                self::initPaie($init,$request->toArray());
+           return $ret= self::initPaie($init,$request->toArray());
             } else {
                 return back()->with('message',$ok->getMessageBag());;
                // return response()->json(['reponse' => false,'msg' => $ok->getMessageBag()]);
@@ -162,7 +226,7 @@ class SessionUserController extends Controller
     
             if (!$ok->fails()) {
                 $init= self::initInfo($request);
-                self::initPaie($init,$request->toArray());
+               return $ret= self::initPaie($init,$request->toArray());
             } else {
             return back()->with('message',$ok->getMessageBag());
              // return response()->json(['reponse' => false,'msg' => $ok->getMessageBag()]);
