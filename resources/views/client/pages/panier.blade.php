@@ -18,108 +18,98 @@
             </nav>
         </div>
     </section>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12  text-danger mb-5">
-           @if (session()->has('message'))
-           {{ session()->get('message') }}
-           @endif
-            @foreach ($errors->all() as $err)
-                {{$err}}
-            @endforeach
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12  text-danger mb-5">
+                @if (session()->has('message'))
+                    {{ session()->get('message') }}
+                @endif
+                @foreach ($errors->all() as $err)
+                    {{ $err }}
+                @endforeach
+            </div>
         </div>
     </div>
-</div>
     <section class="cart-list-area">
         <div class="container">
             <div class="row" id="cart_items_details">
+
                 <div class="col-lg-8">
                     <div class="in-cart-box">
-                        <div class="title">{{ $session->count() }} Formation</div>
+                        <div class="title">{{ $panier->count() }} Formation{{ $panier->count()>1?"s":"" }}</div>
                         <div class="">
                             <ul class="cart-course-list">
-                                <li>
-                                    <div class="cart-course-wrapper">
-                                        <div class="image d-none d-md-block">
-                                            <a href="course-details.html">
-                                                <img src="{{ asset('assets/images/form/' . $session->cover) }}" alt=""
-                                                    class="img-fluid" />
-                                            </a>
-                                        </div>
-                                        <div class="details">
-                                            <a href="{{ route('detailFormation', ['id' => $session->id]) }}">
-                                                <div class="name">{{ $session->titre }}</div>
-                                            </a>
+                                @forelse ($panier as $session)
 
-                                            <div class="course-subtitle text-13px mt-2">
-                                                {{ $session->description }}
+                                    <li>
+                                        <div class="cart-course-wrapper">
+                                            <div class="image d-none d-md-block">
+                                                <a href="course-details.html">
+                                                    <img src="{{ asset('assets/images/form/' . $session->cover) }}" alt=""
+                                                        class="img-fluid" />
+                                                </a>
                                             </div>
+                                            <div class="details">
+                                                <a href="{{ route('detailFormation', ['id' => $session->id]) }}">
+                                                    <div class="name">{{ $session->titre }}</div>
+                                                </a>
 
-                                            <div class="floating-user d-inline-block mt-2">
-                                                @foreach ($session->formateur as $f)
+                                                <div class="course-subtitle text-13px mt-2">
+                                                    {{ $session->description }}
+                                                </div>
+
+                                                <div class="floating-user d-inline-block mt-2">
+                                                    {{-- @foreach ($session->formateur as $f)
                                                     <img style="margin-left: 0px;" class="position-absolute"
                                                         src="{{ asset('assets/images/form/' . $f->photo) }}" width="30px"
                                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                                         title="{{ $f->prenom . ' ' . $f->nom }}"
                                                         onclick="event.stopPropagation(); $(location).attr('href', '');" />
-                                                @endforeach
+                                                @endforeach --}}
+                                                    {{ $session->context }}
+                                                </div>
+                                            </div>
+                                            <div class="move-remove text-center">
+                                                <div id="{{ $session->id }}" onclick="removeFromCartList(this)"><i
+                                                        class="fas fa-times-circle"></i> supprimer</div>
 
-                                                {{-- <img
-                                                style="margin-left: 17px;"
-                                                class="position-absolute"
-                                                src="{{ asset('assets/images/uploads/user_image/b28a0687a23de21f2b2c34b2d160f48f.jpg') }}"
-                                                width="30px"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="top"
-                                                title="Olivia Emily"
-                                                onclick="event.stopPropagation(); $(location).attr('href', 'instructor.html2');"
-                                            /> --}}
+                                            </div>
+                                            <div class="price">
+                                                <div class="current-price">
+                                                    {{ "$" . $session->prix }}
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="move-remove text-center">
-                                            <div id="4" onclick="removeFromCartList(this)"><i
-                                                    class="fas fa-times-circle"></i> Remove</div>
-                                            <div>Move to Wishlist</div>
-                                        </div>
-                                        <div class="price">
-                                            <div class="current-price">
-                                                {{ "$" . $session->prix }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                @empty
+                                <div class="empty-box text-center ">
+                                    <p class="text-danger">Votre panier est vide.</p>
+                                    <a class="btn red radius-10" href="{{ route('dashboard') }}">Voir les formations</a>
+                                </div>
+                                {{-- <div class="title">{{ $panier->count() }} formation trouver Votre panier est vide</div> --}}
+                                @endforelse
 
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 pt-1">
+
+                <div class="col-lg-4 pt-1" {{  $panier->pluck('prix')->sum()==0? "hidden" :"" }}>
                     <h5 class="fw-700">Total:</h5>
                     <div class="cart-sidebar bg-white radius-10 py-4 px-3">
                         <span id="total_price_of_checking_out" hidden> 190 </span>
-                        <div class="total-price"> {{ "$" . $session->prix }}</div>
+                        <div class="total-price"> {{ "$" .  $panier->pluck('prix')->sum()}}</div>
                         <div class="total-original-price">
-                            {{-- <span class="original-price">$290</span> --}}
-                            <!-- <span class="discount-rate">95% off</span> -->
                         </div>
 
-                        {{-- <div class="input-group marge-input-box mb-3">
-                        <input type="text" class="form-control" placeholder="Apply coupon code" id="coupon-code" />
-                        <div class="input-group-append">
-                            <button class="btn" type="button" onclick="applyCoupon()">
-                                <i class="fas fa-spinner fa-pulse hidden" id="spinner"></i>
-                                Apply
-                            </button>
-                        </div>
-                    </div> --}}
                         <div class="col-6 col-sm-6 col-md-3 input-group  mb-3 text-center text-md-start">
                             <form id="form_paie" method="POST" action="{{ url('payerForm') }}">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">
                                         formation id :</label>
-                                    <input type="text" name="formation_id" class="form-control"
-                                        value="{{ $session->id }}">
+                                    <input type="text"  name="formation_id" class="form-control"
+                                        value="{{isset( $session->id )? $panier->pluck('id') :""}}">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="login-email">Moyen de paiement</label>
@@ -137,32 +127,31 @@
 
                                     <div class="form-group mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Selectionnez votre pays
+                                            (obligatoire)
                                         </label>
                                         <div class="input-group">
                                             @include('client.pages.listepays')
                                         </div>
                                     </div>
-
+                                    <div class="form-group mb-3 ">
+                                        <label for="login-email">Ville (obligatoire)</label>
+                                        <div class="input-group">
+                                            <input type="text" name="customer_city" class="form-control"
+                                                placeholder="Ville " />
+                                        </div>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">
-                                            Code postal (pour la cartebancaire) :</label>
+                                            Code postal (obligatoire) :</label>
                                         <input type="text" name="customer_zip_code" class="form-control">
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">votre Etat (obligatoire si
                                             vous êtes au canada ou aux USA)</label>
-                                        <input type="text" name="customer_state" value="californi" class="form-control"
-                                            >
+                                        <input type="text" name="customer_state" class="form-control">
                                     </div>
                                     <div class="form-group mb-3 ">
-                                        <label for="login-email">Ville</label>
-                                        <div class="input-group">
-                                            <input type="text" name="customer_city" class="form-control" placeholder="Etat"
-                                                aria-label="Email" aria-describedby="Email" id="login-email"  />
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-3 ">
-                                        <label for="login-email">Adresse</label>
+                                        <label for="login-email">Adresse (obligatoire)</label>
                                         <div class="input-group">
                                             <textarea name="customer_address" id="" cols="30" rows="5" class="form-control" placeholder="Adresse"></textarea>
                                         </div>
@@ -178,6 +167,7 @@
     </section>
 @endsection
 @section('autres_script')
+    {{-- <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script> --}}
     <script type="text/javascript">
         function switch_modepaie(val) {
             switch (val) {
@@ -195,26 +185,40 @@
             }
         }
 
-        // $(document).ready(function() {
-        //     $("#form_paie").on("submit", function(e) {
-        //         e.preventDefault();
-        //         payer("#form_paie", 'paie');
-        //     });
-        // });
+        $(document).ready(function() {
+            $("#form_paie").on("submit", function(e) {
+                e.preventDefault();
+                payer("#form_paie", '/paie');
+            });
+        });
 
         function payer(form, url) {
-            var u=url;
+            var u = url;
             $.ajax({
-                url:u,
-                method: "POST",
+                url: u,
+                method: "post",
                 data: $(form).serialize(),
                 success: function(data) {
-                    // console.log(data);
+                    // console.log(data.msg);
                     if (!data.reponse) {
-                        swal({
-                            title: data.msg,
-                            icon: 'error'
-                        })
+                        if (data.bank) {
+                            swal({
+                                title: data.msg,
+                                icon: 'error'
+                            })
+                        }
+                        if (data.form) {
+                            swal({
+                                title: "Veuillez remplir touts les champs obligatoire svp!",
+                                icon: 'error'
+                            })
+                        } else {
+                            swal({
+                                title: data.msg,
+                                icon: 'error'
+                            })
+                        }
+
                     } else {
                         swal({
                             title: data.msg,

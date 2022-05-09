@@ -76,7 +76,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="item-details">
-                                                        <a href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
+                                                        <a
+                                                            href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
                                                             <div class="course-name">
                                                                 {{ $fav->session->titre }}
                                                             </div>
@@ -84,15 +85,14 @@
                                                             <div class="item-price">
 
                                                                 @if ($fav->session->type == 'payant')
-                                                                @if ($fav->session->id==$userForm->session_id && $userForm->etat=='Payer')
-                                                           
-                                                                    <span class="current-price">
-                                                                        @lang('general.autre.achatFait')
-                                                                    </span>
+                                                                    @if ($fav->session->id == $userForm->session_id && $userForm->etat == 'Payer')
+                                                                        <span class="current-price">
+                                                                            @lang('general.autre.achatFait')
+                                                                        </span>
                                                                     @else
-                                                                    <span class="current-price">
-                                                                        {{ '$' . $fav->session->prix }}
-                                                                    </span>
+                                                                        <span class="current-price">
+                                                                            {{ '$' . $fav->session->prix }}
+                                                                        </span>
                                                                     @endif
                                                                 @else
                                                                     <span class="current-price">
@@ -103,28 +103,26 @@
                                                             </div>
                                                         </a>
                                                         @if ($fav->type == 'payant')
-
-                                                            @if ($fav->session->id==$userForm->session_id && $userForm->etat=='Payer')
-                                                            <a href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
-                                                                <button
-                                                                    onclick="handleCartItems(this)"
-                                                                    class="addedToCart">
-                                                                    @lang('general.autre.free')
-                                                                </button>
-                                                            </a>
-                                                                
+                                                            @if ($fav->session->id == $userForm->session_id && $userForm->etat == 'Payer')
+                                                                <a
+                                                                    href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
+                                                                    <button onclick="handleCartItems(this)"
+                                                                        class="addedToCart">
+                                                                        @lang('general.autre.free')
+                                                                    </button>
+                                                                </a>
+                                                            @else
+                                                                <a href="{{ route('panier') }}">
+                                                                    <button onclick="handleCartItems(this)"
+                                                                        class="addedToCart">
+                                                                        @lang('general.autre.achat')
+                                                                    </button>
+                                                                </a>
+                                                            @endif
                                                         @else
-                                                        <a href="{{ route('panier', ['id' => $fav->session->id]) }}">
-                                                            <button onclick="handleCartItems(this)"
-                                                                class="addedToCart">
-                                                                @lang('general.autre.achat')
-                                                            </button>
-                                                            </a>
-                                                        @endif 
-                                                        @else 
-                                                            <a href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
-                                                                <button
-                                                                    onclick="handleCartItems(this)"
+                                                            <a
+                                                                href="{{ route('detailFormation', ['id' => $fav->session->id]) }}">
+                                                                <button onclick="handleCartItems(this)"
                                                                     class="addedToCart">
                                                                     @lang('general.autre.free')
                                                                 </button>
@@ -135,20 +133,88 @@
                                                 </div>
                                             </li>
                                         @empty
+                                            <li>
+                                                <div class="empty-box text-center">
+                                                    <p class="text-danger">Votre liste de favorie est vide.
+
+                                                    </p>
+                                                    <a href="{{ route('dashboard') }}">Voir les formations</a>
+                                                </div>
+                                            </li>
                                         @endforelse
                                     </ul>
                                 </div>
-                                <div class="dropdown-footer">
-                                    <a href="{{ route('favorie') }}">@lang('general.menu.btnFavoris')</a>
-                                </div>
+                                @if (count($userForm->favorie->load('session')) > 0)
+                                    <div class="dropdown-footer">
+                                        <a href="{{ route('favorie') }}">@lang('general.menu.btnFavoris')</a>
+                                    </div>
+                                @endif
+
                             </div>
-                            <div class="empty-box text-center d-none">
-                                <p>Your wishlist is empty.</p>
-                                <a href="">Explore courses</a>
-                            </div>
+
                         </div>
                     </div>
+                    <div class="cart-box menu-icon-box" id="cart_items">
+                        <div class="icon">
+                            <a href=""><i class="fas fa-shopping-cart"></i></a>
+                            <span class="number">{{ $panier->count()}}</span>
+                        </div>
 
+                        <!-- Cart Dropdown goes here -->
+                        <div class="dropdown course-list-dropdown corner-triangle top-right" style="display: ;">
+                            <!-- Just remove the display none from the css to make it work -->
+                            <div class="list-wrapper">
+                                <div class="item-list">
+                                    <ul>
+                                        @forelse ($panier as $p)
+                                        
+                                            <li>
+                                            <div class="item clearfix">
+                                                <div class="item-image">
+                                                    <a href="">
+                                                        <img src="{{ asset('assets/images/form/'.$p->cover) }}"
+                                                            alt="" class="img-fluid" />
+                                                    </a>
+                                                </div>
+                                                <div class="item-details">
+                                                    <a href="{{ route('detailFormation', ['id'=>$p->id]) }}">
+                                                        <div class="course-name">
+                                                            {{ $p->titre }}
+                                                        </div>
+                                                        <div class="instructor-name">{{ $p->context }}</div>
+                                                        <div class="item-price">
+                                                            <span class="current-price">${{ $p->prix }}</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        @empty
+                                        <div class="empty-box text-center ">
+                                            <p class="text-danger">Votre panier est vide.</p>
+                                            <a href="{{ route('dashboard') }}">Voir les formations</a>
+                                        </div>
+                                        @endforelse
+                                        
+                                        
+                                    </ul>
+                                </div>
+                                @if ($panier->count() > 0)                                    
+                                <div class="dropdown-footer">
+                                    <div class="cart-total-price clearfix">
+                                        <span>Total:</span>
+                                        <div class="float-end">
+                                            <span class="current-price">${{ $panier->pluck('prix')->sum() }}</span>
+                                            <!-- <span class="original-price">$94.99</span> -->
+                                        </div>
+                                    </div>
+                                    <a href="{{ route('panier') }}">Voir votre panier</a>
+                                </div>
+                                @endif
+                            </div>
+                           
+                        </div>
+                    </div>
 
                     <div class="user-box menu-icon-box">
                         <div class="icon">
@@ -189,7 +255,7 @@
                                             class="fas fa-heart"></i>@lang('general.menu.mesFavoris')</a>
                                 </li>
                                 <li class="user-dropdown-menu-item">
-                                    <a href="{{ route('panier', ['id' => 2]) }}"><i
+                                    <a href="{{ route('panier') }}"><i
                                             class="fas fa-shopping-cart"></i>@lang('general.menu.achatStorie')</a>
                                 </li>
                                 <li class="user-dropdown-menu-item">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\favorie;
 use App\Http\Requests\StorefavorieRequest;
 use App\Http\Requests\UpdatefavorieRequest;
+use App\Models\sessionUser;
 use Illuminate\Support\Facades\Auth;
 
 class FavorieController extends Controller
@@ -27,6 +28,36 @@ class FavorieController extends Controller
     public function create()
     {
         //
+    }
+    public function addCard($id)
+    {
+        $active=sessionUser::where([['session_id',$id],['user_id',Auth::user()->id]])->first();
+        if($active){         
+            return response()->json(['reponse' => false,'msg' =>'Cette formation est déjà dans vos Panier!!']);          
+        }else{
+            $rap =sessionUser::create([
+                'session_id'=>$id,
+                'user_id'=>Auth::user()->id
+            ]);
+            if($rap){
+                return response()->json(['reponse' => true,'msg' =>"Formation ajouter dans votre panier avec succès."]);
+            }else{
+                return response()->json(['reponse' => false,'msg' => "erreur !!"]);
+            }
+        }
+    }
+    public function removeCard($id)
+    {
+        $formCard=sessionUser::where([['session_id',$id],['user_id',Auth::user()->id]])->first();
+        if($formCard){         
+           
+            $rap =$formCard->delete();
+            if($rap){
+                return response()->json(['reponse' => true,'msg' =>"Formation supprimer de votre panier."]);
+            }else{
+                return response()->json(['reponse' => false,'msg' => "erreur !!"]);
+            }
+        }
     }
     public function addFavori($id)
     {

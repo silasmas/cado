@@ -137,20 +137,20 @@ class SessionUserController extends Controller
                 "notify_url" => env("NOTIFY_URL"),
                 'channels' => $request["channels"],                
                 'customer_name' => Auth::user()->nom,
-                'customer_surname' => Auth::user()->prenom,
+                'customer_city' => $request["customer_city"],
                 'customer_email' => Auth::user()->email,
-                'customer_phone_number' => Auth::user()->phone,
-                'customer_address' => $request["adresse"],
-                'customer_city' => $request["ville"],
+                'customer_surname' => Auth::user()->prenom,
+                'customer_address' => $request["customer_address"],
                 'customer_country' => $request["customer_country"],
-                'customer_state' => $request["customer_state"],
                 'customer_zip_code' => $request["customer_zip_code"],
+                'customer_phone_number' => Auth::user()->phone,
+                'customer_state' => $request["customer_state"],
             ];
             return $cinetpay_data;
         }
     }
     public function initPaie($cinetpay_data,$request){   
-      //  dd($request);   
+        dd($cinetpay_data);   
         $transaction_id = $this->genererChaineAleatoire();
 
             $url = 'https://api-checkout.cinetpay.com/v2/payment';
@@ -181,14 +181,19 @@ class SessionUserController extends Controller
                         return  redirect($payment_link);
                         // return  Redirect::to($payment_link);
                     }else{
-                        dd($response_body);
+                       // dd($response_body);
+                        return response()->json(['reponse' => false,'bank'=>true,'msg' => $response_body['description']]);
                     }
                 
             }else{
-                dd("Erreur d'enregistrement!");
+                // dd("Erreur d'enregistrement!");
+                return response()->json(['reponse' => false,'bank'=>true,'msg' => "Erreur d'enregistrement!"]);
+
             }
         } else {
-            dd($response_body);
+           // dd($response_body);
+            return response()->json(['reponse' => false,'bank'=>true,'msg' => $response_body['description']]);
+
         }
         
     }
@@ -201,6 +206,15 @@ class SessionUserController extends Controller
     public function store(Request $request)
     {
         // dd($request->toArray());
+        $ok=Validator::make($request->all(),[
+            Auth::user()->prenom => ['required'],
+            Auth::user()->nom => ['required'],
+            Auth::user()->phone => ['required'],
+            Auth::user()->email => ['required'],
+        ]);
+        if($ok->fails()){
+            return response()->json(['reponse' => false,'msg' => "Veuillez completer votre profil afin de continuer votre paiement"]);
+        }else{
         if (isset($request->formation_id)) {
             if ($request->channels=="MOBILE_MONEY") {
             $ok=Validator::make($request->all(),[
@@ -228,15 +242,15 @@ class SessionUserController extends Controller
                 $init= self::initInfo($request);
                return $ret= self::initPaie($init,$request->toArray());
             } else {
-            return back()->with('message',$ok->getMessageBag());
-             // return response()->json(['reponse' => false,'msg' => $ok->getMessageBag()]);
+           
+              return response()->json(['reponse' => false,'form'=>true,'msg' => $ok->getMessageBag()]);
             }
         }
         } else {
-            return back();
-           // return response()->json(['reponse' => false,'msg' => "Formation non trouvée merci d'actualiser la page!"]);
+            // return back();
+         return response()->json(['reponse' => false,'msg' => "Formation non trouvée merci d'actualiser la page!"]);
         }
-        
+    }
       
     }
 

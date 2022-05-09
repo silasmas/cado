@@ -2,6 +2,7 @@
 
 
 @section('content')
+@include("client.pages.sousMenu")
 
 <section class="my-courses-area">
     <div class="container">

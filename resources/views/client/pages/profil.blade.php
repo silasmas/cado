@@ -3,7 +3,7 @@
 
 @section('content')
 
-
+@include("client.pages.sousMenu")
 <section class="user-dashboard-area">
     <div class="container">
         <div class="row">
@@ -15,14 +15,35 @@
                             <div class="title">Profile</div>
                             <div class="subtitle">Add information about yourself to share on your profile.</div>
                         </div>
-                        <form action="" method="post">
+                        <form action="{{ url('editProfil') }}" method="post">
                             <div class="content-box">
                                 <div class="basic-group">
                                     <div class="form-group">
-                                        <label for="FristName">Basics:</label>
+                                        <label for="FristName">Nom :</label>
                                         <input type="text" class="form-control" name="first_name" id="FristName" placeholder="First name" value=" Ben " />
                                     </div>
                                     <div class="form-group">
+                                        <label for="FristName">Prenom :</label>
+                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="FristName">sexe :</label>
+                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="FristName">VIlle :</label>
+                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="FristName">Email :</label>
+                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="FristName">Email :</label>
+                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="FristName">Email :</label>
                                         <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
                                     </div>
 

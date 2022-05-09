@@ -48,6 +48,8 @@ return [
         'btnAddPanier'=>'Ajouter au panier',
         'achat'=>'Acheter',
         'free'=>'Commencer',
+        'addPanier'=>'Ajouter au panier',
+        'seePanier'=>'Voir le panier',
         'achatFait'=>'Déjà achété',
     ],
 ];

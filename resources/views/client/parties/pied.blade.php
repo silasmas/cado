@@ -28,14 +28,70 @@
 
 
     function handleWishList2(id) {
-        deleteFavorie(id.id,  "../deleteFavorie/");
+        deleteFavorie(id.id, "../deleteFavorie/");
     }
+
     function handleWishList3(id) {
         add(id.id, 'autre', "addFavori");
     }
 
     function handleWishList(id) {
         add(id.id, "", "addFavori");
+    }
+
+    function addToCard(id) {
+        //alert(id.id);
+        addCard(id.id, "", "addCard");
+    }
+
+    function removeFromCartList(id) {
+        swal({
+            title: "Supprimer du panier",
+            text: "êtes-vous sûre de supprimer cette formation du panier?",
+            icon: 'warning',
+            dangerMode: true,
+            buttons: {
+                cancel: 'Non',
+                delete: 'OUI'
+            }
+        }).then(function(willDelete) {
+            if (willDelete) {
+                addCard(id.id, "", "removeCard");
+            } else {
+
+            }
+
+        });
+    }
+
+    function addCard(form, idLoad, url) {
+        var autre = idLoad == '' ? '' : '../';
+        swal({
+            title: 'Merci de patienter panier...',
+            icon: 'info'
+        })
+        $.ajax({
+            url: '../' + url + '/' + form,
+            method: "GET",
+            data: {
+                idform: form
+            },
+            success: function(data) {
+                if (!data.reponse) {
+                    swal({
+                        title: data.msg,
+                        icon: 'error'
+                    })
+                } else {
+                    swal({
+                        title: data.msg,
+                        icon: 'success'
+                    })
+                    actualiser();
+                }
+            },
+        });
+
     }
 
     function add(form, idLoad, url) {
@@ -45,13 +101,14 @@
             icon: 'info'
         })
         $.ajax({
-            url: autre+url + '/' + form,
+            url: autre + url + '/' + form,
             method: "GET",
             data: {
                 idform: form
             },
             success: function(data) {
-                // console.log(data);
+                //alert(data);
+                console.log(data);
                 if (!data.reponse) {
                     deleteFavorie(form, autre + 'deleteFavorie/');
 

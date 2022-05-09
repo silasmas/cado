@@ -25,21 +25,32 @@ class FormationController extends Controller
     }
     public function profil()
     {
-        return view('client.pages.profil');
+        $titre="Mon Profil";
+        return view('client.pages.profil',compact('titre'));
     }
-    public function panier($id)
+    public function panier()
     {
-        $session=session::with('formateur')->where('id',$id)->first();
+       // $session=session::with('formateur')->where('id',$id)->first();
      //  dd($session);
-        return view('client.pages.panier', compact('session'));
+        return view('client.pages.panier');
     }
     public function mesCours()
     {
-        return view('client.pages.mesCours');
+        
+        $titre="Mes formations";
+        return view('client.pages.mesCours',compact('titre'));
     }
     public function favorie()
     {
-        return view('client.pages.favoris');
+        
+        $titre="Mes favories";
+        return view('client.pages.favoris',compact('titre'));
+    }
+    public function historique()
+    {
+        
+        $titre="Mon historique d'achats";
+        return view('client.pages.historique',compact('titre'));
     }
     public function couple()
     {

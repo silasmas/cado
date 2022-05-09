@@ -46,9 +46,14 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('client.pages.*', function ($view) {
             if(!Auth::guest()){
                 $userForm=User::with('session')->where("id",Auth::user()->id)->first();
-              
-                 //dd($userForm->session);
+              $panier=User::with('session')->selectRaw('session_users.etat,session_users.operateur,session_users.niveau,sessions.*')
+              ->join('session_users','session_users.user_id','users.id')
+              ->join('sessions','sessions.id','session_users.session_id')              
+              ->where([['session_users.etat','En attente'],['users.id',Auth::user()->id]])
+              ->get();
+                //    dd($panier);
                  $view->with('userForm',$userForm);
+                 $view->with('panier',$panier);
                  $view->with('mesformations',$userForm->session);
             }
         });
