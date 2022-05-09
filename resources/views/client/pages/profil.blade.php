@@ -20,31 +20,33 @@
                                 <div class="basic-group">
                                     <div class="form-group">
                                         <label for="FristName">Nom :</label>
-                                        <input type="text" class="form-control" name="first_name" id="FristName" placeholder="First name" value=" Ben " />
+                                        <input type="text" class="form-control" name="first_name" 
+                                        id="FristName" placeholder="First name" value="{{ Auth::user()->name }} " />
                                     </div>
                                     <div class="form-group">
                                         <label for="FristName">Prenom :</label>
-                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                        <input type="text" class="form-control" name="last_name" 
+                                        placeholder="Last name" value="{{ Auth::user()->prenom }}" />
                                     </div>
                                     <div class="form-group">
                                         <label for="FristName">sexe :</label>
-                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                        <input type="text" class="form-control" name="sexe" placeholder="sexe" value="{{ Auth::user()->sexe }}" />
                                     </div>
                                     <div class="form-group">
                                         <label for="FristName">VIlle :</label>
-                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                        <input type="text" class="form-control" name="ville" placeholder="Ville" value="{{ Auth::user()->ville }}" />
                                     </div>
                                     <div class="form-group">
                                         <label for="FristName">Email :</label>
-                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                        <input type="text" class="form-control" name="email" placeholder="Email" value="{{ Auth::user()->email }}" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="FristName">Email :</label>
-                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                        <label for="FristName">Téléphone :</label>
+                                        <input type="text" class="form-control" name="phone" placeholder="Téléphone" value="{{ Auth::user()->phone }}" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="FristName">Email :</label>
-                                        <input type="text" class="form-control" name="last_name" placeholder="Last name" value="Hanson" />
+                                        <label for="FristName">Pays :</label>
+                                        <input type="text" class="form-control" name="pays" placeholder="Pays" value="{{ Auth::user()->pays }}" />
                                     </div>
 
                                     <div class="form-group">
@@ -52,7 +54,7 @@
                                         <textarea class="form-control" name="biography" id="Biography">Hello, I am currently a university student in USA</textarea>
                                     </div>
                                 </div>
-                                <div class="link-group">
+                                {{-- <div class="link-group">
                                     <div class="form-group">
                                         <input type="text" class="form-control" maxlength="60" name="twitter_link" placeholder="Twitter link" value="https://www.twitter.com/john" />
                                         <small class="form-text text-muted">Add your twitter link.</small>
@@ -66,7 +68,7 @@
                                         <small class="form-text text-muted">Add your linkedin link.</small>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="content-update-box">
                                 <button type="submit" class="btn">Save</button>
                             </div>
