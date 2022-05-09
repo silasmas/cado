@@ -61,7 +61,7 @@ Route::middleware(['auth'])->group( function (){
     Route::post('payerForm', [SessionUserController::class,'store'])->name('payerForm');
     Route::post('/paie', [SessionUserController::class,'store'])->name('paie');
 
-    Route::get('/retour', [FormationController::class,'index'])->name('retour');
+    Route::get('/retour',[FormationController::class,'panier'])->name('retour');
     Route::post('/retour', [SessionUserController::class,'retour'])->name('retour');
     Route::post('/notify', [SessionUserController::class,'notify'])->name('notify');
 
