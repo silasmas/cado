@@ -237,11 +237,11 @@
                                                     @forelse  ($panier as $r)
                                                     
                                                         @if ($r->id===$form->id)
-                                                            <a href="{{ route('panier') }}" id="{{ $form->id }}"
+                                                            {{-- <a href="{{ route('panier') }}" id="{{ $form->id }}"
                                                                 class="btn red radius-10">
                                                                 @lang('general.autre.seePanier')
                                                                 <i class="fas fa-shopping-cart"></i>
-                                                            </a>
+                                                            </a> --}}
                                                          @else
                                                             <button type="button" id="{{ $form->id }}"
                                                                 class="btn red radius-10" onclick="addToCard(this)">
