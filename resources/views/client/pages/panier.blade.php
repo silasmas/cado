@@ -105,11 +105,15 @@
                         <div class="col-6 col-sm-6 col-md-3 input-group  mb-3 text-center text-md-start">
                             <form id="form_paie" method="POST" action="{{ url('payerForm') }}">
                                 @csrf
-                                <div class="mb-3" hidden>
+                                <div class="mb-3" hidden >
                                     <label for="exampleInputEmail1" class="form-label">
                                         formation id :</label>
                                     <input type="text"   name="formation_id" class="form-control"
-                                        value="{{isset( $session->id )? $panier->pluck('id') :""}}">
+                                        value="{{isset( $session->id )? $panier->pluck('id')->join(',') :""}}">
+                                    <input type="text"   name="prix" class="form-control"
+                                        value="{{ $panier->pluck('prix')->sum() }}">
+                                    <input type="text"   name="monaie" class="form-control"
+                                        value="USD">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="login-email">Moyen de paiement</label>
@@ -185,12 +189,12 @@
             }
         }
 
-        $(document).ready(function() {
-            $("#form_paie").on("submit", function(e) {
-                e.preventDefault();
-                payer("#form_paie", '/paie');
-            });
-        });
+        // $(document).ready(function() {
+        //     $("#form_paie").on("submit", function(e) {
+        //         e.preventDefault();
+        //         payer("#form_paie", '/paie');
+        //     });
+        // });
 
         function payer(form, url) {
             var u = url;

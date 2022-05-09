@@ -108,14 +108,26 @@ class SessionUserController extends Controller
         return $chaineAleatoire;
     }
     public function initInfo($request){
+
+        // $fidels=explode(',',$request->formation_id);
+        // for($i=0;$i<count($fidels);$i++){
+        //   $rep=fidelMetamorpho::updateOrCreate([
+        //       'metamorpho_id'=>$active->id,
+        //       'fidel_id'=>$fidels[$i],
+        //       'user_id'=>Auth::user()->id,
+        //     ]);
+        //     $rap =cultiveFidel::where('fidel_id',$fidels[$i])->first();
+        //       $rap->update([
+        //           'etat' => '1'
+        //       ]);
         $transaction_id = $this->genererChaineAleatoire();
-        $session= session::find($request->formation_id)->first();
+        // $session= session::find($request->formation_id)->first();
 
 
         if ($request->channels=="MOBILE_MONEY") {
            $cinetpay_data =  [
-            "amount" => $session->prix,
-            "currency" => $session->monaie,
+            "amount" => $request->prix,
+            "currency" => $request->monaie,
             "apikey" => env("CINETPAY_APIKEY"),
             "site_id" => env("CINETPAY_SERVICD_ID"),
             "transaction_id" => $transaction_id,
@@ -150,7 +162,7 @@ class SessionUserController extends Controller
         }
     }
     public function initPaie($cinetpay_data,$request){   
-        dd($cinetpay_data);   
+      //  dd($cinetpay_data);   
         $transaction_id = $this->genererChaineAleatoire();
 
             $url = 'https://api-checkout.cinetpay.com/v2/payment';
@@ -158,9 +170,13 @@ class SessionUserController extends Controller
 
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
             if ($response->status() === 200) {
-            $register = sessionUser::create([
-                "session_id" => $request['formation_id'],
-                "user_id" => Auth::user()->id,
+                $p=explode(',',$request["formation_id"]);
+                // dd($p);
+                for($i=0;$i<count($p);$i++){
+            $register = sessionUser::updateOrCreate([
+                "session_id" => $p[$i],
+                "user_id" => Auth::user()->id,              
+            ],[
                 "reference" => $transaction_id,
                 "description" => "Achat formation",
                 "token" => $response_body["data"]["payment_token"],               
@@ -172,14 +188,15 @@ class SessionUserController extends Controller
                 'customer_zip_code' => $request["customer_zip_code"],
                 'etat' => "En attente",
             ]);
+        }
             if ($register) {
                 
                // dd($response_body);
                     if ((int)$response_body["code"] === 201) {
                         $payment_link = $response_body["data"]["payment_url"];
                        // dd($payment_link);
-                        return  redirect($payment_link);
-                        // return  Redirect::to($payment_link);
+                       // return  redirect($payment_link);
+                         return  Redirect::to($payment_link);
                     }else{
                        // dd($response_body);
                         return response()->json(['reponse' => false,'bank'=>true,'msg' => $response_body['description']]);
@@ -206,15 +223,19 @@ class SessionUserController extends Controller
     public function store(Request $request)
     {
         // dd($request->toArray());
-        $ok=Validator::make($request->all(),[
-            Auth::user()->prenom => ['required'],
-            Auth::user()->nom => ['required'],
-            Auth::user()->phone => ['required'],
-            Auth::user()->email => ['required'],
-        ]);
-        if($ok->fails()){
-            return response()->json(['reponse' => false,'msg' => "Veuillez completer votre profil afin de continuer votre paiement"]);
-        }else{
+        // $ok=Validator::make(Auth::user(),[
+        //     Auth::user()->prenom => ['required'],
+        //     Auth::user()->nom => ['required'],
+        //     Auth::user()->phone => ['required'],
+        //     Auth::user()->email => ['required'],
+        // ]);
+        // $ok=Auth::user()->every(function($value,$key){
+        //     return $value!='';
+        // });
+        // return dd($ok);
+        // if($ok->fails()){
+        //     return response()->json(['reponse' => false,'msg' => "Veuillez completer votre profil afin de continuer votre paiement"]);
+        // }else{
         if (isset($request->formation_id)) {
             if ($request->channels=="MOBILE_MONEY") {
             $ok=Validator::make($request->all(),[
@@ -250,7 +271,7 @@ class SessionUserController extends Controller
             // return back();
          return response()->json(['reponse' => false,'msg' => "Formation non trouvée merci d'actualiser la page!"]);
         }
-    }
+    // }
       
     }
 
