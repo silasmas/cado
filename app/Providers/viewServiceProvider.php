@@ -51,7 +51,7 @@ class ViewServiceProvider extends ServiceProvider
               ->join('sessions','sessions.id','session_users.session_id')              
               ->where([['session_users.etat','En attente'],['users.id',Auth::user()->id]])
               ->get();
-                //    dd($panier);
+                //   dd($userForm->favorie);
                  $view->with('userForm',$userForm);
                  $view->with('panier',$panier);
                  $view->with('mesformations',$userForm->session);
@@ -62,7 +62,7 @@ class ViewServiceProvider extends ServiceProvider
             $form=session::where('context','CADO')->get();
             $couple=session::where('context','COUPLE')->get();
             $actuelCado=session::where('date_debut','>', now())->get();
-           //  dd($form[3]->formateur);
+            //  dd($form[3]->favorie);
             $view->with('couples',$couple);
             $view->with('allform',$form);
              $view->with('actuelCado',$actuelCado);

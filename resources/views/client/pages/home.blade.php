@@ -233,35 +233,19 @@
                                         <div class="popover-btns">
                                             @if ($form->type == 'payant')
                                                 @if ($panier != null)
-                                                    {{-- @if ($form->id == $userForm->pivot->session_id)                                                        --}}
-                                                    @forelse  ($panier as $r)
-                                                    
-                                                        @if ($r->id===$form->id)
-                                                            {{-- <a href="{{ route('panier') }}" id="{{ $form->id }}"
-                                                                class="btn red radius-10">
-                                                                @lang('general.autre.seePanier')
-                                                                <i class="fas fa-shopping-cart"></i>
-                                                            </a> --}}
-                                                         @else
-                                                            <button type="button" id="{{ $form->id }}"
-                                                                class="btn red radius-10" onclick="addToCard(this)">
-                                                                @lang('general.autre.addPanier')2
-                                                                <i class="fas fa-shopping-cart"></i>
-                                                            </button> 
-                                                        @endif                                                               
-                                                    @empty                                                            
-                                                    <button type="button" id="{{ $form->id }}"
-                                                        class="btn red radius-10" onclick="addToCard(this)">
-                                                        @lang('general.autre.addPanier')
-                                                        <i class="fas fa-shopping-cart"></i>
-                                                    </button>
-                                                    @endforelse                                                         
-                                                    {{-- @else
-                                                    <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
-                                                        class="btn  green radius-10">
-                                                        @lang('general.autre.free')
-                                                    </a> --}}
-                                                    {{-- @endif --}}
+                                                    @if ($panier->pluck('id')->contains($form->id))
+                                                        <a href="{{ route('panier') }}" id="{{ $form->id }}"
+                                                            class="btn red radius-10">
+                                                            @lang('general.autre.seePanier')
+                                                            <i class="fas fa-shopping-cart"></i>
+                                                        </a>
+                                                    @else
+                                                        <button type="button" id="{{ $form->id }}"
+                                                            class="btn red radius-10" onclick="addToCard(this)">
+                                                            @lang('general.autre.addPanier')
+                                                            <i class="fas fa-shopping-cart"></i>
+                                                        </button>
+                                                    @endif
                                                 @else
                                                     <button type="button" id="{{ $form->id }}"
                                                         title="Ajouter au panier" class="btn red radius-10"
@@ -276,16 +260,13 @@
                                                     @lang('general.autre.free')
                                                 </a>
                                             @endif
-
-
                                             <button type="button" class="wishlist-btn wishlist-add wishlisted"
                                                 title="Ajouter aux favories" name="" onclick="handleWishList(this)"
                                                 id="{{ $form->id }}">
                                                 <i class="fas fa-heart"
-                                                    @foreach ($userForm->favorie as $r) @if ($r->session_id == $form->id)
-                                                        
+                                                    @if ($userForm->favorie->pluck('session_id')->contains($form->id))                                                        
                                                     style="color: #ec5252"
-                                                    @endif @endforeach></i></button>
+                                                    @endif></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -464,7 +445,7 @@
                                         of the Edustar Top Instructors and all my premium co...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                 -->
+                                                     -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">
@@ -492,7 +473,7 @@
                                         Engineering from Santa Clara University and years of exper...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                 -->
+                                                     -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">

@@ -232,16 +232,19 @@
                                 @if ($detail->session->type == 'payant')
                                     @if ($userForm->session->count() > 0)
                                         @foreach ($userForm->session as $form)
-                                            @if ($detail->session->id == $form->id && $form->pivot->etat == 'Payer')
-                                                <span class="current-price"><span class="current-price">
-                                                        Déjà payé
-                                                    </span></span>
+                                            @if ($detail->session->id == $form->id)
+                                                @if ($form->pivot->etat == 'Payer')
+                                                    <span class="current-price"><span class="current-price">
+                                                            Déjà payé
+                                                        </span></span>
+                                                @else
+                                                    <span class="current-price"><span class="current-price">
+                                                            ${{ $detail->session->prix }}
+                                                        </span></span>
+                                                    <input type="hidden" id="total_price_of_checking_out"
+                                                        value="{{ $detail->session->prix }}" />
+                                                @endif
                                             @else
-                                                <span class="current-price"><span class="current-price">
-                                                        ${{ $detail->session->prix }}
-                                                    </span></span>
-                                                <input type="hidden" id="total_price_of_checking_out"
-                                                    value="{{ $detail->session->prix }}" />
                                             @endif
                                         @endforeach
                                     @else
@@ -261,32 +264,35 @@
                             @if ($detail->session->type == 'payant')
                                 @if ($userForm->session->count() > 0)
                                     @foreach ($userForm->session as $fr)
-                                        @if ($detail->session->id == $fr->id && $fr->pivot->etat == 'Payer')
-                                            {{-- @if ($fr->pivot->niveau == 'commencer') --}}
+                                        @if ($detail->session->id == $fr->id)
+                                            @if ($fr->pivot->etat == 'Payer')
+                                                @if ($fr->pivot->niveau == 'commencer')
+                                                    <div class="buy-btns">
+                                                        <a class="btn btn-buy-now"
+                                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
+                                                            id="12" onclick="handleCartItems(this)">
+                                                            Commencer
+                                                        </a>
+                                                    </div>
+                                                @else
+                                                    <div class="buy-btns">
+                                                        <a class="btn btn-buy-now"
+                                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
+                                                            id="12" onclick="handleCartItems(this)">
+                                                            Suivre
+                                                        </a>
+                                                    </div>
+                                                @endif
+                                            @else
                                                 <div class="buy-btns">
                                                     <a class="btn btn-buy-now"
-                                                        href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
+                                                        href="{{ route('panier', ['id' => $detail->session->id]) }}"
                                                         id="12" onclick="handleCartItems(this)">
-                                                        Commencer
+                                                        @lang('general.autre.achat')1
                                                     </a>
                                                 </div>
-                                            {{-- @else
-                                                <div class="buy-btns">
-                                                    <a class="btn btn-buy-now"
-                                                        href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
-                                                        id="12" onclick="handleCartItems(this)">
-                                                        Suivre
-                                                    </a>
-                                                </div> --}}
-                                            {{-- @endif --}}
+                                            @endif
                                         @else
-                                            <div class="buy-btns">
-                                                <a class="btn btn-buy-now"
-                                                    href="{{ route('panier', ['id' => $detail->session->id]) }}" id="12"
-                                                    onclick="handleCartItems(this)">
-                                                    @lang('general.autre.achat')
-                                                </a>
-                                            </div>
                                         @endif
                                     @endforeach
                                 @else
@@ -356,8 +362,8 @@
                     </button>
 
                     <!-- <button type="button" class="close" data-bs-dismiss="modal" onclick="pausePreview()">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button> -->
+                                                <span aria-hidden="true">&times;</span>
+                                              </button> -->
                 </div>
                 <div class="modal-body">
                     <div class="course-preview-video-wrap">
