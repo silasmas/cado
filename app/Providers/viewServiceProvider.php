@@ -51,7 +51,8 @@ class ViewServiceProvider extends ServiceProvider
               ->join('sessions','sessions.id','session_users.session_id')              
               ->where([['session_users.etat','En attente'],['users.id',Auth::user()->id]])
               ->get();
-                //   dd($userForm->favorie);
+            //   $f=$userForm->session->firstWhere("id",6);
+            //        dd($f);
                  $view->with('userForm',$userForm);
                  $view->with('panier',$panier);
                  $view->with('mesformations',$userForm->session);

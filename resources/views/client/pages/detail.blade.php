@@ -230,32 +230,19 @@
                             <div class="price text-center">
                                 {{-- <span class="original-price">{{ $userForm->pivot->etat }}</span> --}}
                                 @if ($detail->session->type == 'payant')
-                                    @if ($userForm->session->count() > 0)
-                                        @foreach ($userForm->session as $form)
-                                            @if ($detail->session->id == $form->id)
-                                                @if ($form->pivot->etat == 'Payer')
-                                                    <span class="current-price"><span class="current-price">
-                                                            Déjà payé
-                                                        </span></span>
-                                                @else
-                                                    <span class="current-price"><span class="current-price">
-                                                            ${{ $detail->session->prix }}
-                                                        </span></span>
-                                                    <input type="hidden" id="total_price_of_checking_out"
-                                                        value="{{ $detail->session->prix }}" />
-                                                @endif
-                                            @else
-                                            @endif
-                                        @endforeach
-                                    @else
+                                    <span class="current-price">
                                         <span class="current-price">
-                                            <span class="current-price">
-                                                ${{ $detail->session->prix }}
-                                            </span>
+                                            ${{ $detail->session->prix }}
                                         </span>
-                                        <input type="hidden" id="total_price_of_checking_out"
-                                            value="{{ $detail->session->prix }}" />
-                                    @endif
+                                    </span>
+                                    <input type="hidden" id="total_price_of_checking_out"
+                                        value="{{ $detail->session->prix }}" />
+                                @else
+                                    {{-- <span class="current-price">
+                                        <span class="current-price">
+                                            {{ $detail->session->type }}
+                                        </span> --}}
+                                    </span>
                                 @endif
                             </div>
 
@@ -263,14 +250,16 @@
 
                             @if ($detail->session->type == 'payant')
                                 @if ($userForm->session->count() > 0)
-                                    @foreach ($userForm->session as $fr)
-                                        @if ($detail->session->id == $fr->id)
-                                            @if ($fr->pivot->etat == 'Payer')
-                                                @if ($fr->pivot->niveau == 'commencer')
+                                <label class="d-none">{{  $fre=$userForm->session->firstWhere("id",$detail->session->id) }}</label>
+                                
+                                    {{-- @foreach ($userForm->session as $fr) --}}
+                                        @if ($fre!=null)
+                                            @if ($fre->pivot->etat == 'Payer')
+                                                @if ($fre->pivot->niveau == 'commencer')
                                                     <div class="buy-btns">
                                                         <a class="btn btn-buy-now"
                                                             href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
-                                                            id="12" onclick="handleCartItems(this)">
+                                                            >
                                                             Commencer
                                                         </a>
                                                     </div>
@@ -278,29 +267,33 @@
                                                     <div class="buy-btns">
                                                         <a class="btn btn-buy-now"
                                                             href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
-                                                            id="12" onclick="handleCartItems(this)">
+                                                            >
                                                             Suivre
                                                         </a>
                                                     </div>
                                                 @endif
                                             @else
-                                                <div class="buy-btns">
-                                                    <a class="btn btn-buy-now"
-                                                        href="{{ route('panier', ['id' => $detail->session->id]) }}"
-                                                        id="12" onclick="handleCartItems(this)">
-                                                        @lang('general.autre.achat')1
-                                                    </a>
-                                                </div>
+                                                    <div class="buy-btns">
+                                                        <a class="btn btn-buy-now" href="{{ route('panier') }}">
+                                                            @lang('general.autre.seePanier')
+                                                        </a>
+                                                    </div>
                                             @endif
                                         @else
+                                        <div class="buy-btns">
+                                            <button class="btn btn-buy-now" 
+                                                id="{{ $detail->session->id }}" onclick="addToCard(this)">
+                                                @lang('general.autre.addPanier')1
+                                            </button>
+                                        </div>
                                         @endif
-                                    @endforeach
+                                    {{-- @endforeach --}}
                                 @else
                                     <div class="buy-btns">
                                         <a class="btn btn-buy-now"
                                             href="{{ route('panier', ['id' => $detail->session->id]) }}" id="12"
                                             onclick="handleCartItems(this)">
-                                            @lang('general.autre.achat')
+                                            @lang('general.autre.btnAddPanier')
                                         </a>
                                     </div>
                                 @endif
@@ -362,8 +355,8 @@
                     </button>
 
                     <!-- <button type="button" class="close" data-bs-dismiss="modal" onclick="pausePreview()">
-                                                <span aria-hidden="true">&times;</span>
-                                              </button> -->
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                  </button> -->
                 </div>
                 <div class="modal-body">
                     <div class="course-preview-video-wrap">

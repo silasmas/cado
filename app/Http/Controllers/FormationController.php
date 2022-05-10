@@ -114,7 +114,7 @@ class FormationController extends Controller
         $chapitres=formation::where('session_id',$id)->get();
         $formateur=session::with('formateur')->where('id',$id)->get();
      
-        //    dd($detail);
+            // dd($detail->session->pivot);
         $total = 0;
  
 // Loop the data items
