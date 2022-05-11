@@ -127,7 +127,7 @@
                         <div class="col-6 col-sm-6 col-md-3 input-group  mb-3 text-center text-md-start">
                             <form id="form_paie" method="POST" action="{{ url('payerForm') }}">
                                 @csrf
-                                <div class="mb-3">
+                                <div class="mb-3" hidden>
                                     <label for="exampleInputEmail1" class="form-label">
                                         formation id :</label>
                                     <input type="text" name="formation_id" class="form-control"

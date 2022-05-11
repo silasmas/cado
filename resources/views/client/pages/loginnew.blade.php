@@ -7,7 +7,7 @@
                         <a href="/" class="me-auto ms-auto mb-2">
                             <img src="{{ asset('assets/logo/logo-white.png') }}" height="100" width="100"/>
                         </a>
-                        <h2 class="mb-5">Bienvenue à Cado g</h2>
+                        <h2 class="mb-5">Bienvenue à Cado</h2>
                         <h1>Connexion</h1>
                         
                         <div class="col-md-12  text-danger mb-5">
