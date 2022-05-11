@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Test de paiement</title>
+    <title>Notification du paiement</title>
     <link rel="shortcut icon" type="image/rdp-icon" href="{{ asset('assets/logo/logoan.png') }}">
 
     <!-- Fonts -->
@@ -26,10 +26,15 @@
         <p>{{ $data['data']['status'] }}</p>
         <hr>
         <p>Montant :{{ $data['data']['amount'] . $data['data']['currency'] }}</p>
-        <p>Opérateur : {{ $data['data']['payment_method'] }}</p>
+        <p>Opérateur : {{ $operateur}}</p>
         <p>Description :{{ $data['data']['description'] }}</p>
         <p>Date :{{ $data['data']['payment_date'] }}</p><br>
-        <a href="{{ route('panier') }}" class="alert-link">Retour à l'accueil</a>
+        @if ($data['data']['status']=="ACCEPTED")
+        <a href="{{ route('dashboard') }}" class="alert-link">Retour à l'accueil</a>
+        @else
+        <a href="{{ route('panier') }}" class="alert-link">Retour au panier</a>
+        @endif
+      
     </div>
     </div>
 
