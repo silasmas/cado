@@ -48,7 +48,7 @@ class SessionUserController extends Controller
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-            dd($response_body.'notify');
+           // dd($response_body.'notify');
             if ((int)$response_body["code"] === 201) {
                 $retour->etat = $response_body['data']['status'];
                 $retour->operateur = $response_body['data']['payment_method'];
@@ -76,7 +76,7 @@ class SessionUserController extends Controller
 
             $data = $response_body;
             $etat="Erreur d'enregistrement";
-            dd($response_body."notify erreur");
+           // dd($response_body."notify erreur");
             return view('notify', compact('data',"etat"));
         }
     }
@@ -94,7 +94,7 @@ class SessionUserController extends Controller
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-            dd($response_body."retour");
+            //dd($response_body."retour");
             if ((int)$response_body["code"] === 201) {
                 $retour->etat = $response_body['data']['status'];
                 $retour->operateur = $response_body['data']['payment_method'];
@@ -122,7 +122,7 @@ class SessionUserController extends Controller
 
             $data = $response_body;
             $etat="Erreur d'enregistrement";
-            dd($response_body."retour erreur");
+          //  dd($response_body."retour erreur");
             return view('notify', compact('data',"etat"));
         }
     }
