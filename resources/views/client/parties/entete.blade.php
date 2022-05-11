@@ -13,7 +13,7 @@
         <meta name="author" content="SovWare" />
         <meta name="description" content="price ever!" />
 
-        <link rel="shortcut icon" type="image/rdp-icon" href="{{ asset('assets/logo/logo-white.png') }}">
+        <link rel="shortcut icon" type="image/rdp-icon" href="{{ asset('assets/logo/logoan.png') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <link rel="stylesheet" href="{{ asset('assets/css/jquery.webui-popover.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}" />

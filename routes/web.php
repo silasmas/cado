@@ -29,9 +29,9 @@ Route::get('/registerUser', function () {
 //     return view('client.pages.registerUser');
 // })->name('registerUser');
 
-// Route::get('/retour',[FormationController::class,'panier'])->name('retour');
-// Route::post('/retour', [SessionUserController::class,'retour'])->name('retour');
-// Route::post('/notify', [SessionUserController::class,'notify'])->name('notify');
+Route::get('/retour',[FormationController::class,'panier'])->name('retour');
+Route::post('/retour', [SessionUserController::class,'retour'])->name('retour');
+Route::post('/notify', [SessionUserController::class,'notify'])->name('notify');
 
 Route::middleware(['auth'])->group( function (){
     // Route::get('/dashboard', [EtudiantController::class,'index'])->name('dashboard');
@@ -70,9 +70,9 @@ Route::middleware(['auth'])->group( function (){
 
     Route::post('/editProfil', [FormationController::class,'editProfil'])->name('editProfil');
 
-    Route::get('/retour',[FormationController::class,'panier'])->name('retour');
-    Route::post('/retour', [SessionUserController::class,'retour'])->name('retour');
-    Route::post('/notify', [SessionUserController::class,'notify'])->name('notify');
+    // Route::get('/retour',[FormationController::class,'panier'])->name('retour');
+    // Route::post('/retour', [SessionUserController::class,'retour'])->name('retour');
+    // Route::post('/notify', [SessionUserController::class,'notify'])->name('notify');
     //Route::get('/retour',[FormationController::class,'panier'])->name('retour');
 
 });
