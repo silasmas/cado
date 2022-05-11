@@ -19,7 +19,7 @@
         <div class="alert {{ $data['data']['status']=="ACCEPTED"?"alert-success":"alert-danger" }} " role="alert">
        
         <h1>{{ $data['message'] }}</h1>
-        <h2>{{ $data->eata?$data->etat:""}}</h2>
+        <h2>{{ $etata?$etat:""}}</h2>
         <p>{{ $data['data']['status'] }}</p>
         <hr>
         <p>Montant :{{ $data['data']['amount'] . $data['data']['currency'] }}</p>
