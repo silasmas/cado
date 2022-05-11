@@ -63,6 +63,14 @@ class SessionUserController extends Controller
                 $data = $response_body;
                 return view('client.pages.notify', compact('data'));
             }
+        }else{
+            $response = Http::asJson()->post($url, $cinetpay_verify);
+
+            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
+
+            $data = $response_body;
+            $etat="Erreur d'enregistrement";
+            return view('notify', compact('data',"etat"));
         }
     }
     public function retour(Request $request)
@@ -95,6 +103,14 @@ class SessionUserController extends Controller
                 $data = $response_body;
                 return view('client.pages.notify', compact('data'));
             }
+        }else{
+            $response = Http::asJson()->post($url, $cinetpay_verify);
+
+            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
+
+            $data = $response_body;
+            $etat="Erreur d'enregistrement";
+            return view('notify', compact('data',"etat"));
         }
     }
     public function genererChaineAleatoire($longueur = 10)
