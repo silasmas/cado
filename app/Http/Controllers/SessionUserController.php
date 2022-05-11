@@ -55,7 +55,7 @@ class SessionUserController extends Controller
                 $retour->message = $response_body['message'];
                 $retour->save();
                 $data = $response_body;
-                return view('notify', compact('data'));
+                return view('client.pages.notify', compact('data'));
             } else {
                 $retour->etat = $response_body['data']['status'];
                 $retour->operateur = $response_body['data']['payment_method'];
@@ -77,7 +77,7 @@ class SessionUserController extends Controller
             $data = $response_body;
             $etat="Erreur d'enregistrement";
            // dd($response_body."notify erreur");
-            return view('notify', compact('data',"etat"));
+            return view('client.pages.notify', compact('data',"etat"));
         }
     }
     public function retour(Request $request)
@@ -101,7 +101,7 @@ class SessionUserController extends Controller
                 $retour->message = $response_body['message'];
                 $retour->save();
                 $data = $response_body;
-                return view('notify', compact('data'));
+                return view('client.pages.notify', compact('data'));
             } else {
                 $retour->etat = $response_body['data']['status'];
                 $retour->operateur = $response_body['data']['payment_method'];
@@ -123,7 +123,7 @@ class SessionUserController extends Controller
             $data = $response_body;
             $etat="Erreur d'enregistrement";
           //  dd($response_body."retour erreur");
-            return view('notify', compact('data',"etat"));
+            return view('client.pages.notify', compact('data',"etat"));
         }
     }
     public function genererChaineAleatoire($longueur = 10)

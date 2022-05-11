@@ -26,7 +26,7 @@
         <p>Opérateur : {{ $data['data']['payment_method'] }}</p>
         <p>Description :{{ $data['data']['description'] }}</p>
         <p>Date :{{ $data['data']['payment_date'] }}</p><br>
-        <a href="{{ route('retour') }}" class="alert-link">Retour à l'accueil</a>
+        <a href="{{ route('panier') }}" class="alert-link">Retour à l'accueil</a>
     </div>
     </div>
 
