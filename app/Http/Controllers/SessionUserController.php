@@ -109,15 +109,17 @@ class SessionUserController extends Controller
                 $retour->message = $response_body['message'];
                 $retour->niveau = 'commencer';
                 $retour->save();
+                $operateur=$retour->operateur;
                 $data = $response_body;
-                return view('client.pages.notify', compact('data'));
+                return view('client.pages.notify', compact('data','operateur'));
             } else {
                 $retour->etat = $response_body['data']['status'];
                 $retour->operateur = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->save();
+                $operateur=$retour->operateur;
                 $data = $response_body;
-                return view('client.pages.notify', compact('data'));
+                return view('client.pages.notify', compact('data','operateur'));
             }
         }else{
             $cinetpay_verify =  [
