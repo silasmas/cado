@@ -259,14 +259,14 @@ class SessionUserController extends Controller
                         'channels' => ['required', 'string', 'max:255'],
                     ]);
 
-                    if (!$ok->fails()) {
+                    // if (!$ok->fails()) {
                         $init = self::initInfo($request);
                     
                         return $ret = self::initPaie($init, $request->toArray());
-                    } else {
-                        return back()->with('message', $ok->getMessageBag());
-                        // return response()->json(['reponse' => false,'msg' => $ok->getMessageBag()]);
-                    }
+                    // } else {
+                    //     return back()->with('message', $ok->getMessageBag());
+                    //     // return response()->json(['reponse' => false,'msg' => $ok->getMessageBag()]);
+                    // }
                 } else {
                     $profil = self::siProfilcomplet();
                     if ($profil === false) {
