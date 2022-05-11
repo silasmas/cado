@@ -51,10 +51,10 @@
                                                     </p>
                                                     </p>
                                                     @if ($actuel->type == 'payant')
-                                                        <a href="#about" class="btn btn-1 scrollTop">Acheter mon billet
+                                                        <a href="{{ route('detailFormation', ['id' => $actuel->id]) }}" class="btn btn-1 scrollTop">Acheter mon billet
                                                             {{ " ($" . $actuel->prix . ')' }}</a>
                                                     @else
-                                                        <a href="#about" class="btn btn-1 scrollTop">Réserver ma place
+                                                        <a href="{{ route('detailFormation', ['id' => $actuel->id]) }}" class="btn btn-1 scrollTop">Réserver ma place
                                                             {{ '(' . $actuel->type . ')' }}</a>
                                                     @endif
                                                 </div>
