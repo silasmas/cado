@@ -102,7 +102,7 @@ class SessionUserController extends Controller
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
             //dd($response_body."retour");
             if ((int)$response_body["code"] === 201) {
-                $retour->etat = $response_body['data']['status'];
+                $retour->etat = 'Payer';
                 $retour->operateur = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->niveau = 'commencer';
