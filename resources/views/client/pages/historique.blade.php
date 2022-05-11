@@ -50,7 +50,18 @@
                         </div>
                     </li>  
                     @empty
-                        
+                    <li class="purchase-history-items mb-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="empty-box text-center">
+                                    <p class="text-danger">Votre historique est vide.
+
+                                    </p>
+                                    <a href="{{ route('dashboard') }}">Voir les formations</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>  
                     @endforelse
                     
                     
