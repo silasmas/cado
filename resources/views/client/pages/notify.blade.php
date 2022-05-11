@@ -16,7 +16,7 @@
 
 <body class="antialiased">
 
-    {{ dd($data) }}
+    
     <div class="container">
         <div class="alert {{ $data['data']['status']=="ACCEPTED"?"alert-success":"alert-danger" }} " role="alert">
        
