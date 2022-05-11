@@ -156,7 +156,7 @@
                     </div>
                     <div class="cart-box menu-icon-box" id="cart_items">
                         <div class="icon">
-                            <a href=""><i class="fas fa-shopping-cart"></i></a>
+                            <a href="{{ $panier->count()>0?route('panier'):"" }}"><i class="fas fa-shopping-cart"></i></a>
                             <span class="number">{{ $panier->count()}}</span>
                         </div>
 
@@ -255,7 +255,7 @@
                                             class="fas fa-heart"></i>@lang('general.menu.mesFavoris')</a>
                                 </li>
                                 <li class="user-dropdown-menu-item">
-                                    <a href="{{ route('panier') }}"><i
+                                    <a href="{{ route('historique') }}"><i
                                             class="fas fa-shopping-cart"></i>@lang('general.menu.achatStorie')</a>
                                 </li>
                                 <li class="user-dropdown-menu-item">
