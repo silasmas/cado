@@ -26,7 +26,7 @@
         <p>{{ $data['data']['status'] }}</p>
         <hr>
         <p>Montant :{{ $data['data']['amount'] . $data['data']['currency'] }}</p>
-        <p>Opérateur : {{ $operateur}}</p>
+        <p>Opérateur : {{ $operateur?$operateur:"absent"}}</p>
         <p>Description :{{ $data['data']['description'] }}</p>
         <p>Date :{{ $data['data']['payment_date'] }}</p><br>
         @if ($data['data']['status']=="ACCEPTED")
