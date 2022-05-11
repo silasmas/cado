@@ -80,11 +80,11 @@ class SessionUserController extends Controller
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-
+            $operateur=$retour->operateur;
             $data = $response_body;
             $etat="Erreur d'enregistrement";
            // dd($response_body."notify erreur");
-            return view('client.pages.notify', compact('data',"etat"));
+            return view('client.pages.notify', compact('data',"etat",'operateur'));
         }
     }
     public function retour(Request $request)
