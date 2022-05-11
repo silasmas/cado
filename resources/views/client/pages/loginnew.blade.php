@@ -1,33 +1,13 @@
+@extends('client.templates.template_login',['titre'=>"Login"])
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ config('app.name') }}  Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/mystyle.css') }}" />
-</head>
-<body>
-    <section class="block-login">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6 ps-0 col-md-6">
-                    <div class="bg d-flex justify-content-center align-items-center">
-                        <a href="/" class="me-auto ms-auto mb-3">
-                            <img src="{{ asset('assets/logo/logo-white.png') }}" height="100" width="100"/>
-                        </a>
-                        <h2>Bienvenue à Cado</h2>
-                    </div>
-                </div>
+
+@section('content')
                 <div class="col-lg-6 d-flex justify-content-center align-items-center col-md-6">
                     <div class="card card-login">
                         <a href="/" class="me-auto ms-auto mb-2">
                             <img src="{{ asset('assets/logo/logo-white.png') }}" height="100" width="100"/>
                         </a>
-                        <h2 class="mb-5">Bienvenue à Cado</h2>
+                        <h2 class="mb-5">Bienvenue à Cado g</h2>
                         <h1>Connexion</h1>
                         
                         <div class="col-md-12  text-danger mb-5">
@@ -36,12 +16,12 @@
                             @endforeach
                             {{ session('status') }}
                         </div>
-                        <form  method="POST" action="{{ route('login') }}">
+                        <form  method="POST" action="{{ route('login') }}" data-parsley-validate>
                             @csrf
                             <div class="form-group row g-5 g-lg-5">
                                 <div class="col-lg-12">
                                     <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email"
-                                    required autofocus>
+                                     autofocus required data-parsley-minlength="3" data-parsley-trigger="change">
                                     <div class="icon">
                                        @
                                     </div>
@@ -50,7 +30,7 @@
                                 <div class="col-lg-12">
                                     <input  class="form-control" placeholder="Mot de passe" type="password"
                                     name="password"
-                                    required autocomplete="current-password" >
+                                    required autocomplete="current-password" required data-parsley-minlength="3" data-parsley-trigger="change">
                                     <div class="icon">
                                         <i class="bi bi-key"></i>
                                     </div>
@@ -74,8 +54,4 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-</body>
-</html>
+        @endsection

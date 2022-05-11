@@ -20,14 +20,15 @@
     </section>
     <div class="container">
         <div class="row">
-            <div class="col-md-12  text-danger mb-5">
+
+            {{-- <div class="col-md-12  text-danger mb-5">
                 @if (session()->has('message'))
                     {{ session()->get('message') }}
                 @endif
                 @foreach ($errors->all() as $err)
                     {{ $err }}
                 @endforeach
-            </div>
+            </div> --}}
         </div>
     </div>
     <section class="cart-list-area">
@@ -35,12 +36,32 @@
             <div class="row" id="cart_items_details">
 
                 <div class="col-lg-8">
+                    @if (session()->has('message'))
+                        <div class="col-md-12 col-md-offset-3">
+                            <div class="alert alert-danger alert-dismissable">
+                                {{ session()->get('message') }}
+                            </div>
+                        </div><br>
+                    @endif
+                    @if ($errors->all())
+                        <div class="col-md-12 col-md-offset-3">
+                            <div class="alert alert-danger alert-dismissable">
+                                Merci de remplire touts les champs obligatoire SVP!
+                            </div>
+                        </div><br>
+                    @endif
+{{-- 
+                    <div class="col-md-12  text-danger mb-1">
+                        @foreach ($errors->all() as $err)
+                            {{$err}}<br>
+                        @endforeach 
+                    </div>--}}
                     <div class="in-cart-box">
-                        <div class="title">{{ $panier->count() }} Formation{{ $panier->count()>1?"s":"" }}</div>
+                        <div class="title">{{ $panier->count() }} Formation{{ $panier->count() > 1 ? 's' : '' }}
+                        </div>
                         <div class="">
                             <ul class="cart-course-list">
                                 @forelse ($panier as $session)
-
                                     <li>
                                         <div class="cart-course-wrapper">
                                             <div class="image d-none d-md-block">
@@ -82,11 +103,12 @@
                                         </div>
                                     </li>
                                 @empty
-                                <div class="empty-box text-center ">
-                                    <p class="text-danger">Votre panier est vide.</p>
-                                    <a class="btn red radius-10" href="{{ route('dashboard') }}">Voir les formations</a>
-                                </div>
-                                {{-- <div class="title">{{ $panier->count() }} formation trouver Votre panier est vide</div> --}}
+                                    <div class="empty-box text-center ">
+                                        <p class="text-danger">Votre panier est vide.</p>
+                                        <a class="btn red radius-10" href="{{ route('dashboard') }}">Voir les
+                                            formations</a>
+                                    </div>
+                                    {{-- <div class="title">{{ $panier->count() }} formation trouver Votre panier est vide</div> --}}
                                 @endforelse
 
                             </ul>
@@ -94,26 +116,25 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 pt-1" {{  $panier->pluck('prix')->sum()==0? "hidden" :"" }}>
+                <div class="col-lg-4 pt-1" {{ $panier->pluck('prix')->sum() == 0 ? 'hidden' : '' }}>
                     <h5 class="fw-700">Total:</h5>
                     <div class="cart-sidebar bg-white radius-10 py-4 px-3">
                         <span id="total_price_of_checking_out" hidden> 190 </span>
-                        <div class="total-price"> {{ "$" .  $panier->pluck('prix')->sum()}}</div>
+                        <div class="total-price"> {{ "$" . $panier->pluck('prix')->sum() }}</div>
                         <div class="total-original-price">
                         </div>
 
                         <div class="col-6 col-sm-6 col-md-3 input-group  mb-3 text-center text-md-start">
                             <form id="form_paie" method="POST" action="{{ url('payerForm') }}">
                                 @csrf
-                                <div class="mb-3" hidden >
+                                <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">
                                         formation id :</label>
-                                    <input type="text"   name="formation_id" class="form-control"
-                                        value="{{isset( $session->id )? $panier->pluck('id')->join(',') :""}}">
-                                    <input type="text"   name="prix" class="form-control"
+                                    <input type="text" name="formation_id" class="form-control"
+                                        value="{{ isset($session->id) ? $panier->pluck('id')->join(',') : '' }}">
+                                    <input type="text" name="prix" class="form-control"
                                         value="{{ $panier->pluck('prix')->sum() }}">
-                                    <input type="text"   name="monaie" class="form-control"
-                                        value="USD">
+                                    <input type="text" name="monaie" class="form-control" value="USD">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="login-email">Moyen de paiement</label>
@@ -135,29 +156,58 @@
                                         </label>
                                         <div class="input-group">
                                             @include('client.pages.listepays')
+                                            @if ($errors->has('customer_country'))
+                                                <small class="invalid-feedback  text-danger" role="alert">
+                                                    <strong>{{ $errors->first('customer_country') }}</strong>
+                                                </small>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-group mb-3 ">
                                         <label for="login-email">Ville (obligatoire)</label>
                                         <div class="input-group">
                                             <input type="text" name="customer_city" class="form-control"
-                                                placeholder="Ville " />
+                                                placeholder="Ville"  value="{{ old('customer_city') }}"/>
+                                                @if ($errors->has('customer_city'))
+                                                <small class="invalid-feedback  text-danger" role="alert">
+                                                    <strong>{{ $errors->first('customer_city') }}</strong>
+                                                </small>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">
                                             Code postal (obligatoire) :</label>
-                                        <input type="text" name="customer_zip_code" class="form-control">
+                                        <input type="text" name="customer_zip_code" value="{{ old('name') }}"
+                                         class="form-control" value="{{ old('customer_zip_code') }}">
+                                        @if ($errors->has('customer_zip_code'))
+                                        <small class="invalid-feedback  text-danger" role="alert">
+                                            <strong>{{ $errors->first('customer_zip_code') }}</strong>
+                                        </small>
+                                    @endif
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">votre Etat (obligatoire si
                                             vous êtes au canada ou aux USA)</label>
-                                        <input type="text" name="customer_state" class="form-control">
+                                        <input type="text" name="customer_state" class="form-control"
+                                        value="{{ old('customer_state') }}">
+                                        @if ($errors->has('customer_state'))
+                                        <small class="invalid-feedback  text-danger" role="alert">
+                                            <strong>{{ $errors->first('customer_state') }}</strong>
+                                        </small>
+                                    @endif
                                     </div>
                                     <div class="form-group mb-3 ">
                                         <label for="login-email">Adresse (obligatoire)</label>
                                         <div class="input-group">
-                                            <textarea name="customer_address" id="" cols="30" rows="5" class="form-control" placeholder="Adresse"></textarea>
+                                            <textarea name="customer_address" id="" cols="30" rows="5" class="form-control" placeholder="Adresse">
+                                                {{ old('customer_address') }}
+                                            </textarea>
+                                            @if ($errors->has('customer_address'))
+                                            <small class="invalid-feedback  text-danger" role="alert">
+                                                <strong>{{ $errors->first('customer_address') }}</strong>
+                                            </small>
+                                        @endif
                                         </div>
                                     </div>
                                 </div>

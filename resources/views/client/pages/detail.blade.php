@@ -289,13 +289,12 @@
                                         @endif
                                     {{-- @endforeach --}}
                                 @else
-                                    <div class="buy-btns">
-                                        <a class="btn btn-buy-now"
-                                            href="{{ route('panier', ['id' => $detail->session->id]) }}" id="12"
-                                            onclick="handleCartItems(this)">
-                                            @lang('general.autre.btnAddPanier')
-                                        </a>
-                                    </div>
+                                <div class="buy-btns">
+                                    <button class="btn btn-buy-now" 
+                                        id="{{ $detail->session->id }}" onclick="addToCard(this)">
+                                        @lang('general.autre.addPanier')1
+                                    </button>
+                                </div>
                                 @endif
                             @else
                                 <div class="buy-btns">

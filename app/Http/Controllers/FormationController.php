@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\session;
 use App\Models\formation;
+use App\Rules\PhoneNumber;
+use App\Models\sessionUser;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\Rules\Password;
 use App\Http\Requests\StoreformationRequest;
 use App\Http\Requests\UpdateformationRequest;
-use App\Models\session;
-use App\Models\sessionUser;
-use Illuminate\Support\Facades\Auth;
 
 class FormationController extends Controller
 {
@@ -73,6 +78,40 @@ class FormationController extends Controller
      * @param  \App\Http\Requests\StoreformationRequest  $request
      * @return \Illuminate\Http\Response
      */
+    public function editProfil(Request $request)
+    {
+        
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'prenom' => ['required', 'string', 'max:255'],
+            'sexe' => ['required', 'string', 'max:255'],
+            'ville' => ['required', 'string', 'max:255'],
+            'pays' => ['required', 'string', 'max:255'],
+            'phone' => ['required', new PhoneNumber],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        ]);
+        $u = User::where("id",Auth::user()->id)->first();
+        // dd($u);
+            $u->name = $request->name;
+            $u->prenom = $request->prenom;
+            $u->sexe = $request->sexe;
+            $u->ville = $request->ville;
+            $u->phone = $request->phone;
+            $u->pays= $request->pays;
+            $u->email= $request->email;
+       
+        $u->save();
+        if ($u) {
+            event(new Registered($u));
+
+            Auth::login($u);
+            return back()->with('message', "Profil mis à jour avec succès");
+        } else {
+            return back()->with('message', "Erreur");
+        }
+     
+
+    }
     public function store(StoreformationRequest $request)
     {
         //
