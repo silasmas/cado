@@ -51,10 +51,12 @@
                                                     </p>
                                                     </p>
                                                     @if ($actuel->type == 'payant')
-                                                        <a href="{{ route('detailFormation', ['id' => $actuel->id]) }}" class="btn btn-1 scrollTop">Acheter mon billet
+                                                        <a href="{{ route('detailFormation', ['id' => $actuel->id]) }}"
+                                                            class="btn btn-1 scrollTop">Acheter mon billet
                                                             {{ " ($" . $actuel->prix . ')' }}</a>
                                                     @else
-                                                        <a href="{{ route('detailFormation', ['id' => $actuel->id]) }}" class="btn btn-1 scrollTop">Réserver ma place
+                                                        <a href="{{ route('detailFormation', ['id' => $actuel->id]) }}"
+                                                            class="btn btn-1 scrollTop">Réserver ma place
                                                             {{ '(' . $actuel->type . ')' }}</a>
                                                     @endif
                                                 </div>
@@ -233,10 +235,10 @@
                                         <div class="popover-btns">
                                             @if ($form->type == 'payant')
                                                 @if ($paie->pluck('id')->contains($form->id))
-                                                <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
-                                                    class="btn  green radius-10">
-                                                    @lang('general.autre.free')
-                                                </a>
+                                                    <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
+                                                        class="btn  green radius-10">
+                                                        @lang('general.autre.free')
+                                                    </a>
                                                 @else
                                                     @if ($panier != null)
                                                         @if ($panier->pluck('id')->contains($form->id))
@@ -298,8 +300,8 @@
                     <div class="animated-loader">
                         <div class="spinner-border text-secondary" role="status"></div>
                     </div>
-                    @forelse ($couples as $form)
-                        <div class="course-carousel shown-after-loading" style="display: none;">
+                    <div class="course-carousel shown-after-loading" style="display: none;">
+                        @forelse ($couples as $form)
                             <div class="course-box-wrap">
                                 <a href="{{ route('detailFormation', ['id' => $form->id]) }}" class="has-popover">
                                     <div class="course-box">
@@ -329,28 +331,60 @@
                                                         Du
                                                         {{ \Carbon\Carbon::parse($form->date_debut)->isoFormat('LL') }}
                                                         au {{ \Carbon\Carbon::parse($form->date_fin)->isoFormat('LL') }}
-
                                                     </span>
                                                 </div>
+
                                             </div>
 
                                             <hr class="divider-1" />
 
                                             <div class="d-block">
-                                                <div class="floating-user d-inline-block">
-                                                    <img style="margin-left: 0px; width: 30px; " class="position-absolute"
-                                                        src="assets/images/uploads/user_image/48a153e87c587ffe79d6e8609e59124b.jpg"
-                                                        alt="user_image" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="John David"
-                                                        onclick="return check_action(this,'instructor.html');" />
-                                                    <img style="margin-left: 17px; width: 30px;" class="position-absolute"
-                                                        src="assets/images/uploads/user_image/0269091217f95c25ac4f77c1bd69879a.jpg"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Dave Franco"
-                                                        onclick="return check_action(this,'instructor.html');" />
-                                                </div>
 
+                                                <div class="floating-user d-inline-block">
+                                                    @if ($form->formateur->count() > 1)
+                                                        @foreach ($form->formateur as $fr)
+                                                            <img style="margin-left: 0px; width: 30px; "
+                                                                class="position-absolute"
+                                                                src="{{ asset('assets/images/form/' . $fr->photo) }}"
+                                                                alt="user_image" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
+                                                                title="{{ $fr->prenom . ' ' . $fr->nom }}"
+                                                                onclick="return check_action(this,'instructor.html');" />
+                                                            <img style="margin-left: 17px; width: 30px;"
+                                                                class="position-absolute"
+                                                                src="{{ asset('assets/images/form/' . $fr->photo) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="{{ $fr->prenom . ' ' . $fr->nom }}"
+                                                                onclick="return check_action(this,'instructor.html');" />
+                                                        @endforeach
+                                                    @else
+                                                        @foreach ($form->formateur as $fr)
+                                                            <img style="margin-left: 17px; width: 30px;"
+                                                                class="position-absolute"
+                                                                src="{{ asset('assets/images/form/' . $fr->photo) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="{{ $fr->prenom . ' ' . $fr->nom }}"
+                                                                onclick="return check_action(this,'instructor.html');" />
+                                                        @endforeach
+                                                    @endif
+
+                                                </div>
                                                 <p class="text-right price d-inline-block float-end">
-                                                    {{ $form->type == 'payant' ? '$' . $form->prix : $form->type }}</p>
+                                                    @if ($form->type == 'payant')
+                                                        @if ($userForm != null)
+                                                            @if ($form->id == $userForm->session_id && $userForm->etat == 'Payer')
+                                                                @lang('general.autre.achatFait')
+                                                            @else
+                                                                {{ '$' . $form->prix }}
+                                                            @endif
+                                                        @else
+                                                            {{ '$' . $form->prix }}
+                                                        @endif
+                                                    @else
+                                                        {{ $form->type }}
+                                                    @endif
+
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -371,49 +405,77 @@
                                             </a>
                                         </div>
                                         <div class="course-meta">
-                                            <span class=""><i class="fas fa-play-circle"></i> 15 Lessons
+                                            <span class=""><i class="fas fa-play-circle"></i>
+                                                {{ $form->formation->count() }} Lessons
                                             </span>
-                                            <span class=""><i class="far fa-clock"></i> 01:10:09 Hours
-                                            </span>
+                                            {{-- <span class=""><i class="far fa-clock"></i> 01:10:09 Hours
+                                        </span> --}}
                                             <span class=""><i
-                                                    class="fas fa-closed-captioning"></i>English</span>
+                                                    class="fas fa-closed-captioning"></i>Français</span>
                                         </div>
-                                        <div class="course-subtitle">In 2020, build a beautiful responsive Wordpress site
-                                            that looks great on all devices. No experience required.</div>
+                                        <div class="course-subtitle">{{ $form->description }}</div>
                                         <div class="what-will-learn">
                                             <ul>
-                                                <li>Install Wordpress on your PC or Mac computer, so you can learn without
-                                                    having to pay hosting or domain fees.</li>
-                                                <li>Navigate around the Wordpress dashboard, know what everything does and
-                                                    how to use it</li>
-                                                <li>Create pages and posts, and most importantly, know the difference
-                                                    between the two</li>
-                                                <li>Easily create a beautiful HTML & CSS website with Bootstrap (that
-                                                    doesn't look like generic Bootstrap websites!)</li>
-                                                <li>Fully understand how to use Custom Post Types and Advanced Custom Fields
-                                                    in WordPress</li>
-                                                <li>Correctly use post categories and tags, and understand why these can
-                                                    cause you problems at the search engines if used incorrectly</li>
-                                                <li>Understand plugins & themes and how to find/install them</li>
+                                                @forelse ($form->formation->sortBy('titre') as $f)
+                                                    <li>{{ $f->titre }}/li>
+                                                    @empty
+                                                @endforelse
+
+
                                             </ul>
                                         </div>
                                         <div class="popover-btns">
-                                            <a href="{{ route($form->type == 'payant' ? 'panier' : 'formationBy', ['id' => $form->id]) }}"
-                                                class="btn {{ $form->type == 'payant' ? 'red' : 'green' }} radius-10"
-                                                onclick="addToCard()">{{ $form->type == 'payant' ? 'Acheter' : "s'enroller" }}</a>
-                                            <button type="button" class="wishlist-btn" title="Add to wishlist"
-                                                onclick="handleWishList(this)" id="1"><i
-                                                    class="fas fa-heart"></i></button>
+                                            @if ($form->type == 'payant')
+                                                @if ($paie->pluck('id')->contains($form->id))
+                                                    <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
+                                                        class="btn  green radius-10">
+                                                        @lang('general.autre.free')
+                                                    </a>
+                                                @else
+                                                    @if ($panier != null)
+                                                        @if ($panier->pluck('id')->contains($form->id))
+                                                            <a href="{{ route('panier') }}" id="{{ $form->id }}"
+                                                                class="btn red radius-10">
+                                                                @lang('general.autre.seePanier')
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                            </a>
+                                                        @else
+                                                            <button type="button" id="{{ $form->id }}"
+                                                                class="btn red radius-10" onclick="addToCard(this)">
+                                                                @lang('general.autre.addPanier')
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                            </button>
+                                                        @endif
+                                                    @else
+                                                        <button type="button" id="{{ $form->id }}"
+                                                            title="Ajouter au panier" class="btn red radius-10"
+                                                            onclick="addToCard(this)">
+                                                            @lang('general.autre.addPanier')
+                                                            <i class="fas fa-shopping-cart"></i>
+                                                        </button>
+                                                    @endif
+                                                @endif
+                                            @else
+                                                <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
+                                                    class="btn  green radius-10">
+                                                    @lang('general.autre.free')
+                                                </a>
+                                            @endif
+                                            <button type="button" class="wishlist-btn wishlist-add wishlisted"
+                                                title="Ajouter aux favories" name="" onclick="handleWishList(this)"
+                                                id="{{ $form->id }}">
+                                                <i class="fas fa-heart"
+                                                    @if ($userForm->favorie->pluck('session_id')->contains($form->id)) style="color: #ec5252" @endif></i></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @empty
-                        <h4 class="btn btn-plus">
-                            Aucune conférence disponible pour le moment
-                        </h4>
-                    @endforelse
+                        @empty
+                            <h4 class="btn btn-plus">
+                                Aucune conférence disponible pour le moment
+                            </h4>
+                        @endforelse
+                    </div>
                 </div>
             </div>
             @if ($couples->count() > 0)
@@ -450,7 +512,7 @@
                                         of the Edustar Top Instructors and all my premium co...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                         -->
+                                                             -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">
@@ -478,7 +540,7 @@
                                         Engineering from Santa Clara University and years of exper...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                         -->
+                                                             -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">
