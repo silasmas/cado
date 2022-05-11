@@ -237,6 +237,7 @@ class SessionUserController extends Controller
      */
     public function store(Request $request)
     {
+        $transaction_id = $this->genererChaineAleatoire();
             if (isset($request->formation_id)) {
                 if ($request->channels == "MOBILE_MONEY") {
                     $ok = $request->validate([
@@ -244,9 +245,9 @@ class SessionUserController extends Controller
                     ]);
 
                     // if (!$ok->fails()) {
-                        $init = self::initInfo($request);
+                        $init = self::initInfo($request,$transaction_id);
                     
-                        return $ret = self::initPaie($init, $request->toArray());
+                        return $ret = self::initPaie($init, $request->toArray(),$transaction_id);
                     // } else {
                     //     return back()->with('message', $ok->getMessageBag());
                     //     // return response()->json(['reponse' => false,'msg' => $ok->getMessageBag()]);
@@ -265,7 +266,7 @@ class SessionUserController extends Controller
                             'customer_address' => ['required', 'string', 'max:255'],
                             'customer_city' => ['required', 'string', 'max:255'],
                         ]);
-                        $transaction_id = $this->genererChaineAleatoire();
+                        
                             $init = self::initInfo($request,$transaction_id);
                             return $ret = self::initPaie($init, $request->toArray(),$transaction_id);
                     }
