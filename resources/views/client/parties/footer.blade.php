@@ -1,6 +1,6 @@
 <footer class="footer-area d-print-none bg-gray mt-5">
 
-    <div class="border-top" style="border: none!important">
+    <div class="border-top" >
         <div class="container-xl">
             <div class="row mt-3 py-1">
                 <div class="col-6 col-sm-6 col-md-3 text-muted text-13px">
