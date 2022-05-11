@@ -90,7 +90,7 @@ class SessionUserController extends Controller
                 $data = $response_body;
                 return view('client.pages.notify', compact('data','operateur'));
             } else {
-                $retour->etat = "En attente";
+                // $retour->etat = "En attente";
                 $retour->operateur = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->save();
