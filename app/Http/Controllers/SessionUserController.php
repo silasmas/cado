@@ -75,7 +75,7 @@ class SessionUserController extends Controller
     public function retour(Request $request)
     {
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
-        dd($request->transaction_id);
+      //  dd($request->transaction_id);
         $login=self::verifyLogin($request->transaction_id);
         if ($retour) {           
 
@@ -90,7 +90,7 @@ class SessionUserController extends Controller
                 $data = $response_body;
                 return view('client.pages.notify', compact('data','operateur'));
             } else {
-                $retour->etat = $response_body['data']['status'];
+                $retour->etat = "En attente";
                 $retour->operateur = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->save();
