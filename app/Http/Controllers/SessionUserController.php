@@ -109,7 +109,7 @@ class SessionUserController extends Controller
                 $retour->message = $response_body['message'];
                 $retour->niveau = 'commencer';
                 $retour->save();
-                $operateur=$retour->operateur;
+               // $operateur=$retour->operateur;
                 $data = $response_body;
                 return view('client.pages.notify', compact('data','operateur'));
             } else {
@@ -117,7 +117,7 @@ class SessionUserController extends Controller
                 $retour->operateur = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->save();
-                $operateur=$retour->operateur;
+                //$operateur=$retour->operateur;
                 $data = $response_body;
                 return view('client.pages.notify', compact('data','operateur'));
             }
