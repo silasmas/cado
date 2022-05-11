@@ -8,7 +8,9 @@ use App\Rules\PhoneNumber;
 use App\Models\sessionUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdatesessionUserRequest;
@@ -30,15 +32,26 @@ class SessionUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function verifyLogin($id)
     {
-        //
+        $verify=explode('.',$id);
+        $id=$verify[0];
+        $u = User::where("id",$id)->first();
+
+         if ($u) {
+            event(new Registered($u));
+
+            Auth::login($u);
+            return true;
+        } else {
+            return false;
+        }
     }
     public function notify(Request $request)
     {
         $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
-       
+        self::verifyLogin($transaction_id);
         if ($retour) {
             $cinetpay_verify =  [
                 "apikey" => env("CINETPAY_APIKEY"),
@@ -50,17 +63,17 @@ class SessionUserController extends Controller
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
            // dd($response_body.'notify');
             if ((int)$response_body["code"] === 201) {
-                $retour->etat = $response_body['data']['status'];
-                $retour->operateur = $response_body['data']['payment_method'];
-                $retour->message = $response_body['message'];
-                $retour->save();
+                // $retour->etat = $response_body['data']['status'];
+                // $retour->operateur = $response_body['data']['payment_method'];
+                // $retour->message = $response_body['message'];
+                // $retour->save();
                 $data = $response_body;
                 return view('client.pages.notify', compact('data'));
             } else {
-                $retour->etat = $response_body['data']['status'];
-                $retour->operateur = $response_body['data']['payment_method'];
-                $retour->message = $response_body['message'];
-                $retour->save();
+                // $retour->etat = $response_body['data']['status'];
+                // $retour->operateur = $response_body['data']['payment_method'];
+                // $retour->message = $response_body['message'];
+                // $retour->save();
                 $data = $response_body;
                 return view('client.pages.notify', compact('data'));
             }
@@ -134,12 +147,13 @@ class SessionUserController extends Controller
         for ($i = 0; $i < $longueur; $i++) {
             $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
         }
-        return $chaineAleatoire;
+        $idHash=Auth::user()->id.".".$chaineAleatoire;
+        return $idHash;
     }
     public function initInfo($request)
     {
-
         $transaction_id = $this->genererChaineAleatoire();
+        // dd(self::verifyLogin($transaction_id));
         // $session= session::find($request->formation_id)->first();
 
 
