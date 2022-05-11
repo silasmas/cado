@@ -119,12 +119,8 @@ class SessionUserController extends Controller
         $idHash=Auth::user()->id.".".$chaineAleatoire;
         return $idHash;
     }
-    public function initInfo($request)
+    public function initInfo($request,$transaction_id)
     {
-        $transaction_id = $this->genererChaineAleatoire();
-        // dd(self::verifyLogin($transaction_id));
-        // $session= session::find($request->formation_id)->first();
-
 
         if ($request->channels == "MOBILE_MONEY") {
             $cinetpay_data =  [
@@ -163,10 +159,8 @@ class SessionUserController extends Controller
             return $cinetpay_data;
         }
     }
-    public function initPaie($cinetpay_data, $request)
+    public function initPaie($cinetpay_data, $request,$transaction_id)
     {
-        //  dd($cinetpay_data);   
-        $transaction_id = $this->genererChaineAleatoire();
 
         $url = 'https://api-checkout.cinetpay.com/v2/payment';
         $response = Http::asJson()->post($url, $cinetpay_data);
@@ -194,11 +188,8 @@ class SessionUserController extends Controller
             }
             if ($register) {
 
-                // dd($response_body);
                 if ((int)$response_body["code"] === 201) {
                     $payment_link = $response_body["data"]["payment_url"];
-                    // dd($payment_link);
-                    // return  redirect($payment_link);
                     return  Redirect::to($payment_link);
                 } else {
                     return back()->with('message', $response_body['description']);
@@ -274,15 +265,9 @@ class SessionUserController extends Controller
                             'customer_address' => ['required', 'string', 'max:255'],
                             'customer_city' => ['required', 'string', 'max:255'],
                         ]);
-// dd($ok->fails());
-                        // if (!$ok->fails()) {
-                            $init = self::initInfo($request);
-                            return $ret = self::initPaie($init, $request->toArray());
-                        // } else {
-                        //     return back()->with("message",$ok->getMessageBag());
-
-                        //    // return response()->json(['reponse' => false, 'form' => true, 'msg' => $ok->getMessageBag()]);
-                        // }
+                        $transaction_id = $this->genererChaineAleatoire();
+                            $init = self::initInfo($request,$transaction_id);
+                            return $ret = self::initPaie($init, $request->toArray(),$transaction_id);
                     }
                 }
             } else {
