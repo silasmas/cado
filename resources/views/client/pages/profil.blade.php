@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="FristName">Email :</label>
-                                            <input type="email" class="form-control" name="email" placeholder="Email"
+                                            <input disabled type="email" class="form-control disabled" name="email" placeholder="Email"
                                                 value="{{ Auth::user()->email }}" required data-parsley-minlength="3"
                                                 data-parsley-trigger="change" />
                                             @if ($errors->has('email'))

@@ -88,7 +88,7 @@ class FormationController extends Controller
             'ville' => ['required', 'string', 'max:255'],
             'pays' => ['required', 'string', 'max:255'],
             'phone' => ['required', new PhoneNumber],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
         $u = User::where("id",Auth::user()->id)->first();
         // dd($u);
@@ -98,7 +98,7 @@ class FormationController extends Controller
             $u->ville = $request->ville;
             $u->phone = $request->phone;
             $u->pays= $request->pays;
-            $u->email= $request->email;
+            // $u->email= $request->email;
        
         $u->save();
         if ($u) {
