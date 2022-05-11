@@ -51,7 +51,7 @@ class SessionUserController extends Controller
     {
         $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
-        self::verifyLogin($transaction_id);
+        // $login=self::verifyLogin($request->transaction_id);
         if ($retour) {
             $cinetpay_verify =  [
                 "apikey" => env("CINETPAY_APIKEY"),
@@ -63,17 +63,9 @@ class SessionUserController extends Controller
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
            // dd($response_body.'notify');
             if ((int)$response_body["code"] === 201) {
-                // $retour->etat = $response_body['data']['status'];
-                // $retour->operateur = $response_body['data']['payment_method'];
-                // $retour->message = $response_body['message'];
-                // $retour->save();
                 $data = $response_body;
                 return view('client.pages.notify', compact('data'));
             } else {
-                // $retour->etat = $response_body['data']['status'];
-                // $retour->operateur = $response_body['data']['payment_method'];
-                // $retour->message = $response_body['message'];
-                // $retour->save();
                 $data = $response_body;
                 return view('client.pages.notify', compact('data'));
             }
@@ -98,6 +90,7 @@ class SessionUserController extends Controller
         // dd($request);
         $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
+        $login=self::verifyLogin($request->transaction_id);
         if ($retour) {
             $cinetpay_verify =  [
                 "apikey" => env("CINETPAY_APIKEY"),
@@ -112,6 +105,7 @@ class SessionUserController extends Controller
                 $retour->etat = $response_body['data']['status'];
                 $retour->operateur = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
+                $retour->niveau = 'commencer';
                 $retour->save();
                 $data = $response_body;
                 return view('client.pages.notify', compact('data'));

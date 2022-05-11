@@ -51,10 +51,16 @@ class ViewServiceProvider extends ServiceProvider
               ->join('sessions','sessions.id','session_users.session_id')              
               ->where([['session_users.etat','En attente'],['users.id',Auth::user()->id]])
               ->get();
+              $panierPaie=User::with('session')->selectRaw('session_users.etat,session_users.operateur,session_users.niveau,sessions.*')
+              ->join('session_users','session_users.user_id','users.id')
+              ->join('sessions','sessions.id','session_users.session_id')              
+              ->where([['session_users.etat','Payer'],['users.id',Auth::user()->id]])
+              ->get();
             //   $f=$userForm->session->firstWhere("id",6);
-            //        dd($f);
+                    //dd($panierPaie);
                  $view->with('userForm',$userForm);
                  $view->with('panier',$panier);
+                 $view->with('paie',$panierPaie);
                  $view->with('mesformations',$userForm->session);
             }
         });
@@ -63,7 +69,7 @@ class ViewServiceProvider extends ServiceProvider
             $form=session::where('context','CADO')->get();
             $couple=session::where('context','COUPLE')->get();
             $actuelCado=session::where('date_debut','>', now())->get();
-            //  dd($form[3]->favorie);
+            //   dd($form);
             $view->with('couples',$couple);
             $view->with('allform',$form);
              $view->with('actuelCado',$actuelCado);

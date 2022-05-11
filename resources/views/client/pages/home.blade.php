@@ -232,27 +232,34 @@
                                         </div>
                                         <div class="popover-btns">
                                             @if ($form->type == 'payant')
-                                                @if ($panier != null)
-                                                    @if ($panier->pluck('id')->contains($form->id))
-                                                        <a href="{{ route('panier') }}" id="{{ $form->id }}"
-                                                            class="btn red radius-10">
-                                                            @lang('general.autre.seePanier')
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
+                                                @if ($paie->pluck('id')->contains($form->id))
+                                                <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
+                                                    class="btn  green radius-10">
+                                                    @lang('general.autre.free')
+                                                </a>
+                                                @else
+                                                    @if ($panier != null)
+                                                        @if ($panier->pluck('id')->contains($form->id))
+                                                            <a href="{{ route('panier') }}" id="{{ $form->id }}"
+                                                                class="btn red radius-10">
+                                                                @lang('general.autre.seePanier')
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                            </a>
+                                                        @else
+                                                            <button type="button" id="{{ $form->id }}"
+                                                                class="btn red radius-10" onclick="addToCard(this)">
+                                                                @lang('general.autre.addPanier')
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                            </button>
+                                                        @endif
                                                     @else
                                                         <button type="button" id="{{ $form->id }}"
-                                                            class="btn red radius-10" onclick="addToCard(this)">
+                                                            title="Ajouter au panier" class="btn red radius-10"
+                                                            onclick="addToCard(this)">
                                                             @lang('general.autre.addPanier')
                                                             <i class="fas fa-shopping-cart"></i>
                                                         </button>
                                                     @endif
-                                                @else
-                                                    <button type="button" id="{{ $form->id }}"
-                                                        title="Ajouter au panier" class="btn red radius-10"
-                                                        onclick="addToCard(this)">
-                                                        @lang('general.autre.addPanier')
-                                                        <i class="fas fa-shopping-cart"></i>
-                                                    </button>
                                                 @endif
                                             @else
                                                 <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
@@ -264,9 +271,7 @@
                                                 title="Ajouter aux favories" name="" onclick="handleWishList(this)"
                                                 id="{{ $form->id }}">
                                                 <i class="fas fa-heart"
-                                                    @if ($userForm->favorie->pluck('session_id')->contains($form->id))                                                        
-                                                    style="color: #ec5252"
-                                                    @endif></i></button>
+                                                    @if ($userForm->favorie->pluck('session_id')->contains($form->id)) style="color: #ec5252" @endif></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -445,7 +450,7 @@
                                         of the Edustar Top Instructors and all my premium co...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                     -->
+                                                         -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">
@@ -473,7 +478,7 @@
                                         Engineering from Santa Clara University and years of exper...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                     -->
+                                                         -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">

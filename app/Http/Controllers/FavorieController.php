@@ -49,7 +49,7 @@ class FavorieController extends Controller
     public function removeCard($id)
     {
         $formCard=sessionUser::where([['session_id',$id],['user_id',Auth::user()->id]])->first();
-        if($formCard){         
+        if($formCard){          
            
             $rap =$formCard->delete();
             if($rap){
