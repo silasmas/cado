@@ -82,7 +82,7 @@ class SessionUserController extends Controller
             $response_body = self::verifyStatus($request);
             if ((int)$response_body["code"] === 201) {
                 $retour->etat = 'Payer';
-                $retour->operateur = $response_body['data']['payment_method'];
+                 $retour->reponse = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->niveau = 'commencer';
                 $retour->save();
@@ -91,7 +91,7 @@ class SessionUserController extends Controller
                 return view('client.pages.notify', compact('data','operateur'));
             } else {
                 // $retour->etat = "En attente";
-                $retour->operateur = $response_body['data']['payment_method'];
+                $retour->reponse = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->save();
                 $operateur=$retour->operateur;
