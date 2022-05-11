@@ -51,7 +51,7 @@ class SessionUserController extends Controller
     {
         $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
-        $operateur=$retour->operateur;
+        
         if ($retour) {
             $cinetpay_verify =  [
                 "apikey" => env("CINETPAY_APIKEY"),
@@ -63,9 +63,11 @@ class SessionUserController extends Controller
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
            // dd($response_body.'notify');
             if ((int)$response_body["code"] === 201) {
+                $operateur=$retour->operateur;
                 $data = $response_body;
                 return view('client.pages.notify', compact('data','operateur'));
             } else {
+                $operateur=$retour->operateur;
                 $data = $response_body;
                 return view('client.pages.notify', compact('data','operateur'));
             }
