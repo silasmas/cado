@@ -49,43 +49,43 @@ class SessionUserController extends Controller
     }
     public function notify(Request $request)
     {
-        $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
-        $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
+        // $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
+        // $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
         
-        if ($retour) {
-            $cinetpay_verify =  [
-                "apikey" => env("CINETPAY_APIKEY"),
-                "site_id" => env("CINETPAY_SERVICD_ID"),
-                "transaction_id" => $request->transaction_id,
-            ];
-            $response = Http::asJson()->post($url, $cinetpay_verify);
+        // if ($retour) {
+        //     $cinetpay_verify =  [
+        //         "apikey" => env("CINETPAY_APIKEY"),
+        //         "site_id" => env("CINETPAY_SERVICD_ID"),
+        //         "transaction_id" => $request->transaction_id,
+        //     ];
+        //     $response = Http::asJson()->post($url, $cinetpay_verify);
 
-            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-           // dd($response_body.'notify');
-            if ((int)$response_body["code"] === 201) {
-                $operateur=$retour->operateur;
-                $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
-            } else {
-                $operateur=$retour->operateur;
-                $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
-            }
-        }else{
-            $cinetpay_verify =  [
-                "apikey" => env("CINETPAY_APIKEY"),
-                "site_id" => env("CINETPAY_SERVICD_ID"),
-                "transaction_id" => $request->transaction_id,
-            ];
-            $response = Http::asJson()->post($url, $cinetpay_verify);
+        //     $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
+        //    // dd($response_body.'notify');
+        //     if ((int)$response_body["code"] === 201) {
+        //         $operateur=$retour->operateur;
+        //         $data = $response_body;
+        //         return view('client.pages.notify', compact('data','operateur'));
+        //     } else {
+        //         $operateur=$retour->operateur;
+        //         $data = $response_body;
+        //         return view('client.pages.notify', compact('data','operateur'));
+        //     }
+        // }else{
+        //     $cinetpay_verify =  [
+        //         "apikey" => env("CINETPAY_APIKEY"),
+        //         "site_id" => env("CINETPAY_SERVICD_ID"),
+        //         "transaction_id" => $request->transaction_id,
+        //     ];
+        //     $response = Http::asJson()->post($url, $cinetpay_verify);
 
-            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-            $operateur=$retour->operateur;
-            $data = $response_body;
-            $etat="Erreur d'enregistrement";
-           // dd($response_body."notify erreur");
-            return view('client.pages.notify', compact('data',"etat",'operateur'));
-        }
+        //     $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
+        //     $operateur=$retour->operateur;
+        //     $data = $response_body;
+        //     $etat="Erreur d'enregistrement";
+        //    // dd($response_body."notify erreur");
+        //     return view('client.pages.notify', compact('data',"etat",'operateur'));
+        // }
     }
     public function retour(Request $request)
     {
@@ -111,13 +111,13 @@ class SessionUserController extends Controller
                 $retour->save();
                // $operateur=$retour->operateur;
                 $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
+                return view('client.pages.notify', compact('data','C'));
             } else {
                 $retour->etat = $response_body['data']['status'];
                 $retour->operateur = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->save();
-                //$operateur=$retour->operateur;
+                $operateur=$retour->operateur;
                 $data = $response_body;
                 return view('client.pages.notify', compact('data','operateur'));
             }
@@ -133,8 +133,9 @@ class SessionUserController extends Controller
 
             $data = $response_body;
             $etat="Erreur d'enregistrement";
+            $operateur=$retour->operateur;
           //  dd($response_body."retour erreur");
-            return view('client.pages.notify', compact('data',"etat"));
+            return view('client.pages.notify', compact('data',"etat","operateur"));
         }
     }
     public function genererChaineAleatoire($longueur = 10)
