@@ -65,6 +65,11 @@ class SessionUserController extends Controller
                 return view('client.pages.notify', compact('data'));
             }
         }else{
+            $cinetpay_verify =  [
+                "apikey" => env("CINETPAY_APIKEY"),
+                "site_id" => env("CINETPAY_SERVICD_ID"),
+                "transaction_id" => $request->reference,
+            ];
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
@@ -106,6 +111,11 @@ class SessionUserController extends Controller
                 return view('client.pages.notify', compact('data'));
             }
         }else{
+            $cinetpay_verify =  [
+                "apikey" => env("CINETPAY_APIKEY"),
+                "site_id" => env("CINETPAY_SERVICD_ID"),
+                "transaction_id" => $request->reference,
+            ];
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
             $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
