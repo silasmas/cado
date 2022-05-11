@@ -22,24 +22,25 @@
                             </div>
                         </div>
                     </li>
+                    @forelse ($paie as $p)
                     <li class="purchase-history-items mb-2">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="purchase-history-course-img">
-                                    <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_12.jpg" class="img-fluid" />
+                                    <img src="{{ asset('assets/images/form/'.$p->cover) }}" class="img-fluid" />
                                 </div>
-                                <a class="purchase-history-course-title" href="course-details.html">
-                                    Learn to draw fashion with Adobe Illustrator CC - Beginners
+                                <a class="purchase-history-course-title" href="{{ route('detailFormation', ['id'=>$p->id]) }}">
+                                   {{ $p->titre }}
                                 </a>
                             </div>
                             <div class="col-sm-6 purchase-history-detail">
                                 <div class="row">
                                     <div class="col-sm-3 date">
-                                        Tue, 01-Jun-2021
+                                        {{ \Carbon\Carbon::parse($p->date)->isoFormat('LLL') }}
                                     </div>
-                                    <div class="col-sm-3 price"><b> $20 </b></div>
+                                    <div class="col-sm-3 price"><b> ${{ $p->prix }}</b></div>
                                     <div class="col-sm-4 payment-type">
-                                        Stripe
+                                        {{ $p->operateur }}
                                     </div>
                                     <div class="col-sm-2">
                                         <a href="javascript:;" target="_blank" class="btn btn-receipt">Facture</a>
@@ -47,57 +48,12 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
-                    <li class="purchase-history-items mb-2">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="purchase-history-course-img">
-                                    <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_13.jpg" class="img-fluid" />
-                                </div>
-                                <a class="purchase-history-course-title" href="course-details.html"> Front End Web Development Ultimate Course 2021 </a>
-                            </div>
-                            <div class="col-sm-6 purchase-history-detail">
-                                <div class="row">
-                                    <div class="col-sm-3 date">
-                                        Tue, 01-Jun-2021
-                                    </div>
-                                    <div class="col-sm-3 price"><b> $45 </b></div>
-                                    <div class="col-sm-4 payment-type">
-                                        Stripe
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <a href="javascript:;" target="_blank" class="btn btn-receipt">Facture</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="purchase-history-items mb-2">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="purchase-history-course-img">
-                                    <img src="assets/images/uploads/thumbnails/course_thumbnails/course_thumbnail_default_14.jpg" class="img-fluid" />
-                                </div>
-                                <a class="purchase-history-course-title" href="course-details.html">
-                                    React and Typescript: Build a Portfolio Project
-                                </a>
-                            </div>
-                            <div class="col-sm-6 purchase-history-detail">
-                                <div class="row">
-                                    <div class="col-sm-3 date">
-                                        Tue, 01-Jun-2021
-                                    </div>
-                                    <div class="col-sm-3 price"><b> $20 </b></div>
-                                    <div class="col-sm-4 payment-type">
-                                        Stripe
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <a href="javascript:;" target="_blank" class="btn btn-receipt">Facture</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    </li>  
+                    @empty
+                        
+                    @endforelse
+                    
+                    
                 </ul>
             </div>
         </div>

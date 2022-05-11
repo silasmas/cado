@@ -51,7 +51,7 @@ class ViewServiceProvider extends ServiceProvider
               ->join('sessions','sessions.id','session_users.session_id')              
               ->where([['session_users.etat','En attente'],['users.id',Auth::user()->id]])
               ->get();
-              $panierPaie=User::with('session')->selectRaw('session_users.etat,session_users.operateur,session_users.niveau,sessions.*')
+              $panierPaie=User::with('session')->selectRaw('session_users.etat,session_users.operateur,session_users.niveau,session_users.updated_at as date,sessions.*')
               ->join('session_users','session_users.user_id','users.id')
               ->join('sessions','sessions.id','session_users.session_id')              
               ->where([['session_users.etat','Payer'],['users.id',Auth::user()->id]])
