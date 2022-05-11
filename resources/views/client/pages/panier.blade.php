@@ -46,7 +46,7 @@
                     @if ($errors->all())
                         <div class="col-md-12 col-md-offset-3">
                             <div class="alert alert-danger alert-dismissable">
-                                Merci de remplire touts les champs obligatoire SVP!
+                                Merci de remplire touts les champs obligatoire afin de continuer le paiement par carte bancaire SVP!
                             </div>
                         </div><br>
                     @endif
@@ -119,7 +119,6 @@
                 <div class="col-lg-4 pt-1" {{ $panier->pluck('prix')->sum() == 0 ? 'hidden' : '' }}>
                     <h5 class="fw-700">Total:</h5>
                     <div class="cart-sidebar bg-white radius-10 py-4 px-3">
-                        <span id="total_price_of_checking_out" hidden> 190 </span>
                         <div class="total-price"> {{ "$" . $panier->pluck('prix')->sum() }}</div>
                         <div class="total-original-price">
                         </div>
