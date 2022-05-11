@@ -43,7 +43,7 @@ class SessionUserController extends Controller
             $cinetpay_verify =  [
                 "apikey" => env("CINETPAY_APIKEY"),
                 "site_id" => env("CINETPAY_SERVICD_ID"),
-                "transaction_id" => $request->reference,
+                "transaction_id" => $request->transaction_id,
             ];
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
@@ -68,7 +68,7 @@ class SessionUserController extends Controller
             $cinetpay_verify =  [
                 "apikey" => env("CINETPAY_APIKEY"),
                 "site_id" => env("CINETPAY_SERVICD_ID"),
-                "transaction_id" => $request->reference,
+                "transaction_id" => $request->transaction_id,
             ];
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
@@ -89,7 +89,7 @@ class SessionUserController extends Controller
             $cinetpay_verify =  [
                 "apikey" => env("CINETPAY_APIKEY"),
                 "site_id" => env("CINETPAY_SERVICD_ID"),
-                "transaction_id" => $request->reference,
+                "transaction_id" => $request->transaction_id,
             ];
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
@@ -114,7 +114,7 @@ class SessionUserController extends Controller
             $cinetpay_verify =  [
                 "apikey" => env("CINETPAY_APIKEY"),
                 "site_id" => env("CINETPAY_SERVICD_ID"),
-                "transaction_id" => $request->reference,
+                "transaction_id" => $request->transaction_id,
             ];
             $response = Http::asJson()->post($url, $cinetpay_verify);
 
