@@ -22,9 +22,18 @@ class SessionUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function verifyStatus($request)
     {
-        //
+        $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
+        $cinetpay_verify =  [
+            "apikey" => env("CINETPAY_APIKEY"),
+            "site_id" => env("CINETPAY_SERVICD_ID"),
+            "transaction_id" => $request->transaction_id,
+        ];
+        $response = Http::asJson()->post($url, $cinetpay_verify);
+        $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
+
+        return $response_body;
     }
 
     /**
@@ -49,69 +58,36 @@ class SessionUserController extends Controller
     }
     public function notify(Request $request)
     {
-        // $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
-        // $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
+        $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
+
+            $response_body = self::verifyStatus($request);
+            if ((int)$response_body["code"] === 201) {
+                $operateur=$retour->operateur;
+                $data = $response_body;
+                return view('client.pages.notify', compact('data','operateur'));
+            } else {
+                $operateur=$retour->operateur;
+                $data = $response_body;
+                return view('client.pages.notify', compact('data','operateur'));
+            }
         
-        // if ($retour) {
-        //     $cinetpay_verify =  [
-        //         "apikey" => env("CINETPAY_APIKEY"),
-        //         "site_id" => env("CINETPAY_SERVICD_ID"),
-        //         "transaction_id" => $request->transaction_id,
-        //     ];
-        //     $response = Http::asJson()->post($url, $cinetpay_verify);
-
-        //     $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-        //    // dd($response_body.'notify');
-        //     if ((int)$response_body["code"] === 201) {
-        //         $operateur=$retour->operateur;
-        //         $data = $response_body;
-        //         return view('client.pages.notify', compact('data','operateur'));
-        //     } else {
-        //         $operateur=$retour->operateur;
-        //         $data = $response_body;
-        //         return view('client.pages.notify', compact('data','operateur'));
-        //     }
-        // }else{
-        //     $cinetpay_verify =  [
-        //         "apikey" => env("CINETPAY_APIKEY"),
-        //         "site_id" => env("CINETPAY_SERVICD_ID"),
-        //         "transaction_id" => $request->transaction_id,
-        //     ];
-        //     $response = Http::asJson()->post($url, $cinetpay_verify);
-
-        //     $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-        //     $operateur=$retour->operateur;
-        //     $data = $response_body;
-        //     $etat="Erreur d'enregistrement";
-        //    // dd($response_body."notify erreur");
-        //     return view('client.pages.notify', compact('data',"etat",'operateur'));
-        // }
     }
     public function retour(Request $request)
     {
-        // dd($request);
-        $url = 'https://api-checkout.cinetpay.com/v2/payment/check';
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
         $login=self::verifyLogin($request->transaction_id);
-        if ($retour) {
-            $cinetpay_verify =  [
-                "apikey" => env("CINETPAY_APIKEY"),
-                "site_id" => env("CINETPAY_SERVICD_ID"),
-                "transaction_id" => $request->transaction_id,
-            ];
-            $response = Http::asJson()->post($url, $cinetpay_verify);
+        if ($retour) {           
 
-            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-            //dd($response_body."retour");
+            $response_body = self::verifyStatus($request);
             if ((int)$response_body["code"] === 201) {
                 $retour->etat = 'Payer';
                 $retour->operateur = $response_body['data']['payment_method'];
                 $retour->message = $response_body['message'];
                 $retour->niveau = 'commencer';
                 $retour->save();
-               // $operateur=$retour->operateur;
+                $operateur=$retour->operateur;
                 $data = $response_body;
-                return view('client.pages.notify', compact('data','C'));
+                return view('client.pages.notify', compact('data','operateur'));
             } else {
                 $retour->etat = $response_body['data']['status'];
                 $retour->operateur = $response_body['data']['payment_method'];
@@ -122,15 +98,8 @@ class SessionUserController extends Controller
                 return view('client.pages.notify', compact('data','operateur'));
             }
         }else{
-            $cinetpay_verify =  [
-                "apikey" => env("CINETPAY_APIKEY"),
-                "site_id" => env("CINETPAY_SERVICD_ID"),
-                "transaction_id" => $request->transaction_id,
-            ];
-            $response = Http::asJson()->post($url, $cinetpay_verify);
-
-            $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
-
+           
+            $response_body =self::verifyStatus($request);
             $data = $response_body;
             $etat="Erreur d'enregistrement";
             $operateur=$retour->operateur;
