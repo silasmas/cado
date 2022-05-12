@@ -191,7 +191,6 @@ class FormationController extends Controller
         if ($r) {
             if ($r->niveau != 'En cour') {
                 $r->niveau = 'En cour';
-                $r->sous_titre = 'active';
                 $r->save();
             }
         } else {
@@ -204,7 +203,9 @@ class FormationController extends Controller
             ]);
         }
 
-        $chapitre = formation::with('session')->where('session_id', $id)->first();
+        $chapitre = formation::with('session')->where('session_id', $id)->orderBy('titre',"asc")->first();
+        $chapitre->sous_titre='active';
+        $chapitre->save();
         $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
         // $chapitres = formation::with('session')->whereBelongsTo($chapitre, 'session')->get();
         //  dd($chapitres->sortBy('titre'));
