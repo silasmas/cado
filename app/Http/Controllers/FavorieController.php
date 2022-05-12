@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\favorie;
 use App\Http\Requests\StorefavorieRequest;
 use App\Http\Requests\UpdatefavorieRequest;
+use App\Models\formation;
 use App\Models\sessionUser;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,6 +58,22 @@ class FavorieController extends Controller
             }else{
                 return response()->json(['reponse' => false,'msg' => "erreur !!"]);
             }
+        }
+    }
+    public function finiChapitre($id)
+    {
+        $active=formation::find($id);
+        if($active){   
+            $active->sous_titre='fini';
+            $rap =$active->save();
+            if($rap){
+                return response()->json(['reponse' => true,'msg' =>"Fin du chapitre merci de passer au suivant"]);
+            }else{
+                return response()->json(['reponse' => false,'msg' => "erreur d'enregistrement!!"]);
+            }      
+        }else{
+            return response()->json(['reponse' => false,'msg' =>'erreur']);          
+            
         }
     }
     public function addFavori($id)

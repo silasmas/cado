@@ -12,7 +12,7 @@
         <meta name="author" content="media-coder" />
         <meta name="description" content="" />
 
-        <link rel="shortcut icon" type="image/rdp-icon" href="{{ asset('assets/logos/LOGOTYPE-17.png') }}">
+        <link rel="shortcut icon" type="image/rdp-icon" href="{{ asset('assets/logo/logoan.png') }}">
 
         <link rel="stylesheet" href="{{ asset('assets/css/jquery.webui-popover.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/slick.css') }}" />
@@ -25,8 +25,9 @@
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('assets/lessons/css/custom.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/lessons/css/mystyle.css') }}" />
-        <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
+        <link rel="stylesheet" href="{{ asset('assets/css/mystyle.css') }}" />
+        <link href="{{ asset('js/sweetalert/sweetalert.css') }}" rel="stylesheet">
+        <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script> 
 
         <!-- Lesson page specific styles are here -->
         <style type="text/css">
@@ -97,8 +98,8 @@
         <script src="{{ asset('https://content.jwplatform.com/libraries/O7BMTay5.js') }}"></script>
         <script src="{{ asset('assets/js/main.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
-        <script src="{{ asset('assets/js/custom.js') }}"></script>
         <script src="{{ asset('assets/lessons/js/custom.js') }}"></script>
+        <script src="{{ asset('js/sweetalert/sweetalert.min.js') }}"></script>
         <script>
             function toggle_lesson_view() {
                 $("#lesson-container").toggleClass("justify-content-center");
@@ -106,7 +107,7 @@
                 $("#lesson_list_area").toggleClass("col-lg-5 order-md-1");
             }
         </script>
-
+@yield("autres_script")
 
 
     </body>

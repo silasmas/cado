@@ -46,9 +46,11 @@ Route::middleware(['auth'])->group( function (){
     Route::get('panier', [FormationController::class,'panier'])->name('panier');
 
     Route::get('formationBy/{id}', [FormationController::class,'show'])->name('formationBy');
+    Route::get('viewChapitre/{id}', [FormationController::class,'viewChapitre'])->name('viewChapitre');
     Route::get('detailFormation/{id}', [FormationController::class,'detailFormation'])->name('detailFormation');
    
     
+    Route::get('finiChapitre/{id}', [FavorieController::class,'finiChapitre'])->name('finiChapitre');
     Route::get('addFavori/{id}', [FavorieController::class,'addFavori'])->name('addFavori');
     Route::get('removeCard/{id}', [FavorieController::class,'removeCard'])->name('removeCard');
     Route::get('addCard/{id}', [FavorieController::class,'addCard'])->name('addCard');
