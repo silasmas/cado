@@ -199,14 +199,14 @@ class FormationController extends Controller
                 "session_id" => $id,
                 "user_id" => Auth::user()->id,
                 "etat" => "Payer",
-                "sous_titre" => "active",
                 "reference" => "free",
                 "niveau" => "En cour",
             ]);
         }
 
         $chapitre = formation::with('session')->where('session_id', $id)->first();
-        $chapitres = formation::with('session')->whereBelongsTo($chapitre, 'session')->get();
+        $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
+        // $chapitres = formation::with('session')->whereBelongsTo($chapitre, 'session')->get();
         //  dd($chapitres->sortBy('titre'));
         return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
     }
