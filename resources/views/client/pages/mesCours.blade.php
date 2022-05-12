@@ -39,8 +39,8 @@
             </div>
         </div>
         <div class="row no-gutters" id="my_courses_area">*
- @if (is_array($mesformations) || is_object($mesformations))
-      @forelse ($mesformations as $fr)
+ @if (is_array($paie) || is_object($paie))
+      @forelse ($paie as $fr)
                 <div class="col-lg-3">
                 <div class="course-box-wrap">
                     <div class="course-box">
@@ -56,7 +56,7 @@
                                 <a href="{{route('detailFormation',['id'=>$fr->id])}}"><h5 class="title">
                                    {{ $fr->titre }}
                                 </h5></a>
-                                @if ($fr->pivot->niveau=='commencer')
+                                @if ($fr->niveau=='commencer')
                                 <small class="btn btn-plus">Pas encore commencer</small><br>
                                 @else
                                 <div class="progress" style="height: 5px;">
@@ -64,7 +64,7 @@
                                      style="width: 50%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <small>50% Terminée</small>  
-                                <span class="btn btn-plus">{{ $fr->pivot->niveau }}</span>                                       
+                                <span class="btn btn-plus">{{ $fr->niveau }}</span>                                       
                                 @endif
                                 {{-- <div class="rating your-rating-box" style="position: unset; margin-top: -18px;">
                                     <i class="fas fa-star filled"></i>
