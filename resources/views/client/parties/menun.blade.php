@@ -86,7 +86,8 @@
                                                                         </span>
                                                                     @else
                                                                         <span class="current-price">
-                                                                            {{ '$' . $fav->session->prix }}
+                                                                            {{$fav->session->monaie=="USD"?"$":"CDF" }}
+                                                                            {{$fav->session->prix }}
                                                                         </span>
                                                                     @endif
                                                                 @else
