@@ -11,7 +11,7 @@
                 <ul class="purchase-history-list">
                     <li class="purchase-history-list-header">
                         <div class="row">
-                            <div class="col-sm-6"><h4 class="purchase-history-list-title">Purchase history</h4></div>
+                            <div class="col-sm-6"><h4 class="purchase-history-list-title">Conférence</h4></div>
                             <div class="col-sm-6 hidden-xxs hidden-xs">
                                 <div class="row">
                                     <div class="col-sm-3">Date</div>
