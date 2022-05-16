@@ -5,7 +5,7 @@
             <div class="col">
                 <h1 class="page-title print-hidden"> {{ isset($titre) ? $titre : '' }}</h1>
                 <ul class="print-hidden">
-                    <li class="{{ $titre=="Mes formations"?"active":"" }}"><a href="{{ route('mesCours') }}">Courses</a></li>
+                    <li class="{{ $titre=="Mes formations"?"active":"" }}"><a href="{{ route('mesCours') }}">Mes conférences</a></li>
 
                     <li class="{{ $titre=="Mes favories"?"active":"" }}"><a href="{{ route('favorie') }}">Mes favories</a></li>
 
