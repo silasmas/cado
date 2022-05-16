@@ -232,7 +232,7 @@
                                 @if ($detail->session->type == 'payant')
                                     <span class="current-price">
                                         <span class="current-price">
-                                            {{ $form->monaie=="USD"?'$':'FC' $detail->session->prix }}
+                                            {{ $form->monaie=="USD"?'$':'FC'.$detail->session->prix }}
                                         </span>
                                     </span>
                                     <input type="hidden" id="total_price_of_checking_out"
