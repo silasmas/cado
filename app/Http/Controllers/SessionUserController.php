@@ -61,7 +61,7 @@ class SessionUserController extends Controller
        
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
       //  dd($request->transaction_id);
-      
+      $login=self::verifyLogin($request->transaction_id);
         if ($retour) {           
 
             $response_body = self::verifyStatus($request);
@@ -97,18 +97,39 @@ class SessionUserController extends Controller
     public function retour(Request $request)
     {
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
+        //  dd($request->transaction_id);
         $login=self::verifyLogin($request->transaction_id);
-            $response_body = self::verifyStatus($request);
-            if ((int)$response_body["code"] === 201) {
-                $operateur=$retour->operateur;
-                $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
-            } else {
-                $operateur=$retour->operateur;
-                $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
-            }
-            
+          if ($retour) {           
+  
+              $response_body = self::verifyStatus($request);
+              if ((int)$response_body["code"] === 201) {
+                  $retour->etat = 'Payer';
+                   $retour->reponse = $response_body['data']['payment_method'];
+                  $retour->message = $response_body['message'];
+                  $retour->niveau = 'commencer';
+                  $retour->save();
+                  $operateur=$retour->operateur;
+                  $data = $response_body;
+                  return view('client.pages.notify', compact('data','operateur'));
+              } else {
+                  // $retour->etat = "En attente";
+                  $retour->reponse = $response_body['data']['payment_method'];
+                  $retour->message = $response_body['message'];
+                  $retour->save();
+                  $operateur=$retour->operateur;
+                  $data = $response_body;
+                  return view('client.pages.notify', compact('data','operateur'));
+              }
+          }else{
+             
+              $response_body =self::verifyStatus($request);
+              $data = $response_body;
+              $etat="Erreur d'enregistrement";
+              $operateur=$retour->operateur;
+            //  dd($response_body."retour erreur");
+              return view('client.pages.notify', compact('data',"etat","operateur"));
+          }
+          
     }
     public function genererChaineAleatoire($longueur = 10)
     {
