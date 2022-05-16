@@ -61,7 +61,7 @@ class SessionUserController extends Controller
        
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
       //  dd($request->transaction_id);
-        $login=self::verifyLogin($request->transaction_id);
+      
         if ($retour) {           
 
             $response_body = self::verifyStatus($request);
@@ -97,7 +97,7 @@ class SessionUserController extends Controller
     public function retour(Request $request)
     {
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
-
+        $login=self::verifyLogin($request->transaction_id);
             $response_body = self::verifyStatus($request);
             if ((int)$response_body["code"] === 201) {
                 $operateur=$retour->operateur;
