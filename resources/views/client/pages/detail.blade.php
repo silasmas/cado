@@ -258,16 +258,14 @@
                                                 @if ($fre->pivot->niveau == 'commencer')
                                                     <div class="buy-btns">
                                                         <a class="btn btn-buy-now"
-                                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
-                                                            >
+                                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}">
                                                             Commencer
                                                         </a>
                                                     </div>
                                                 @else
                                                     <div class="buy-btns">
                                                         <a class="btn btn-buy-now"
-                                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}"
-                                                            >
+                                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}">
                                                             Suivre
                                                         </a>
                                                     </div>
@@ -283,7 +281,7 @@
                                         <div class="buy-btns">
                                             <button class="btn btn-buy-now" 
                                                 id="{{ $detail->session->id }}" onclick="addToCard(this)">
-                                                @lang('general.autre.addPanier')1
+                                                @lang('general.autre.addPanier')
                                             </button>
                                         </div>
                                         @endif
@@ -292,7 +290,7 @@
                                 <div class="buy-btns">
                                     <button class="btn btn-buy-now" 
                                         id="{{ $detail->session->id }}" onclick="addToCard(this)">
-                                        @lang('general.autre.addPanier')1
+                                        @lang('general.autre.addPanier')
                                     </button>
                                 </div>
                                 @endif
