@@ -129,7 +129,7 @@
                                         value="{{ isset($session->id) ? $panier->pluck('id')->join(',') : '' }}">
                                     <input type="text" name="prix" class="form-control"
                                         value="{{ $panier->pluck('prix')->sum() }}">
-                                    <input type="text" name="monaie" class="form-control" value="{{$session->monaie=="USD"?"$":"CDF"}}">
+                                    <input type="text" name="monaie" class="form-control" value="{{$session->monaie=="USD"?"USD":"CDF"}}">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="login-email">Moyen de paiement</label>
