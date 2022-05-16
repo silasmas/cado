@@ -38,7 +38,10 @@
                                     <div class="col-sm-3 date">
                                         {{ \Carbon\Carbon::parse($p->date)->isoFormat('LLL') }}
                                     </div>
-                                    <div class="col-sm-3 price"><b> ${{ $p->prix }}</b></div>
+                                    <div class="col-sm-3 price"><b>
+                                         {{ $p->monaie=='USD'?"$":"FC" }}
+                                         {{ $p->prix }}
+                                        </b></div>
                                     <div class="col-sm-4 payment-type">
                                         {{ $p->operateur }}
                                     </div>
