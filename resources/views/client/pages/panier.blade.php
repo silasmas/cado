@@ -113,8 +113,8 @@
                     <h5 class="fw-700">Total:</h5>
                     <div class="cart-sidebar bg-white radius-10 py-4 px-3">
                         <div class="total-price"> 
-                            {{$panier->monaie=="USD"?"$":"CDF"}} 
-                            {{ "$" . $panier->pluck('prix')->sum() }}</div>
+                            {{$panier->session->monaie=="USD"?"$":"CDF"}} 
+                            {{$panier->pluck('prix')->sum() }}</div>
                         <div class="total-original-price">
                         </div>
 
