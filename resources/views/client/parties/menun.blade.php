@@ -179,7 +179,10 @@
                                                         </div>
                                                         <div class="instructor-name">{{ $p->context }}</div>
                                                         <div class="item-price">
-                                                            <span class="current-price">${{ $p->prix }}</span>
+                                                            <span class="current-price">
+                                                                {{$p->monaie=="USD"?"$":"CDF" }}
+                                                                {{ $p->prix }}
+                                                            </span>
                                                         </div>
                                                     </a>
                                                 </div>
