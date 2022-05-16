@@ -203,7 +203,10 @@
                                     <div class="cart-total-price clearfix">
                                         <span>Total:</span>
                                         <div class="float-end">
-                                            <span class="current-price">${{ $panier->pluck('prix')->sum() }}</span>
+                                            <span class="current-price">
+                                                {{ $panier->pluck('monaie')->first() }}
+                                                {{ $panier->pluck('prix')->sum() }}
+                                            </span>
                                             <!-- <span class="original-price">$94.99</span> -->
                                         </div>
                                     </div>
