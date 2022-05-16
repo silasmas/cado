@@ -9,19 +9,21 @@
         <div class="row align-items-baseline">
             <div class="col-lg-6">
                 <div class="my-course-filter-bar filter-box">
-                    <span>Filter by</span>
+                    <span>Filtrer par</span>
                     <div class="btn-group">
                         <a class="btn btn-outline-secondary dropdown-toggle all-btn" href="#" data-bs-toggle="dropdown"> Categories </a>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" id="2" onclick="getCoursesByCategoryId(this.id)"></a>
-                            <a class="dropdown-item" href="#" id="39" onclick="getCoursesByCategoryId(this.id)">Frontend Development</a>
-                            <a class="dropdown-item" href="#" id="34" onclick="getCoursesByCategoryId(this.id)">Fashion</a>
+                            <a class="dropdown-item" href="#" ></a>
+                            <a class="dropdown-item" href="#" id="commencer" onclick="getCoursesByCategoryId(this.id)">Pas encore debuter </a>    
+                            <a class="dropdown-item" href="#" id="En cour" onclick="getCoursesByCategoryId(this.id)">En cours </a>    
+                            <a class="dropdown-item" href="#" id="Fini" onclick="getCoursesByCategoryId(this.id)">Fini </a>    
+                            
                         </div>
                     </div>
 
                     <div class="btn-group">
-                        <a href="my_courses.html" class="btn reset-btn" disabled>Reset</a>
+                        <button  class="btn reset-btn" onclick="toutesFormations()">Toutes</button>
                     </div>
                 </div>
             </div>
@@ -124,5 +126,13 @@
     </div>
 </section>
 
+@endsection
+@section('autres_script')
+    <script type="text/javascript">
+      
+      function toutesFormations() {
+        location.reload();
+    }
+    </script>
 @endsection
 
