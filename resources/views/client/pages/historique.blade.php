@@ -15,8 +15,8 @@
                             <div class="col-sm-6 hidden-xxs hidden-xs">
                                 <div class="row">
                                     <div class="col-sm-3">Date</div>
-                                    <div class="col-sm-3">Total price</div>
-                                    <div class="col-sm-4">Payment type</div>
+                                    <div class="col-sm-3">Prix total</div>
+                                    <div class="col-sm-4">Moyen de paiement</div>
                                     <div class="col-sm-2">Actions</div>
                                 </div>
                             </div>
