@@ -58,22 +58,7 @@ class SessionUserController extends Controller
     }
     public function notify(Request $request)
     {
-        $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
-
-            $response_body = self::verifyStatus($request);
-            if ((int)$response_body["code"] === 201) {
-                $operateur=$retour->operateur;
-                $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
-            } else {
-                $operateur=$retour->operateur;
-                $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
-            }
-        
-    }
-    public function retour(Request $request)
-    {
+       
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
       //  dd($request->transaction_id);
         $login=self::verifyLogin($request->transaction_id);
@@ -107,6 +92,23 @@ class SessionUserController extends Controller
           //  dd($response_body."retour erreur");
             return view('client.pages.notify', compact('data',"etat","operateur"));
         }
+        
+    }
+    public function retour(Request $request)
+    {
+        $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
+
+            $response_body = self::verifyStatus($request);
+            if ((int)$response_body["code"] === 201) {
+                $operateur=$retour->operateur;
+                $data = $response_body;
+                return view('client.pages.notify', compact('data','operateur'));
+            } else {
+                $operateur=$retour->operateur;
+                $data = $response_body;
+                return view('client.pages.notify', compact('data','operateur'));
+            }
+            
     }
     public function genererChaineAleatoire($longueur = 10)
     {

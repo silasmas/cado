@@ -28,21 +28,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
-        // Using closure based composers...
-        // View::composer('client.pages.mesCours', function ($view) {
-
-        //     $session=user::with('session')->findOrFail(Auth::user()->id);                         
-
-        //     $Myform=$session->session()->wherePivot('user_id',Auth::user()->id)->get();
-           
-        //     $Mycouple=session::with(['user','formation'])->where('context','COUPLE')->get();
-        //     $Mycouple=session::with(['user','formation'])->where('context','CADO')->get();
-            
-         
-        //      $view->with('Moncoaching',$Mycouple);
-        //     $view->with('Myform',$Myform);
-        // });
+    
         View::composer('client.pages.*', function ($view) {
             if(!Auth::guest()){
                 $userForm=User::with('session')->where("id",Auth::user()->id)->first();

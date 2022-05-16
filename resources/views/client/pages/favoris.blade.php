@@ -57,7 +57,7 @@
                            
                                         @lang('general.autre.achatFait')
                                     @else
-                                        {{ '$' . $fav->session->prix }}
+                                        {{  $form->monaie=="USD"?'$':'FC'. $fav->session->prix }}
                                     @endif
                                 @else
                                         {{ $fav->session->type }}

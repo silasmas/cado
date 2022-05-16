@@ -183,10 +183,10 @@
                                                             @if ($form->id == $userForm->session_id && $userForm->etat == 'Payer')
                                                                 @lang('general.autre.achatFait')
                                                             @else
-                                                                {{ '$' . $form->prix }}
+                                                                {{ $form->monaie=="USD"?'$':'FC' . $form->prix }}
                                                             @endif
                                                         @else
-                                                            {{ '$' . $form->prix }}
+                                                            {{ $form->monaie=="USD"?'$':'FC'. $form->prix }}
                                                         @endif
                                                     @else
                                                         {{ $form->type }}
