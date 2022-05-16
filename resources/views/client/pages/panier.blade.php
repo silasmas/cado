@@ -90,7 +90,8 @@
                                             </div>
                                             <div class="price">
                                                 <div class="current-price">
-                                                    {{ "$" . $session->prix }}
+                                                    {{ $session->monaie=="USD"?"$":"CDF" }}
+                                                    {{ $session->prix }}
                                                 </div>
                                             </div>
                                         </div>
@@ -113,7 +114,7 @@
                     <h5 class="fw-700">Total:</h5>
                     <div class="cart-sidebar bg-white radius-10 py-4 px-3">
                         <div class="total-price"> 
-                            {{$panier->session->monaie=="USD"?"$":"CDF"}} 
+                            {{$session->monaie=="USD"?"$":"CDF"}} 
                             {{$panier->pluck('prix')->sum() }}</div>
                         <div class="total-original-price">
                         </div>

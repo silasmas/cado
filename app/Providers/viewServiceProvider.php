@@ -44,7 +44,7 @@ class ViewServiceProvider extends ServiceProvider
               ->where([['session_users.etat','Payer'],['users.id',Auth::user()->id]])
               ->get();
             //   $f=$userForm->session->firstWhere("id",6);
-                    //dd($panierPaie);
+                // dd($panier);
                  $view->with('userForm',$userForm);
                  $view->with('panier',$panier);
                  $view->with('paie',$panierPaie);
