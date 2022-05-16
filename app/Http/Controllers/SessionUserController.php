@@ -102,8 +102,8 @@ class SessionUserController extends Controller
           if ($retour) {           
   
               $response_body = self::verifyStatus($request);
+              dd($response_body);
               if ((int)$response_body["code"] === 201) {
-                  dd($response_body["code"] );
                   $retour->etat = 'Payer';
                    $retour->reponse = $response_body['data']['payment_method'];
                   $retour->message = $response_body['message'];
