@@ -266,7 +266,7 @@
                                                     <div class="buy-btns">
                                                         <a class="btn btn-buy-now"
                                                             href="{{ route('formationBy', ['id' => $detail->session->id]) }}">
-                                                            Suivre
+                                                            @lang('general.autre.suite')
                                                         </a>
                                                     </div>
                                                 @endif

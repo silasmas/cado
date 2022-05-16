@@ -51,5 +51,6 @@ return [
         'addPanier'=>'Ajouter au panier',
         'seePanier'=>'Voir le panier',
         'achatFait'=>'Déjà achété',
+        'suite'=>'Continuer la formation',
     ],
 ];

@@ -66,24 +66,20 @@
                                 <small>50% Terminée</small>  
                                 <span class="btn btn-plus">{{ $fr->niveau }}</span>                                       
                                 @endif
-                                {{-- <div class="rating your-rating-box" style="position: unset; margin-top: -18px;">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>                                                                   
-                                    <p class="your-rating-text">
-                                        <a href="javascript::" id="edit_rating_btn_1" onclick="toggleRatingView('1')" style="color: #2a303b;">Edit rating</a>
-                                        <a href="javascript::" class="hidden" id="cancel_rating_btn_1" onclick="toggleRatingView('1')" style="color: #2a303b;">Cancel rating</a>
-                                    </p>
-                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-12 px-4 py-2">
                                     <a href="{{ route('detailFormation',['id'=>$fr->id]) }}" class="btn red radius-10 w-100">Voir en detail</a>
                                 </div>
                                 <div class="col-md-12 px-4 py-2">
-                                    <a href="{{ route('formationBy',['id'=>$fr->id]) }}" class="btn red radius-10 w-100">Commencer</a>
+                                    <a href="{{ route('formationBy',['id'=>$fr->id]) }}" class="btn red radius-10 w-100">
+                                       @if ($fr->niveau=='commencer')
+                                       @lang('general.autre.free')
+                                       @else
+                                       @lang('general.autre.suite')                                       
+                                       @endif
+                                       
+                                    </a>
                                 </div>
                             </div>
                         </div>
