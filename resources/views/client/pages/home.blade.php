@@ -234,11 +234,16 @@
                                         </div>
                                         <div class="popover-btns">
                                             @if ($form->type == 'payant')
-                                                @if ($paie->pluck('id')->contains($form->id))
+                                                @if ($paie->pluck('id')->contains($form->id))                                         
+                                                
                                                     <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
                                                         class="btn  green radius-10">
+                                                        @if ($paie->find($form->id)->niveau=='commencer')                                                    
+                                                        @lang('general.autre.suite')
+                                                        @else
                                                         @lang('general.autre.free')
-                                                    </a>
+                                                        @endif
+                                                    </a>                                                    
                                                 @else
                                                     @if ($panier != null)
                                                         @if ($panier->pluck('id')->contains($form->id))
