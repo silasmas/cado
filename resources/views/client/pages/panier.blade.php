@@ -80,13 +80,6 @@
                                                 </div>
 
                                                 <div class="floating-user d-inline-block mt-2">
-                                                    {{-- @foreach ($session->formateur as $f)
-                                                    <img style="margin-left: 0px;" class="position-absolute"
-                                                        src="{{ asset('assets/images/form/' . $f->photo) }}" width="30px"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="{{ $f->prenom . ' ' . $f->nom }}"
-                                                        onclick="event.stopPropagation(); $(location).attr('href', '');" />
-                                                @endforeach --}}
                                                     {{ $session->context }}
                                                 </div>
                                             </div>
@@ -120,7 +113,7 @@
                     <h5 class="fw-700">Total:</h5>
                     <div class="cart-sidebar bg-white radius-10 py-4 px-3">
                         <div class="total-price"> 
-                            {{$panier->monaie=="USD"?"$":"CDF"}}
+                            {{$panier->monaie=="USD"?"$":"CDF"}} 
                             {{ "$" . $panier->pluck('prix')->sum() }}</div>
                         <div class="total-original-price">
                         </div>
