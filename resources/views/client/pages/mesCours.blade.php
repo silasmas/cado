@@ -6,9 +6,9 @@
 
 <section class="my-courses-area">
     <div class="container">
-        <div class="row align-items-baseline">
-            <div class="col-lg-6">
-                <div class="my-course-filter-bar filter-box">
+        <div class="row ">
+            <div class="col-lg-4 col-sm-12">
+                <div class="my-course-filter-bar filter-box ">
                     <span>Filtrer par</span>
                     <div class="btn-group">
                         <a class="btn btn-outline-secondary dropdown-toggle all-btn" href="#" data-bs-toggle="dropdown"> Conférence </a>
@@ -27,11 +27,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="my-course-search-bar">
+            <div class="col-lg-6  col-sm-12">
+                <div class="my-course-search-bar mt-3">
                     <form action="">
                         <div class="input-group">
-                            <input type="text" class="form-control py-2" placeholder="Search my courses" onkeyup="getCoursesBySearchString(this.value)" />
+                            <input type="text" class="form-control py-2" placeholder="Chercher une conférence" onkeyup="getCoursesBySearchString(this.value)" />
                             <div class="input-group-append">
                                 <button class="btn py-2" type="submit"><i class="fas fa-search"></i></button>
                             </div>
