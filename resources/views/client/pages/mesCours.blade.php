@@ -11,7 +11,7 @@
                 <div class="my-course-filter-bar filter-box">
                     <span>Filtrer par</span>
                     <div class="btn-group">
-                        <a class="btn btn-outline-secondary dropdown-toggle all-btn" href="#" data-bs-toggle="dropdown"> Categories </a>
+                        <a class="btn btn-outline-secondary dropdown-toggle all-btn" href="#" data-bs-toggle="dropdown"> Conférence </a>
 
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#" ></a>
