@@ -130,14 +130,14 @@ class SessionUserController extends Controller
             } else {
                 $data = $response_body;
                 $message = self::message($response_body);
-                return view('pages.notify', compact('data', "message", "ab"));
+                return view('pages.notify', compact('data', "message"));
             }
         } else {
             $response_body = self::verifyStatus($request);
             $data = $response_body;
             $etat = "Erreur d'enregistrement";
             $message = self::message($response_body);
-            return view('pages.notify', compact('data', "message", "ab"));
+            return view('pages.notify', compact('data', "message"));
         }
 
 
