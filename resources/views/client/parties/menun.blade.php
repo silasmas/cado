@@ -59,7 +59,8 @@
                     {{-- debut menu live --}}
                     <div class="instructor-box  menu-icon-box" id="">
                         <div class="icon">
-                            <a href="{{ $live->count() > 0 ? route('listelives') : route('hone') }}"><i
+                            <a href="{{ $live->count() > 0 ? route('listelives') : route('home') }}"><i
+                                
                                     class="fas fa-signal"></i>
                             </a>
                             <span class="number">{{ $live->count() }}</span>
