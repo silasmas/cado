@@ -46,12 +46,16 @@
                         </div><br>
                     @endif
                     @if ($errors->all())
-                        <div class="col-md-12 col-md-offset-3">
-                            <div class="alert alert-danger alert-dismissable">
-                                Merci de remplire touts les champs obligatoire afin de continuer le paiement par carte
-                                bancaire SVP!
-                            </div>
-                        </div><br>
+                    @foreach ($errors->all() as $e)
+                        
+                    <div class="col-md-12 col-md-offset-3">
+                        <div class="alert alert-danger alert-dismissable">
+                            {{ $e }}
+                            {{-- Merci de remplire touts les champs obligatoire afin de continuer le paiement par carte
+                            bancaire SVP! --}}
+                        </div>
+                    </div><br>
+                    @endforeach
                     @endif
 
                     <div class="in-cart-box">
@@ -166,44 +170,34 @@
                                                 </small>
                                             @endif
                                         </div>
-                                    </div>
+                                  
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label">
+                                                Code postal (obligatoire) :</label>
+                                            <input type="text" name="customer_zip_code" value="{{ old('name') }}"
+                                                class="form-control carte2" value="{{ old('customer_zip_code') }}">
+                                            @if ($errors->has('customer_zip_code'))
+                                                <small class="invalid-feedback  text-danger" role="alert">
+                                                    <strong>{{ $errors->first('customer_zip_code') }}</strong>
+                                                </small>
+                                            @endif
                                         <div class="state" id="state" style="display: none">
-                                            <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="form-label">
-                                                    Code postal (obligatoire) :</label>
-                                                <input type="text" name="customer_zip_code" value="{{ old('name') }}"
-                                                    class="form-control carte3" value="{{ old('customer_zip_code') }}">
-                                                @if ($errors->has('customer_zip_code'))
-                                                    <small class="invalid-feedback  text-danger" role="alert">
-                                                        <strong>{{ $errors->first('customer_zip_code') }}</strong>
-                                                    </small>
-                                                @endif
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="form-label">votre Etat
-                                                    (obligatoire
-                                                    si
-                                                    vous êtes au canada ou aux USA)</label>
-                                                <input type="text" name="customer_state" class="form-control carte3"
-                                                    value="{{ old('customer_state') }}">
-                                                @if ($errors->has('customer_state'))
-                                                    <small class="invalid-feedback  text-danger" role="alert">
-                                                        <strong>{{ $errors->first('customer_state') }}</strong>
-                                                    </small>
-                                                @endif
+                                            <div class="mb-3" id="us">
+                                                <label for="exampleInputEmail1" class="form-label">votre Etat</label>
+                                              @include('client.pages.etatUs')
+                                            </div>
+                                            <div class="mb-3" id="ca">
+                                                <label for="exampleInputEmail1" class="form-label">votre Etat</label>
+                                              @include('client.pages.etatCa')
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 ">
                                             <label for="login-email">Adresse (obligatoire)</label>
-                                            <div class="input-group">
+                                            <div class="input-group" >
                                                 <textarea name="customer_address" id="" cols="30" rows="5" class="form-control carte2" placeholder="Adresse">
                                              {{ old('customer_address') }}
                                             </textarea>
-                                                @if ($errors->has('customer_address'))
-                                                    <small class="invalid-feedback  text-danger" role="alert">
-                                                        <strong>{{ $errors->first('customer_address') }}</strong>
-                                                    </small>
-                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -230,20 +224,37 @@
         });
 
         function switch_state(val) {
-            if (val == "CA" || val == "US") {
-                document.getElementById('state').style.display = "block";
-                var el = document.querySelectorAll('input.carte3');
-                el.forEach(element => {
-                    element.setAttribute('required', "true");
-                });
-            } else {
-                document.getElementById('state').style.display = "none";
+           switch (val) {
+               case "US":
+               document.getElementById('state').style.display = "block";
+                document.getElementById('us').style.display = "block";
+                document.getElementById('ca').style.display = "none";
 
-                var el = document.querySelectorAll('input.carte3');
-                el.forEach(element => {
-                    element.removeAttribute("required");
-                });
-            }
+                document.querySelector('select.carteca').removeAttribute('required');
+                 document.querySelector('select.carteus').setAttribute('required', "true");
+
+                   break;
+               case "CA":
+               document.getElementById('state').style.display = "block";
+
+                document.querySelector('select.carteus').removeAttribute('required');
+                document.querySelector('select.carteca').setAttribute('required', "true");
+               
+                document.getElementById('ca').style.display = "block";
+                document.getElementById('us').style.display = "none";
+                
+                   break;
+           
+               default:
+               document.getElementById('state').style.display = "none";
+                document.getElementById('us').style.display = "none";
+                document.getElementById('ca').style.display = "none";
+
+                document.querySelector('select.carteus').removeAttribute('required');
+                document.querySelector('select.carteca').removeAttribute('required'); 
+                document.querySelector('input.carte3').removeAttribute('required'); 
+                   break;
+           }         
 
         }
 
@@ -254,6 +265,7 @@
                     document.getElementById('carte').style.display = "none";
 
                     var el = document.querySelectorAll('input.carte2');
+                    document.querySelector('textarea.carte2').removeAttribute('required');
                     document.querySelector('select.carte2').removeAttribute("required");
                     el.forEach(element => {
                         element.removeAttribute("required");
@@ -262,6 +274,7 @@
                 case "CREDIT_CARD":
                     document.getElementById('carte').style.display = "block";
                     var el = document.querySelectorAll('input.carte2');
+                   document.querySelector('textarea.carte2').setAttribute('required', "true");
                     document.querySelector('select.carte2').setAttribute('required', "true");
                     el.forEach(element => {
                         element.setAttribute('required', "true");

@@ -343,6 +343,16 @@ class SessionUserController extends Controller
             ];
             return $cinetpay_data;
         } else {
+            $state="";
+            switch ($request["customer_country"]) {
+                case 'CA':
+                   $state= $request["customer_state"];
+                    break;
+                case 'US':
+                   $state= $request["customer_state2"];
+                    break;
+            }
+
             $cinetpay_data =  [
                 "amount" => $request->prix,
                 "currency" => $request->monaie,
@@ -361,7 +371,7 @@ class SessionUserController extends Controller
                 'customer_country' => $request["customer_country"],
                 'customer_zip_code' => $request["customer_zip_code"],
                 'customer_phone_number' => Auth::user()->phone,
-                'customer_state' => $request["customer_state"],
+                'customer_state' => $state,
             ];
             return $cinetpay_data;
         }
@@ -460,10 +470,24 @@ class SessionUserController extends Controller
                     return back()->with("message", "Veuillez completer votre profil afin de continuer votre paiement par carte bancaire ");
                     // return response()->json(['reponse' => false,'msg' => "Veuillez completer votre profil afin de continuer votre paiement"]);
                 } else {
-                    if ($request->customer_country == "CA" || $request->customer_country == "US") {
+                    //  dd($request->customer_state2);
+                     if($request->customer_country == "US"){
                         $request->validate([
                             'channels' => ['required', 'string', 'max:255'],
                             'customer_country' => ['required', 'string', 'max:255'],
+                            'customer_zip_code' => ['required', 'string', 'max:255'],
+                            'customer_state2' => ['required', 'string', 'max:255'],
+                            'customer_address' => ['required', 'string', 'max:255'],
+                            'customer_city' => ['required', 'string', 'max:255'],
+                        ]);
+                     }
+                    if ($request->customer_country == "CA") {
+  
+                        $request->validate([
+                            'channels' => ['required', 'string', 'max:255'],
+                            'customer_country' => ['required', 'string', 'max:255'],
+                            'customer_zip_code' => ['required', 'string', 'max:255'],
+                            'customer_state' => ['required', 'string', 'max:255'],
                             'customer_address' => ['required', 'string', 'max:255'],
                             'customer_city' => ['required', 'string', 'max:255'],
                         ]);
@@ -471,8 +495,6 @@ class SessionUserController extends Controller
                         $request->validate([
                             'channels' => ['required', 'string', 'max:255'],
                             'customer_country' => ['required', 'string', 'max:255'],
-                            'customer_zip_code' => ['required', 'string', 'max:255'],
-                            'customer_state' => ['required', 'string', 'max:255'],
                             'customer_address' => ['required', 'string', 'max:255'],
                             'customer_city' => ['required', 'string', 'max:255'],
                         ]);
