@@ -1,4 +1,4 @@
-@extends('client.templates.main_template',['titre'=>"Detail formation"])
+@extends('client.templates.main_template', ['titre' => 'Detail formation'])
 
 
 @section('content')
@@ -121,46 +121,6 @@
                             </div>
                         </div>
                     </div>
-@if (isset($formatted))
-    
-<div class="course-curriculum-box">
- 
-    <div class="course-curriculum-accordion">
-        <div class="lecture-group-wrapper">
-            <div class="lecture-group-title clearfix" style="border-radius: 10px 10px 0px 0px;"
-                data-bs-toggle="collapse" data-bs-target="#collapse91" aria-expanded="true">
-                <div class="title float-start">
-                    Table des matières
-                </div>
-                <div class="float-end">
-                    <span class="total-lectures " style="color: #000000"> {{ $chapitres->count() }}
-                        Chapitre(s) </span>
-                    <span class="total-time"> {{ $formatted }} </span>
-                </div>
-            </div>
-
-            <div id="collapse91" class="lecture-list collapse show">
-                <ul>
-                    @forelse ($chapitres->sortBy('titre') as $d)
-                        <li class="lecture has-preview text-14px">
-                            <span class="lecture-title"
-                                onclick="go_course_playing_page('12', '157')">{{ $d->titre }}</span>
-
-                            <div class="lecture-info float-lg-end">
-                                <span class="lecture-time ps-2"> {{ $d->nbrHeure }}</span>
-                            </div>
-                        </li>
-                    @empty
-                    @endforelse
-
-                </ul>
-            </div>
-        </div>
-
-    </div>
-</div>
-@endif
-
 
                     <div class="about-instructor-box">
                         <div class="about-instructor-title">
@@ -228,7 +188,7 @@
                                 @if ($detail->session->type == 'payant')
                                     <span class="current-price">
                                         <span class="current-price">
-                                            {{ $detail->session->monaie=="USD"?'$':'FC' }}{{$detail->session->prix }}
+                                            {{ $detail->session->monaie == 'USD' ? '$' : 'FC' }}{{ $detail->session->prix }}
                                         </span>
                                     </span>
                                     <input type="hidden" id="total_price_of_checking_out"
@@ -244,60 +204,59 @@
 
                             <!-- WISHLIST BUTTON -->
 
+                            <label
+                                class="d-none">{{ $fre = $userForm->session->where('id', $detail->session->id)->first() }}</label>
+                            {{-- {{ dd($fre) }} --}}
                             @if ($detail->session->type == 'payant')
-                                @if ($userForm->session->count() > 0)
-                                <label class="d-none">{{  $fre=$userForm->session->firstWhere("id",$detail->session->id) }}</label>
-                                
-                                    {{-- @foreach ($userForm->session as $fr) --}}
-                                        @if ($fre!=null)
-                                            @if ($fre->pivot->etat == 'Payer')
-                                                @if ($fre->pivot->niveau == 'commencer')
-                                                    <div class="buy-btns">
-                                                        <a class="btn btn-buy-now"
-                                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}">
-                                                            Commencer
-                                                        </a>
-                                                    </div>
-                                                @else
-                                                    <div class="buy-btns">
-                                                        <a class="btn btn-buy-now"
-                                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}">
-                                                            @lang('general.autre.suite')
-                                                        </a>
-                                                    </div>
-                                                @endif
-                                            @else
-                                                    <div class="buy-btns">
-                                                        <a class="btn btn-buy-now" href="{{ route('panier') }}">
-                                                            @lang('general.autre.seePanier')
-                                                        </a>
-                                                    </div>
-                                            @endif
-                                        @else
-                                        <div class="buy-btns">
-                                            <button class="btn btn-buy-now" 
-                                                id="{{ $detail->session->id }}" onclick="addToCard(this)">
-                                                @lang('general.autre.addPanier')
-                                            </button>
-                                        </div>
-                                        @endif
-                                    {{-- @endforeach --}}
-                                @else
+                                @if ($fre == '')
                                 <div class="buy-btns">
                                     <button class="btn btn-buy-now" 
                                         id="{{ $detail->session->id }}" onclick="addToCard(this)">
                                         @lang('general.autre.addPanier')
                                     </button>
                                 </div>
+                                @else
+                                    @if ($fre->pivot->etat == 'Payer')
+                                        <div class="buy-btns">
+                                            <a class="btn btn-buy-now"
+                                                href="{{ route('formationBy', ['id' => $detail->session->id]) }}">
+                                                Réservation réussi
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="buy-btns">
+                                            <a class="btn btn-buy-now" href="{{ route('panier') }}">
+                                                @lang('general.autre.seePanier')
+                                            </a>
+                                        </div>
+                                    @endif
                                 @endif
                             @else
-                                <div class="buy-btns">
-                                    <a class="btn btn-buy-now"
-                                        href="{{ route('formationBy', ['id' => $detail->session->id]) }}" id="12"
-                                        onclick="handleCartItems(this)">
-                                        Commencer
-                                    </a>
-                                </div>
+                                @if ($fre != null)
+                                    @if ($fre->pivot->etat == 'Payer')
+                                        <div class="buy-btns">
+                                            <a class="btn btn-buy-now"
+                                                href="{{ route('formationBy', ['id' => $detail->session->id]) }}" id="12"
+                                                onclick="handleCartItems(this)">
+                                                Réservation réussi
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="buy-btns">
+                                            <a class="btn btn-buy-now" href="{{ route('panier') }}">
+                                                @lang('general.autre.seePanier')
+                                            </a>
+                                        </div>
+                                    @endif
+                                @else
+                                    <div class="buy-btns">
+                                        <a class="btn btn-buy-now"
+                                            href="{{ route('formationBy', ['id' => $detail->session->id]) }}" id="12"
+                                            onclick="handleCartItems(this)">
+                                            Confirmez votre réservation
+                                        </a>
+                                    </div>
+                                @endif
                             @endif
                             <div class="buy-btns">
                                 <button class="btn btn-add-wishlist" type="button" onclick="handleWishList3(this)"
@@ -348,8 +307,8 @@
                     </button>
 
                     <!-- <button type="button" class="close" data-bs-dismiss="modal" onclick="pausePreview()">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                  </button> -->
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                      </button> -->
                 </div>
                 <div class="modal-body">
                     <div class="course-preview-video-wrap">

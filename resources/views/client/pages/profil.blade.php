@@ -1,11 +1,12 @@
-@extends('client.templates.main_template',['titre'=>"Profil"])
+@extends('client.templates.main_template', ['titre' => 'Profil'])
 
 @section('autres_style')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/parsley/parsley.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/aos.css') }}">
 @endsection
 @section('content')
     @include('client.pages.sousMenu')
-    <section class="user-dashboard-area">
+    {{-- <section class="user-dashboard-area">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -111,27 +112,6 @@
                                             @endif
                                         </div>
 
-                                        {{-- <div class="form-group">
-                                        <label for="Biography">Biography:</label>
-                                        <textarea class="form-control" name="biography" 
-                                        id="Biography"></textarea>
-                                    </div> --}}
-                                    </div>
-                                    {{-- <div class="link-group">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" maxlength="60" name="twitter_link" placeholder="Twitter link" value="https://www.twitter.com/john" />
-                                        <small class="text-danger">Add your twitter link.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" maxlength="60" name="facebook_link" placeholder="Facebook link" value="https://www.facebook.com/john" />
-                                        <small class="text-danger">Add your facebook link.</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" maxlength="60" name="linkedin_link" placeholder="Linkedin link" value="https://www.linkedin.com/john" />
-                                        <small class="text-danger">Add your linkedin link.</small>
-                                    </div>
-                                </div>
-                            </div> --}}
                                     <div class="content-update-box">
                                         <button type="submit" class="btn">Save</button>
                                     </div>
@@ -141,9 +121,80 @@
                 </div>
             </div>
         </div>
+    </section> --}}
+    <section class="user-dashboard-area">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="user-dashboard-box">
+                        <div class="user-dashboard-sidebar">
+                            <div class="user-box">
+                                <img src="assets/images/uploads/user_image/placeholder.png" alt="" class="img-fluid" />
+                                <div class="name">Ben Hanson</div>
+                            </div>
+                            <div class="user-dashboard-menu" id="list-tab" role="tablist">
+                                <ul>
+                                    <li data-filter="profil" class="link-nav">
+                                        <a href="#profil" data-bs-toggle="list" role="tab" aria-controls="list-home">Profile</a></li>
+                                    <li data-filter="compte" class="active">
+                                        <a href="#compte" data-bs-toggle="list" role="tab" aria-controls="list-home">Account</a>
+                                    </li>
+                                    <li data-filter="photo"><a href="#photo" data-bs-toggle="list" role="tab" aria-controls="list-home">Photo</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="user-dashboard-content tab-content" data-aos="fade-up" data-aos-delay="100"  id="nav-tabContent">
+                            <div class="profil tab-pane fade show active " role="tabpanel"
+                             aria-labelledby="list-profile-list" id="profil">
+
+                            </div>
+                            <div class="compte" id="compte">
+                                <div class="content-title-box">
+                                    <div class="title">Account</div>
+                                    <div class="subtitle">Edit your account settings.</div>
+                                </div>
+                                <form action="" method="post">
+                                    <div class="content-box">
+                                        <div class="email-group">
+                                            <div class="form-group">
+                                                <label for="email">Email:</label>
+                                                <input type="email" class="form-control" name="email" id="email"
+                                                    placeholder="Email" value="student@example.com" />
+                                            </div>
+                                        </div>
+                                        <div class="password-group">
+                                            <div class="form-group">
+                                                <label for="password">Password:</label>
+                                                <input type="password" class="form-control" id="current_password"
+                                                    name="current_password" placeholder="Enter current password" />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control" name="new_password"
+                                                    placeholder="Enter new password" />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control" name="confirm_password"
+                                                    placeholder="Re-type your password" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="content-update-box">
+                                        <button type="submit" class="btn">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="photo" id="photo">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 @section('autres_script')
+    <script src="{{ asset('assets/js/aos.js') }}"></script>
     <script src="{{ asset('assets/parsley/js/parsley.js') }}"></script>
     <script src="{{ asset('assets/parsley/i18n/fr.js') }}"></script>
 @endsection

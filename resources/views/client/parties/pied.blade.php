@@ -28,23 +28,50 @@
 
 
     function handleWishList2(id) {
+        event.preventDefault()
         deleteFavorie(id.id, "../deleteFavorie/");
     }
 
     function handleWishList3(id) {
+        event.preventDefault()
         add(id.id, 'autre', "addFavori");
     }
 
     function handleWishList(id) {
+        event.preventDefault()
         add(id.id, "", "addFavori");
+    }
+    function confirmPlace(id) {
+        addCard(id.id, "autre", "confirmPlace");
     }
 
     function addToCard(id) {
-        //alert(id.id);
+        event.preventDefault()
         addCard(id.id, "", "addCard");
     }
 
+    function annulReservation(id) {
+        event.preventDefault()
+        swal({
+            title: "Annuler la réservation",
+            text: "êtes-vous sûre de vouloir annuler votre réservation?",
+            icon: 'warning',
+            dangerMode: true,
+            buttons: {
+                cancel: 'Non',
+                delete: 'OUI'
+            }
+        }).then(function(willDelete) {
+            if (willDelete) {
+                addCard(id.id, "", "removeCard");
+            } else {
+
+            }
+
+        });
+    }
     function removeFromCartList(id) {
+        event.preventDefault()
         swal({
             title: "Supprimer du panier",
             text: "êtes-vous sûre de supprimer cette formation du panier?",
@@ -65,9 +92,10 @@
     }
 
     function addCard(form, idLoad, url) {
+        event.preventDefault()
         var autre = idLoad == '' ? '' : '../';
         swal({
-            title: 'Merci de patienter panier...',
+            title: 'Merci de patienter...',
             icon: 'info'
         })
         $.ajax({
@@ -124,6 +152,7 @@
 
     }
 
+   
     function deleteFavorie(form, url) {
         swal({
             title: "Supprimer de vos favories",

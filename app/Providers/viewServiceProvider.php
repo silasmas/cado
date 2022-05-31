@@ -43,8 +43,17 @@ class ViewServiceProvider extends ServiceProvider
               ->join('sessions','sessions.id','session_users.session_id')              
               ->where([['session_users.etat','Payer'],['users.id',Auth::user()->id]])
               ->get();
-            //   $f=$userForm->session->firstWhere("id",6);
-                //   dd($panierPaie->find(9)->niveau);
+              $livePaie=User::with('session')->selectRaw('session_users.etat,session_users.operateur,
+              session_users.niveau,session_users.updated_at as date,sessions.*')
+              ->join('session_users','session_users.user_id','users.id')
+              ->join('sessions','sessions.id','session_users.session_id')              
+              ->where([['sessions.live',true],['session_users.etat','Payer'],['users.id',Auth::user()->id]])
+              ->get();
+          
+              $live=session::with('formateur')->where([['live',true],['isform',false]])->get();
+            //   dd($userForm->session);
+                 $view->with('live',$live);
+                 $view->with('livep',$livePaie);
                  $view->with('userForm',$userForm);
                  $view->with('panier',$panier);
                  $view->with('paie',$panierPaie);
@@ -53,9 +62,9 @@ class ViewServiceProvider extends ServiceProvider
         }); 
 
         View::composer('client.pages.home', function ($view) {
-            $form=session::where('context','CADO')->get();
-            $couple=session::where('context','COUPLE')->get();
-            $actuelCado=session::where('date_debut','>', now())->get();
+            $form=session::where([['context','CADO'],['isform',true]])->get();
+            $couple=session::where([['context','COUPLE'],['isform',true]])->get();
+            $actuelCado=session::where([['date_debut','>', now()],['live',true],['isform',false]])->get();
             //   dd($form);
             $view->with('couples',$couple);
             $view->with('allform',$form);

@@ -50,11 +50,10 @@ class FavorieController extends Controller
     public function removeCard($id)
     {
         $formCard=sessionUser::where([['session_id',$id],['user_id',Auth::user()->id]])->first();
-        if($formCard){          
-           
+        if($formCard){      
             $rap =$formCard->delete();
             if($rap){
-                return response()->json(['reponse' => true,'msg' =>"Formation supprimer de votre panier."]);
+                return response()->json(['reponse' => true,'msg' =>"Action réussie!"]);
             }else{
                 return response()->json(['reponse' => false,'msg' => "erreur !!"]);
             }
@@ -88,6 +87,24 @@ class FavorieController extends Controller
             ]);
             if($rap){
                 return response()->json(['reponse' => true,'msg' =>"Session ajouter dans vos favories avec succès."]);
+            }else{
+                return response()->json(['reponse' => false,'msg' => "erreur !!"]);
+            }
+        }
+    }
+    public function confirmPlace($id)
+    {
+        $active=sessionUser::where([['session_id',$id],['user_id',Auth::user()->id]])->first();
+        if($active){         
+            return response()->json(['reponse' => false,'msg' =>'Vous avez déjà réserver pour ce live!!']);          
+        }else{
+            $rap =sessionUser::updateOrCreate([
+                'session_id'=>$id,
+                'user_id'=>Auth::user()->id,
+                'etat'=>'Payer'
+            ]);
+            if($rap){
+                return response()->json(['reponse' => true,'msg' =>"Votre réservation est faite avec succès, vous recevrez un mail de confirmation"]);
             }else{
                 return response()->json(['reponse' => false,'msg' => "erreur !!"]);
             }

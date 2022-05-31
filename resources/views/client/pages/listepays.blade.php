@@ -1,4 +1,4 @@
-<select name="customer_country" class="form-select" >
+<select name="customer_country" class="form-select carte2" onchange="switch_state(this.value)">
     <option value=" " selected>Selectionnez votre pays </option>
 	<option value="AF">Afghanistan</option>
 	<option value="AX">Åland Islands</option>

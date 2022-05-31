@@ -67,9 +67,9 @@ class FormationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function lives()
     {
-        //
+        return view('client.pages.listeLive');
     }
 
     /**
@@ -249,6 +249,16 @@ class FormationController extends Controller
 
 
         return view('client.pages.detail', compact('detail', 'chapitres', 'formatted', 'formateur'));
+    }
+    public function viewLive($id)
+    {
+        // $detail=session::with('formation')->find($id);
+        $detail = formation::with('session')->where('session_id', $id)->first();
+        $chapitres = formation::where('session_id', $id)->get();
+        $formateur = session::with('formateur')->where('id', $id)->get();
+// dd($detail);
+
+        return view('client.pages.confirmLive', compact('detail', 'chapitres', 'formateur'));
     }
 
     /**

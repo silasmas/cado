@@ -1,4 +1,4 @@
-@extends('client.templates.main_template',['titre'=>"Home dev"])
+@extends('client.templates.main_template', ['titre' => 'Home dev'])
 
 @section('content')
     {{-- {{ dd($allform[0]->formation) }} --}}
@@ -7,7 +7,7 @@
         {{-- <div class="cropped-home-banner"></div> --}}
         <div class="container-xl">
             <div class="block-card">
-                @if ($actuelCado->isEmpty())
+                @if ($live->isEmpty())
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-lg-6 order-2 order-lg-1">
@@ -32,7 +32,7 @@
                 @else
                     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            @forelse ($actuelCado as $actuel)
+                            @forelse ($live as $actuel)
                                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                                     <div class="container">
                                         <div class="row align-items-center">
@@ -51,19 +51,46 @@
                                                     </p>
                                                     </p>
                                                     @if ($actuel->type == 'payant')
-                                                        <a href="{{ route('detailFormation', ['id' => $actuel->id]) }}"
-                                                            class="btn btn-1 scrollTop">Acheter mon billet
-                                                            {{ " ($" . $actuel->prix . ')' }}</a>
+                                                        @if ($livep->pluck('id')->contains($actuel->id))
+                                                            <button id="{{ $actuel->id }}" onclick="addToCard(this)"
+                                                                class="btn btn-1 scrollTop">Reéservation réussie
+                                                                {{ " ($" . $actuel->prix . ')' }}</button>
+                                                        @else
+                                                            @if ($panier->pluck('id')->contains($actuel->id))
+                                                            <a href="{{ route('panier') }}" id="{{ $actuel->id }}"
+                                                                class="">
+                                                                <button class="btn btn-1 scrollTop">
+                                                                    @lang('general.autre.seePanier')
+                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                </button>
+                                                            </a>
+                                                            @else
+                                                            <button id="{{ $actuel->id }}" onclick="addToCard(this)"
+                                                                class="btn btn-1 scrollTop">AJouter au panier
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                                {{ " ($" . $actuel->prix . ')' }}</button>
+                                                            @endif
+                                                        @endif
                                                     @else
-                                                        <a href="{{ route('detailFormation', ['id' => $actuel->id]) }}"
-                                                            class="btn btn-1 scrollTop">Réserver ma place
-                                                            {{ '(' . $actuel->type . ')' }}</a>
+                                                        @if ($livep->pluck('id')->contains($actuel->id))
+                                                            <button onclick="annulReservation(this)"
+                                                                id="{{ $actuel->id }}" class="btn btn-1 scrollTop">
+                                                                @lang('general.autre.payer')
+                                                            </button>
+                                                        @else
+                                                            <button onclick="confirmPlace(this)" id="{{ $actuel->id }}"
+                                                                class="btn btn-1 scrollTop">
+                                                                @lang('general.autre.livefree')
+                                                                {{ '(' . $actuel->type . ')' }}
+                                                            </button>
+                                                        @endif
                                                     @endif
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 order-1 order-lg-2">
                                                 <div class="box-img">
-                                                    <img src="{{ asset('assets/images/form/' . $actuel->cover) }}" alt="">
+                                                    <img src="{{ asset('assets/images/form/' . $actuel->cover) }}"
+                                                        alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -183,10 +210,10 @@
                                                             @if ($form->id == $userForm->session_id && $userForm->etat == 'Payer')
                                                                 @lang('general.autre.achatFait')
                                                             @else
-                                                            {{ $form->monaie=="USD"?'$':'FC' }}{{$form->prix }}
+                                                                {{ $form->monaie == 'USD' ? '$' : 'FC' }}{{ $form->prix }}
                                                             @endif
                                                         @else
-                                                        {{ $form->monaie=="USD"?'$':'FC' }}{{ $form->monaie=="USD"?'$':'FC'.$form->prix }}
+                                                            {{ $form->monaie == 'USD' ? '$' : 'FC' }}{{ $form->monaie == 'USD' ? '$' : 'FC' . $form->prix }}
                                                         @endif
                                                     @else
                                                         {{ $form->type }}
@@ -234,16 +261,15 @@
                                         </div>
                                         <div class="popover-btns">
                                             @if ($form->type == 'payant')
-                                                @if ($paie->pluck('id')->contains($form->id))                                       
-                                                
+                                                @if ($paie->pluck('id')->contains($form->id))
                                                     <a href="{{ route('detailFormation', ['id' => $form->id]) }}"
                                                         class="btn  green radius-10">
-                                                        @if ($paie->find($form->id)->niveau=='commencer')                                                    
-                                                        @lang('general.autre.free')
+                                                        @if ($paie->find($form->id)->niveau == 'commencer')
+                                                            @lang('general.autre.free')
                                                         @else
-                                                        @lang('general.autre.suite')
+                                                            @lang('general.autre.suite')
                                                         @endif
-                                                    </a>                                                    
+                                                    </a>
                                                 @else
                                                     @if ($panier != null)
                                                         @if ($panier->pluck('id')->contains($form->id))
@@ -291,7 +317,9 @@
                     </div>
                 </div>
             </div>
-            <a href="#" class="btn btn-plus">Toutes les conférences <i class="bi bi-arrow-right"></i></a>
+            @if ($allform->count() > 0)
+                <a href="#" class="btn btn-plus">Toutes les conférences <i class="bi bi-arrow-right"></i></a>
+            @endif
         </div>
     </section>
 
@@ -380,12 +408,12 @@
                                                             @if ($form->id == $userForm->session_id && $userForm->etat == 'Payer')
                                                                 @lang('general.autre.achatFait')
                                                             @else
-                                                            {{ $form->monaie=="USD"?'$':'FC' }}
+                                                                {{ $form->monaie == 'USD' ? '$' : 'FC' }}
                                                                 {{ $form->prix }}
                                                             @endif
                                                         @else
-                                                        {{ $form->monaie=="USD"?'$':'FC' }}
-                                                            {{  $form->prix }}
+                                                            {{ $form->monaie == 'USD' ? '$' : 'FC' }}
+                                                            {{ $form->prix }}
                                                         @endif
                                                     @else
                                                         {{ $form->type }}
@@ -519,7 +547,7 @@
                                         of the Edustar Top Instructors and all my premium co...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                             -->
+                                                                         -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">
@@ -547,7 +575,7 @@
                                         Engineering from Santa Clara University and years of exper...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                             -->
+                                                                         -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">

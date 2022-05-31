@@ -1,6 +1,8 @@
-@extends('client.templates.main_template',['titre'=>"Panier"])
+@extends('client.templates.main_template', ['titre' => 'Panier'])
 
-
+@section('autres_style')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/parsley/parsley.css') }}">
+@endsection
 @section('content')
     <section class="category-header-area"
         style="background-image: url('assets/images/system/shopping_cart.png'); background-size: contain; background-repeat: no-repeat; background-position-x: right; background-color: #ec5252;">
@@ -46,18 +48,15 @@
                     @if ($errors->all())
                         <div class="col-md-12 col-md-offset-3">
                             <div class="alert alert-danger alert-dismissable">
-                                Merci de remplire touts les champs obligatoire afin de continuer le paiement par carte bancaire SVP!
+                                Merci de remplire touts les champs obligatoire afin de continuer le paiement par carte
+                                bancaire SVP!
                             </div>
                         </div><br>
                     @endif
-{{-- 
-                    <div class="col-md-12  text-danger mb-1">
-                        @foreach ($errors->all() as $err)
-                            {{$err}}<br>
-                        @endforeach 
-                    </div>--}}
+
                     <div class="in-cart-box">
-                        <div class="title">{{ $panier->count() }} Formation{{ $panier->count() > 1 ? 's' : '' }}
+                        <div class="title">{{ $panier->count() }}
+                            Formation{{ $panier->count() > 1 ? 's' : '' }}
                         </div>
                         <div class="">
                             <ul class="cart-course-list">
@@ -90,7 +89,7 @@
                                             </div>
                                             <div class="price">
                                                 <div class="current-price">
-                                                    {{ $session->monaie=="USD"?"$":"CDF" }}
+                                                    {{ $session->monaie == 'USD' ? "$" : 'CDF' }}
                                                     {{ $session->prix }}
                                                 </div>
                                             </div>
@@ -109,139 +108,170 @@
                         </div>
                     </div>
                 </div>
-@if (isset($session))
-    
-<div class="col-lg-4 pt-1" {{ $panier->pluck('prix')->sum() == 0 ? 'hidden' : '' }}>
-    <h5 class="fw-700">Total:</h5>
-    <div class="cart-sidebar bg-white radius-10 py-4 px-3">
-        <div class="total-price"> 
-            {{$session->monaie=="USD"?"$":"CDF"}} 
-            {{$panier->pluck('prix')->sum() }}</div>
-        <div class="total-original-price">
-        </div>
+                @if (isset($session))
+                    <div class="col-lg-4 pt-1" {{ $panier->pluck('prix')->sum() == 0 ? 'hidden' : '' }}>
+                        <h5 class="fw-700">Total:</h5>
+                        <div class="cart-sidebar bg-white radius-10 py-4 px-3">
+                            <div class="total-price">
+                                {{ $session->monaie == 'USD' ? "$" : 'CDF' }}
+                                {{ $panier->pluck('prix')->sum() }}</div>
+                            <div class="total-original-price">
+                            </div>
 
-        <div class="col-6 col-sm-6 col-md-3 input-group  mb-3 text-center text-md-start">
-            <form id="form_paie" method="POST" action="{{ url('payerForm') }}">
-                @csrf
-                <div class="mb-3" hidden>
-                    <label for="exampleInputEmail1" class="form-label">
-                        formation id :</label>
-                    <input type="text" name="formation_id" class="form-control"
-                        value="{{ isset($session->id) ? $panier->pluck('id')->join(',') : '' }}">
-                    <input type="text" name="prix" class="form-control"
-                        value="{{ $panier->pluck('prix')->sum() }}">
-                    <input type="text" name="monaie" class="form-control" value="{{$session->monaie=="USD"?"USD":"CDF"}}">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="login-email">Moyen de paiement</label>
-                    <div class="input-group">
-                        <select class="form-select" name="channels"
-                            onchange="switch_modepaie(this.value)" required>
-                            <option disabled value="" selected> Selectionnez le moyen de paiement</option>
-                            <option value="MOBILE_MONEY">Mobile money</option>
-                            <option value="CREDIT_CARD">Carte bancaire</option>
-                            {{-- <option value="ALL">Les deux</option> --}}
-                        </select>
-                    </div>
-                </div>
-                <div class="" id="carte" style="display: none">
-
-                    <div class="form-group mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Selectionnez votre pays
-                            (obligatoire)
-                        </label>
-                        <div class="input-group">
-                            @include('client.pages.listepays')
-                            @if ($errors->has('customer_country'))
-                                <small class="invalid-feedback  text-danger" role="alert">
-                                    <strong>{{ $errors->first('customer_country') }}</strong>
-                                </small>
-                            @endif
+                            <div class="col-6 col-sm-6 col-md-3 input-group  mb-3 text-center text-md-start">
+                                <form id="form_paie" method="POST" action="{{ url('payerForm') }}" data-parsley-validate>
+                                    @csrf
+                                    <div class="mb-3" hidden>
+                                        <label for="exampleInputEmail1" class="form-label">
+                                            formation id :</label>
+                                        <input type="text" name="formation_id" class="form-control"
+                                            value="{{ isset($session->id) ? $panier->pluck('id')->join(',') : '' }}">
+                                        <input type="text" name="prix" class="form-control"
+                                            value="{{ $panier->pluck('prix')->sum() }}">
+                                        <input type="text" name="monaie" class="form-control"
+                                            value="{{ $session->monaie == 'USD' ? 'USD' : 'CDF' }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="login-email">Moyen de paiement</label>
+                                        <div class="input-group">
+                                            <select class="form-select moyen" name="channels"
+                                                onchange="switch_modepaie(this.value)" required>
+                                                <option disabled value="" selected> Selectionnez le moyen de paiement
+                                                </option>
+                                                <option value="MOBILE_MONEY">Mobile money</option>
+                                                <option value="CREDIT_CARD">Carte bancaire</option>
+                                                {{-- <option value="ALL">Les deux</option> --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="" id="carte" style="display: none">
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label">Selectionnez votre pays
+                                                (obligatoire)
+                                            </label>
+                                            @include('client.pages.listepays')
+                                            @if ($errors->has('customer_country'))
+                                                <small class="invalid-feedback  text-danger" role="alert">
+                                                    <strong>{{ $errors->first('customer_country') }}</strong>
+                                                </small>
+                                            @endif
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="form-label">Ville (obligatoire)</label>
+                                            <input type="text" name="customer_city" class="form-control carte2"
+                                                placeholder="Ville" value="{{ old('customer_city') }}" />
+                                            @if ($errors->has('customer_city'))
+                                                <small class="invalid-feedback  text-danger" role="alert">
+                                                    <strong>{{ $errors->first('customer_city') }}</strong>
+                                                </small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                        <div class="state" id="state" style="display: none">
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">
+                                                    Code postal (obligatoire) :</label>
+                                                <input type="text" name="customer_zip_code" value="{{ old('name') }}"
+                                                    class="form-control carte3" value="{{ old('customer_zip_code') }}">
+                                                @if ($errors->has('customer_zip_code'))
+                                                    <small class="invalid-feedback  text-danger" role="alert">
+                                                        <strong>{{ $errors->first('customer_zip_code') }}</strong>
+                                                    </small>
+                                                @endif
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">votre Etat
+                                                    (obligatoire
+                                                    si
+                                                    vous êtes au canada ou aux USA)</label>
+                                                <input type="text" name="customer_state" class="form-control carte3"
+                                                    value="{{ old('customer_state') }}">
+                                                @if ($errors->has('customer_state'))
+                                                    <small class="invalid-feedback  text-danger" role="alert">
+                                                        <strong>{{ $errors->first('customer_state') }}</strong>
+                                                    </small>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-3 ">
+                                            <label for="login-email">Adresse (obligatoire)</label>
+                                            <div class="input-group">
+                                                <textarea name="customer_address" id="" cols="30" rows="5" class="form-control carte2" placeholder="Adresse">
+                                             {{ old('customer_address') }}
+                                            </textarea>
+                                                @if ($errors->has('customer_address'))
+                                                    <small class="invalid-feedback  text-danger" role="alert">
+                                                        <strong>{{ $errors->first('customer_address') }}</strong>
+                                                    </small>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn red w-100 radius-10 mb-3">Payer</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group mb-3 ">
-                        <label for="login-email">Ville (obligatoire)</label>
-                        <div class="input-group">
-                            <input type="text" name="customer_city" class="form-control"
-                                placeholder="Ville"  value="{{ old('customer_city') }}"/>
-                                @if ($errors->has('customer_city'))
-                                <small class="invalid-feedback  text-danger" role="alert">
-                                    <strong>{{ $errors->first('customer_city') }}</strong>
-                                </small>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">
-                            Code postal (obligatoire) :</label>
-                        <input type="text" name="customer_zip_code" value="{{ old('name') }}"
-                         class="form-control" value="{{ old('customer_zip_code') }}">
-                        @if ($errors->has('customer_zip_code'))
-                        <small class="invalid-feedback  text-danger" role="alert">
-                            <strong>{{ $errors->first('customer_zip_code') }}</strong>
-                        </small>
-                    @endif
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">votre Etat (obligatoire si
-                            vous êtes au canada ou aux USA)</label>
-                        <input type="text" name="customer_state" class="form-control"
-                        value="{{ old('customer_state') }}">
-                        @if ($errors->has('customer_state'))
-                        <small class="invalid-feedback  text-danger" role="alert">
-                            <strong>{{ $errors->first('customer_state') }}</strong>
-                        </small>
-                    @endif
-                    </div>
-                    <div class="form-group mb-3 ">
-                        <label for="login-email">Adresse (obligatoire)</label>
-                        <div class="input-group">
-                            <textarea name="customer_address" id="" cols="30" rows="5" class="form-control" placeholder="Adresse">
-                                {{ old('customer_address') }}
-                            </textarea>
-                            @if ($errors->has('customer_address'))
-                            <small class="invalid-feedback  text-danger" role="alert">
-                                <strong>{{ $errors->first('customer_address') }}</strong>
-                            </small>
-                        @endif
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn red w-100 radius-10 mb-3">Payer</button>
-            </form>
-        </div>
-    </div>
-</div>
-@endif
+                @endif
             </div>
         </div>
     </section>
 @endsection
 @section('autres_script')
+    <script src="{{ asset('assets/parsley/js/parsley.js') }}"></script>
+    <script src="{{ asset('assets/parsley/i18n/fr.js') }}"></script>
     {{-- <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script> --}}
     <script type="text/javascript">
+        $(document).ready(function() {
+            var moyen = document.querySelector('select.moyen').value;
+            switch_modepaie(moyen);
+            var state = document.querySelector('select.carte2').value;
+            switch_state(state);
+        });
+
+        function switch_state(val) {
+            if (val == "CA" || val == "US") {
+                document.getElementById('state').style.display = "block";
+                var el = document.querySelectorAll('input.carte3');
+                el.forEach(element => {
+                    element.setAttribute('required', "true");
+                });
+            } else {
+                document.getElementById('state').style.display = "none";
+
+                var el = document.querySelectorAll('input.carte3');
+                el.forEach(element => {
+                    element.removeAttribute("required");
+                });
+            }
+
+        }
+
         function switch_modepaie(val) {
             switch (val) {
                 case "MOBILE_MONEY":
                     // document.getElementById('carte').setAttribute('hidden');
                     document.getElementById('carte').style.display = "none";
+
+                    var el = document.querySelectorAll('input.carte2');
+                    document.querySelector('select.carte2').removeAttribute("required");
+                    el.forEach(element => {
+                        element.removeAttribute("required");
+                    });
                     break;
                 case "CREDIT_CARD":
                     document.getElementById('carte').style.display = "block";
-                    // document.getElementById('carte').removeAttribute('hidden');
+                    var el = document.querySelectorAll('input.carte2');
+                    document.querySelector('select.carte2').setAttribute('required', "true");
+                    el.forEach(element => {
+                        element.setAttribute('required', "true");
+                    });
                     break;
                 case "ALL":
-                    alert("tout");
+
                     break;
             }
         }
-
-        // $(document).ready(function() {
-        //     $("#form_paie").on("submit", function(e) {
-        //         e.preventDefault();
-        //         payer("#form_paie", '/paie');
-        //     });
-        // });
 
         function payer(form, url) {
             var u = url;

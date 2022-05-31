@@ -43,11 +43,11 @@ class SessionUserController extends Controller
      */
     public function verifyLogin($id)
     {
-        $verify=explode('.',$id);
-        $id=$verify[0];
-        $u = User::where("id",$id)->first();
+        $verify = explode('.', $id);
+        $id = $verify[0];
+        $u = User::where("id", $id)->first();
 
-         if ($u) {
+        if ($u) {
             event(new Registered($u));
 
             Auth::login($u);
@@ -58,79 +58,262 @@ class SessionUserController extends Controller
     }
     public function notify(Request $request)
     {
-       
-        $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
-      //  dd($request->transaction_id);
-      $login=self::verifyLogin($request->transaction_id);
-        if ($retour) {           
+        $retour = sessionUser::where("reference", $request->cpm_trans_id)->first();
+        if ($retour) {
+            $response_body = self::verifyStatus($request->cpm_trans_id);
+            /**
+             * composition de la variable reponse, c'est une concatenation de montant+monaie+
+             * signature+telephone+prefix du pay+la langue+la version+la configuration+l'action+status+code
+             * * */
+            $reponse = $request->cpm_amount . "/" . $request->cpm_currency . "/" . $request->signature . "/" . $request->cel_phone_num . "/" .
+                $request->cpm_phone_prefixe . "/" . $request->cpm_language . "/" . $request->cpm_version . "/" . $request->cpm_payment_config . "/" .
+                $request->cpm_page_action . "/" . $response_body['data']['status'] . "/" . $response_body['data']['code'];
 
-            $response_body = self::verifyStatus($request);
-            if ((int)$response_body["code"] === 201) {
+            if ((int)$response_body["code"] === 00 && $response_body["message"] == "SUCCES") {
+
                 $retour->etat = 'Payer';
-                 $retour->reponse = $response_body['data']['payment_method'];
+                $retour->reponse = $reponse;
                 $retour->message = $response_body['message'];
                 $retour->niveau = 'commencer';
+                $retour->updated_at = $request->cpm_trans_date;
                 $retour->save();
-                $operateur=$retour->operateur;
-                $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
+                return dd($response_body['data']['status']);
             } else {
-                // $retour->etat = "En attente";
-                $retour->reponse = $response_body['data']['payment_method'];
+                $retour->reponse = $reponse;
                 $retour->message = $response_body['message'];
                 $retour->save();
-                $operateur=$retour->operateur;
-                $data = $response_body;
-                return view('client.pages.notify', compact('data','operateur'));
+
+                return dd($response_body['data']['status']);
             }
-        }else{
-           
-            $response_body =self::verifyStatus($request);
-            $data = $response_body;
-            $etat="Erreur d'enregistrement";
-            $operateur=$retour->operateur;
-          //  dd($response_body."retour erreur");
-            return view('client.pages.notify', compact('data',"etat","operateur"));
+        } else {
+            return dd($retour);
         }
-        
+        // if ($retour) {
+
+        //     $response_body = self::verifyStatus($request);
+        //     if ((int)$response_body["code"] === 201) {
+        //         $retour->etat = 'Payer';
+
+        //         $retour->save();
+
+        //     } else {
+        //         // $retour->etat = "En attente";
+        //         $retour->reponse = $response_body['data']['payment_method'];
+        //         $retour->message = $response_body['message'];
+        //         $retour->save();
+        //         $operateur = $retour->operateur;
+        //         $data = $response_body;
+        //         return view('client.pages.notify', compact('data', 'operateur'));
+        //     }
+        // } else {
+
+        //     $response_body = self::verifyStatus($request);
+        //     $data = $response_body;
+        //     $etat = "Erreur d'enregistrement";
+        //     $operateur = $retour->operateur;
+        //     //  dd($response_body."retour erreur");
+        //     return view('client.pages.notify', compact('data', "etat", "operateur"));
+        // }
     }
     public function retour(Request $request)
     {
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
+        $login = self::verifyLogin($request->transaction_id);
+        if ($retour) {
+            $response_body = self::verifyStatus($request);
+            if ((int)$response_body["code"] === 00 && $response_body["message"] == "SUCCES") {
+
+                $message = ["message" => "Paiement fait avec succès", "status" => "Réussi"];
+                $operateur = $retour->operateur;
+                $data = $response_body;
+                return view('client.pages.notify', compact('data', 'message', 'operateur'));
+            } else {
+                $data = $response_body;
+                $message = self::message($response_body);
+                return view('pages.notify', compact('data', "message", "ab"));
+            }
+        } else {
+            $response_body = self::verifyStatus($request);
+            $data = $response_body;
+            $etat = "Erreur d'enregistrement";
+            $message = self::message($response_body);
+            return view('pages.notify', compact('data', "message", "ab"));
+        }
+
+
         //  dd($request->transaction_id);
-        $login=self::verifyLogin($request->transaction_id);
-          if ($retour) {           
-  
-              $response_body = self::verifyStatus($request);
-             // dd($response_body);
-              if ((int)$response_body["code"] === 201 || $response_body["message"] =="SUCCES") {
-                  $retour->etat = 'Payer';
-                   $retour->reponse = $response_body['data']['payment_method'];
-                  $retour->message = $response_body['message'];
-                  $retour->niveau = 'commencer';
-                  $retour->save();
-                  $operateur=$retour->operateur;
-                  $data = $response_body;
-                  return view('client.pages.notify', compact('data','operateur'));
-              } else {
-                  // $retour->etat = "En attente";
-                  $retour->reponse = $response_body['data']['payment_method'];
-                  $retour->message = $response_body['message'];
-                  $retour->save();
-                  $operateur=$retour->operateur;
-                  $data = $response_body;
-                  return view('client.pages.notify', compact('data','operateur'));
-              }
-          }else{
-             
-              $response_body =self::verifyStatus($request);
-              $data = $response_body;
-              $etat="Erreur d'enregistrement";
-              $operateur=$retour->operateur;
-            //  dd($response_body."retour erreur");
-              return view('client.pages.notify', compact('data',"etat","operateur"));
-          }
-          
+
+        // if ($retour) {
+
+        //     $response_body = self::verifyStatus($request);
+        //     // dd($response_body);
+        //     if ((int)$response_body["code"] === 201 || $response_body["message"] == "SUCCES") {
+        //         $retour->etat = 'Payer';
+        //         $retour->reponse = $response_body['data']['payment_method'];
+        //         $retour->message = $response_body['message'];
+        //         $retour->niveau = 'commencer';
+        //         $retour->save();
+        //         $operateur = $retour->operateur;
+        //         $data = $response_body;
+        //         return view('client.pages.notify', compact('data', 'operateur'));
+        //     } else {
+        //         // $retour->etat = "En attente";
+        //         $retour->reponse = $response_body['data']['payment_method'];
+        //         $retour->message = $response_body['message'];
+        //         $retour->save();
+        //         $operateur = $retour->operateur;
+        //         $data = $response_body;
+        //         return view('client.pages.notify', compact('data', 'operateur'));
+        //     }
+        // } else {
+
+        //     $response_body = self::verifyStatus($request);
+        //     $data = $response_body;
+        //     $etat = "Erreur d'enregistrement";
+        //     $operateur = $retour->operateur;
+        //     //  dd($response_body."retour erreur");
+        //     return view('client.pages.notify', compact('data', "etat", "operateur"));
+        // }
+    }
+    public function message($body)
+    {
+        $code = $body["code"];
+        $reponse = array();
+        switch ($code) {
+            case '201':
+                return $reponse = ["message" => "Paiement crée", "status" => "Créé"];
+                break;
+            case '600':
+                return $reponse = ["message" => "Paiement échoué!", "status" => "échec"];
+                break;
+            case '602':
+                return $reponse = ["message" => "Solde insuffisant", "status" => "échec"];
+                break;
+            case '603':
+                return $reponse = ["message" => "Service indisponible", "status" => "échec"];
+                break;
+            case '604':
+                return $reponse = ["message" => "Erreur du code OTP", "status" => "échec"];
+                break;
+            case '608':
+                return $reponse = ["message" => "Les champs minimum requis n'est pas envoyer", "status" => "échec"];
+                break;
+            case '606':
+                return $reponse = ["message" => "Erreur des configurations", "status" => "échec"];
+                break;
+            case '609':
+                return $reponse = ["message" => "Erreur d'authenfication", "status" => "échec"];
+                break;
+            case '610':
+                return $reponse = ["message" => "Erreur de méthode de paiement", "status" => "échec"];
+                break;
+            case '611':
+                return $reponse = ["message" => "Erreur des type de montant", "status" => "échec"];
+                break;
+            case '612':
+                return $reponse = ["message" => "Monaie non valide", "status" => "échec"];
+                break;
+            case '613':
+                return $reponse = ["message" => "Identifiant du site non valide", "status" => "échec"];
+                break;
+            case '614':
+                return $reponse = ["message" => "Format de date de transaction non valide", "status" => "échec"];
+                break;
+            case '615':
+                return $reponse = ["message" => "Langue non valide", "status" => "échec"];
+                break;
+            case '616':
+                return $reponse = ["message" => "Page d'action non valide", "status" => "échec"];
+                break;
+            case '617':
+                return $reponse = ["message" => "Configuration de paiement non valide", "status" => "échec"];
+                break;
+            case '618':
+                return $reponse = ["message" => "Version de API non valide", "status" => "échec"];
+                break;
+            case '619':
+                return $reponse = ["message" => "La signature érronée", "status" => "échec"];
+                break;
+            case '620':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '621':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '622':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '623':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '624':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '625':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '626':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '627':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '628':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '635':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '636':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '637':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '641':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '642':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '662':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '663':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '664':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '804':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '807':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '808':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '809':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '810':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '811':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '812':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+            case '623':
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+
+            default:
+                return $reponse = ["message" => "Paiement crée", "status" => "échec"];
+                break;
+        }
     }
     public function genererChaineAleatoire($longueur = 10)
     {
@@ -140,10 +323,10 @@ class SessionUserController extends Controller
         for ($i = 0; $i < $longueur; $i++) {
             $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
         }
-        $idHash=Auth::user()->id.".".$chaineAleatoire;
+        $idHash = Auth::user()->id . "." . $chaineAleatoire;
         return $idHash;
     }
-    public function initInfo($request,$transaction_id)
+    public function initInfo($request, $transaction_id)
     {
 
         if ($request->channels == "MOBILE_MONEY") {
@@ -183,7 +366,7 @@ class SessionUserController extends Controller
             return $cinetpay_data;
         }
     }
-    public function initPaie($cinetpay_data, $request,$transaction_id)
+    public function initPaie($cinetpay_data, $request, $transaction_id)
     {
 
         $url = 'https://api-checkout.cinetpay.com/v2/payment';
@@ -220,12 +403,12 @@ class SessionUserController extends Controller
                     // return response()->json(['reponse' => false, 'bank' => true, 'msg' => $response_body['description']]);
                 }
             } else {
-                return back()->with('message',"Erreur d'enregistrement!");
+                return back()->with('message', "Erreur d'enregistrement!");
                 //return response()->json(['reponse' => false, 'bank' => true, 'msg' => "Erreur d'enregistrement!"]);
             }
         } else {
-            return back()->with('message',$response_body['description'] );
-           // return response()->json(['reponse' => false, 'bank' => true, 'msg' => $response_body['description']]);
+            return back()->with('message', $response_body['description']);
+            // return response()->json(['reponse' => false, 'bank' => true, 'msg' => $response_body['description']]);
         }
     }
 
@@ -262,21 +445,28 @@ class SessionUserController extends Controller
     public function store(Request $request)
     {
         $transaction_id = $this->genererChaineAleatoire();
-            if (isset($request->formation_id)) {
-                if ($request->channels == "MOBILE_MONEY") {
-                    $ok = $request->validate([
-                        'channels' => ['required', 'string', 'max:255'],
-                    ]);
+        if (isset($request->formation_id)) {
+            if ($request->channels == "MOBILE_MONEY") {
+                $ok = $request->validate([
+                    'channels' => ['required', 'string', 'max:255'],
+                ]);
 
-                        $init = self::initInfo($request,$transaction_id);
-                    
-                        return $ret = self::initPaie($init, $request->toArray(),$transaction_id);
-                 
+                $init = self::initInfo($request, $transaction_id);
+
+                return $ret = self::initPaie($init, $request->toArray(), $transaction_id);
+            } else {
+                $profil = self::siProfilcomplet();
+                if ($profil === false) {
+                    return back()->with("message", "Veuillez completer votre profil afin de continuer votre paiement par carte bancaire ");
+                    // return response()->json(['reponse' => false,'msg' => "Veuillez completer votre profil afin de continuer votre paiement"]);
                 } else {
-                    $profil = self::siProfilcomplet();
-                    if ($profil === false) {
-                        return back()->with("message", "Veuillez completer votre profil afin de continuer votre paiement par carte bancaire ");
-                        // return response()->json(['reponse' => false,'msg' => "Veuillez completer votre profil afin de continuer votre paiement"]);
+                    if ($request->customer_country == "CA" || $request->customer_country == "US") {
+                        $request->validate([
+                            'channels' => ['required', 'string', 'max:255'],
+                            'customer_country' => ['required', 'string', 'max:255'],
+                            'customer_address' => ['required', 'string', 'max:255'],
+                            'customer_city' => ['required', 'string', 'max:255'],
+                        ]);
                     } else {
                         $request->validate([
                             'channels' => ['required', 'string', 'max:255'],
@@ -286,16 +476,18 @@ class SessionUserController extends Controller
                             'customer_address' => ['required', 'string', 'max:255'],
                             'customer_city' => ['required', 'string', 'max:255'],
                         ]);
-                        
-                            $init = self::initInfo($request,$transaction_id);
-                            return $ret = self::initPaie($init, $request->toArray(),$transaction_id);
                     }
-                }
-            } else {
-                return back()->with("message", "Formation non trouvée merci d'actualiser la page!");
 
-                // return response()->json(['reponse' => false, 'msg' => "Formation non trouvée merci d'actualiser la page!"]);
+
+                    $init = self::initInfo($request, $transaction_id);
+                    return $ret = self::initPaie($init, $request->toArray(), $transaction_id);
+                }
             }
+        } else {
+            return back()->with("message", "Formation non trouvée merci d'actualiser la page!");
+
+            // return response()->json(['reponse' => false, 'msg' => "Formation non trouvée merci d'actualiser la page!"]);
+        }
     }
 
     /**
