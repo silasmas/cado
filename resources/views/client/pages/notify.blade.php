@@ -17,18 +17,50 @@
 
 <body class="antialiased">
 
-    
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-lg-6 col-sm-12" style="margin-top:80px">
+                <div class="card  mb-3 
+                 {{ $data['data']['status'] == 'ACCEPTED' ? 'border-success' : 'border-danger' }}"
+                    style="max-width: 50rem;">
+                    <div
+                        class="card-header bg-transparent {{ $data['data']['status'] == 'ACCEPTED' ? 'border-success' : 'border-danger' }}">
+                        Etat de votre paiement
+                    </div>
+                    <div
+                        class="card-body {{ $data['data']['status'] == 'ACCEPTED' ? 'text-success' : 'text-danger' }}">
+                        <h2 class="card-title">{{ $message['message'] }}</h2>
+                       
+                        <h1>{{ $data['message'] }}</h1>
+                        <h2>{{ isset($etat)?$etat:""}}</h2>
+                        <p class="card-text">{{ $data['data']['status'] }}</p>
+                        <hr>
+                        <p>Montant :{{ $data['data']['amount'] . $data['data']['currency'] }}</p>
+                        <p>Opérateur : {{ isset($operateur)?$operateur:"absent"}}</p>
+                        <p>Description :{{ $data['data']['description'] }}</p>
+                        <p class="card-text">
+                            Date :{{ \Carbon\Carbon::parse($data['data']['payment_date'])->isoFormat('LLL') }}
+
+                        </p>
+                    </div>
+                    <div
+                        class="card-footer bg-transparent  {{ $data['data']['status'] == 'ACCEPTED' ? 'border-success' : 'border-danger' }}">
+                       
+                        @if ($data['data']['status']=="ACCEPTED")
+                        <a type="button"  class="btn btn-outline-success" href="{{ route('dashboard') }}" class="alert-link">Retour à l'accueil</a>
+                        @else
+                        <a type="button"  class="btn btn-outline-danger"  href="{{ route('panier') }}" class="alert-link">Retour au panier</a>
+                        @endif
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="alert {{ $data['data']['status']=="ACCEPTED"?"alert-success":"alert-danger" }} " role="alert">
        
-        <h1>{{ $data['message'] }}</h1>
-        <h2>{{ isset($etat)?$etat:""}}</h2>
-        <p>{{ $data['data']['status'] }}</p>
-        <hr>
-        <p>Montant :{{ $data['data']['amount'] . $data['data']['currency'] }}</p>
-        <p>Opérateur : {{ isset($operateur)?$operateur:"absent"}}</p>
-        <p>Description :{{ $data['data']['description'] }}</p>
-        <p>Date :{{ $data['data']['payment_date'] }}</p><br>
+  
         @if ($data['data']['status']=="ACCEPTED")
         <a href="{{ route('dashboard') }}" class="alert-link">Retour à l'accueil</a>
         @else
