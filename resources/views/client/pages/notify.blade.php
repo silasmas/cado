@@ -30,13 +30,9 @@
                     <div
                         class="card-body {{ $data['data']['status'] == 'ACCEPTED' ? 'text-success' : 'text-danger' }}">
                         <h2 class="card-title">{{ $message['message'] }}</h2>
-                       
-                        <h1>{{ $data['message'] }}</h1>
-                        <h2>{{ isset($etat)?$etat:""}}</h2>
-                        <p class="card-text">{{ $data['data']['status'] }}</p>
+                        <p class="card-text">{{  $message['status'] }}</p>
                         <hr>
                         <p>Montant :{{ $data['data']['amount'] . $data['data']['currency'] }}</p>
-                        <p>Opérateur : {{ isset($operateur)?$operateur:"absent"}}</p>
                         <p>Description :{{ $data['data']['description'] }}</p>
                         <p class="card-text">
                             Date :{{ \Carbon\Carbon::parse($data['data']['payment_date'])->isoFormat('LLL') }}
@@ -56,18 +52,6 @@
 
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="alert {{ $data['data']['status']=="ACCEPTED"?"alert-success":"alert-danger" }} " role="alert">
-       
-  
-        @if ($data['data']['status']=="ACCEPTED")
-        <a href="{{ route('dashboard') }}" class="alert-link">Retour à l'accueil</a>
-        @else
-        <a href="{{ route('panier') }}" class="alert-link">Retour au panier</a>
-        @endif
-      
-    </div>
     </div>
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
