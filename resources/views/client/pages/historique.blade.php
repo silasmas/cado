@@ -50,7 +50,7 @@
                                             <div class="col-sm-3 payment-type text-center">
                                                 {{ $p->operateur=="MOBILE_MONEY"?"Mobile":"Carte" }}
                                             </div>
-                                            <div class="col-sm-3 payment-type {{ $p->status == 'ACCEPTED' ? 'badge-sub-success' : 'badge-sub-warning' }}">
+                                            <div class="col-sm-3 payment-type {{ $p->status == 'ACCEPTED' ? 'brn-compare-sm' : 'badge badge-sub-warning' }}">
                                                 {{-- <span class="badge  text-11px"></span> --}}
                                                 {{ $p->status }}
                                             </div>
