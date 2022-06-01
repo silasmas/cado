@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\session;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -12,16 +13,16 @@ class mailAchat extends Mailable
 {
     use Queueable, SerializesModels;
     public User $user;
-    public $data=[];
+    public session $session;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user,Array $data)
+    public function __construct(User $user, session $session)
     {
         $this->user=$user;
-        $this->data=$data;
+        $this->session=$session;
     }
 
     /**
@@ -31,6 +32,8 @@ class mailAchat extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.achat')->subject($this->data['objet']);
+        $d = $this->session->live == true && $this->session->isform == false ? "Réservation du live": "Achat de la Formation";
+
+        return $this->markdown('emails.achat')->subject($d);
     }
 }

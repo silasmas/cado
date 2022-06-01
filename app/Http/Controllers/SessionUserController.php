@@ -95,14 +95,10 @@ class SessionUserController extends Controller
                 $retour->updated_at = $request->cpm_trans_date;
                 $retour->save();
 
-                $desc = session::find($retour->session_id);
-                $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
-                $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
-                : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
-        
-                $data = ['objet' => $d, "message" => $m];
+                $desc = session::find($retour->session_id);            
                 $user = User::find(Auth::user()->id);
-                Mail::to(Auth::user()->email)->send(new mailAchat($user, $data));
+                Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc));
+
                 return dd($response_body['data']['status']);
             } else {
                 $retour->reponse = $reponse;
@@ -127,14 +123,10 @@ class SessionUserController extends Controller
                 $operateur = $retour->operateur;
                 $data = $response_body;
 
-                $desc = session::find($retour->session_id);
-                $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
-                $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
-                : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
-        
-                $dat = ['objet' => $d." retour", "message" => $m];
+                $desc = session::find($retour->session_id);            
                 $user = User::find(Auth::user()->id);
-                Mail::to(Auth::user()->email)->send(new mailAchat($user, $dat));
+                Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc));
+                
                 return view('client.pages.notify', compact('data', 'message', 'operateur'));
             } else {
                 $data = $response_body;
