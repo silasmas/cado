@@ -102,7 +102,7 @@ class SessionUserController extends Controller
         
                 $data = ['objet' => $d, "message" => $m];
                 $user = User::find(Auth::user()->id);
-                Mail::to()->send(new mailAchat($user, $data));
+                Mail::to(Auth::user()->email)->send(new mailAchat($user, $data));
                 return dd($response_body['data']['status']);
             } else {
                 $retour->reponse = $reponse;
@@ -134,7 +134,7 @@ class SessionUserController extends Controller
         
                 $dat = ['objet' => $d." retour", "message" => $m];
                 $user = User::find(Auth::user()->id);
-                Mail::to()->send(new mailAchat($user, $dat));
+                Mail::to(Auth::user()->email)->send(new mailAchat($user, $dat));
                 return view('client.pages.notify', compact('data', 'message', 'operateur'));
             } else {
                 $data = $response_body;
