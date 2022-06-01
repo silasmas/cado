@@ -63,7 +63,7 @@ class FormationController extends Controller
             ->join('paiements', 'paiements.user_id', 'users.id')
             ->where([['session_users.etat', 'Payer'], ['users.id', Auth::user()->id]])
             ->get();
-         dd($historique);
+        //  dd($historique);
         return view('client.pages.historique', compact('historique', "titre"));
     }
     public function couple()
