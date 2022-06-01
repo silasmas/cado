@@ -95,7 +95,7 @@ class SessionUserController extends Controller
                 $retour->updated_at = $request->cpm_trans_date;
                 $retour->save();
 
-                $desc = session::find($retour->formation_id);
+                $desc = session::find($retour->session_id);
                 $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
                 $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
                 : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
@@ -127,8 +127,7 @@ class SessionUserController extends Controller
                 $operateur = $retour->operateur;
                 $data = $response_body;
 
-                $desc = session::find($retour->formation_id);
-                dd($retour);
+                $desc = session::find($retour->session_id);
                 $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
                 $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
                 : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
