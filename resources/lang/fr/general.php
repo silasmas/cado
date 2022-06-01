@@ -49,7 +49,7 @@ return [
         'achat'=>'Acheter',
         'livefree'=>'Confirmé sa participation',
         'free'=>'Commencer',
-        'payer'=>'  Déjà réserver',
+        'payer'=>'Déjà réserver',
         'addPanier'=>'Ajouter au panier',
         'seePanier'=>'Voir le panier',
         'achatFait'=>'Déjà achété',

@@ -76,11 +76,11 @@
                                                             @if ($livep->pluck('id')->contains($l->id))
                                                                 <div class="col-6">
                                                                     <a href="{{ route('viewLive', ['id' => $l->id]) }}">
-                                                                        <button onclick="handleCartItems(this)"
+                                                                        <span onclick="handleCartItems(this)"
                                                                             class="">
                                                                             <span
                                                                                 class="badge badge-sub-warning text-11px">@lang('general.autre.payer')</span>
-                                                                        </button>
+                                                                        </span>
                                                                     </a>
                                                                 </div>
                                                             @else
