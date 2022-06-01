@@ -53,7 +53,8 @@ class FormationController extends Controller
     }
     public function historique()
     {
-        $titre == "Mon historique d'achats";
+
+        $titre = "Mon historique d'achats";
         $historique = User::with('session')
             ->selectRaw('session_users.etat,session_users.operateur,
     session_users.updated_at as date,paiements.*,sessions.titre')
@@ -122,64 +123,67 @@ class FormationController extends Controller
     {
         $active = formation::where("sous_titre", "active")->first();
         //  dd($active===null?"vide":"oui");
-        if ($active === null) {
+        if ($active===null) {
             $fini = formation::where("sous_titre", "fini")->get();
             //  dd($active===null?"vide":"oui");
-            if ($fini === null) {
+            if ($fini===null) {
                 $chap = formation::find($id_chap);
                 $chap->sous_titre = "active";
                 $chap->save();
                 $chapitre = formation::with('session')->where('id', $chap->id)->first();
-                $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
+                $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
                 // $chapitres = formation::with('session')->whereBelongsTo($chapitre->session_id, 'session')->get();
                 return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-            } else {
-                // dd($fini->pluck('id')->contains($id_chap));
-                if ($fini->pluck('id')->contains($id_chap)) {
+            } else {   
+               // dd($fini->pluck('id')->contains($id_chap));
+                if($fini->pluck('id')->contains($id_chap)){
                     $chapitre = formation::with('session')->where('id', $id_chap)->first();
-                    $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
-
+                    $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
+    
                     return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                } else {
+                }else{
                     $chap = formation::find($id_chap);
                     $chap->sous_titre = "active";
                     $chap->save();
                     $chapitre = formation::with('session')->where('id', $chap->id)->first();
-                    $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
+                    $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
                     // $chapitres = formation::with('session')->whereBelongsTo($chapitre->session_id, 'session')->get();
                     return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                }
+                }           
             }
-        } else {
-            if ($active->id == $id_chap || $active->sous_titre == "fini") {
-
-                $chap = formation::find($id_chap);
-                $chap->sous_titre = "active";
-                $chap->save();
-                $chapitre = formation::with('session')->where('id', $id_chap)->first();
-                $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
-
-                return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-            } else {
-                $chap = formation::find($id_chap);
-                if ($active->sous_titre == "fini") {
-
-                    $chapitre = formation::with('session')->where('id', $id_chap)->first();
-                    $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
-
-                    return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                } else {
-                    $active->sous_titre = "";
-                    $active->save();
+        } else {            
+            if ($active->id == $id_chap || $active->sous_titre=="fini") {
+                   
                     $chap = formation::find($id_chap);
                     $chap->sous_titre = "active";
                     $chap->save();
-                    // dd($chap);
                     $chapitre = formation::with('session')->where('id', $id_chap)->first();
-                    $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
-
+                    $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
+    
                     return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                }
+                
+            } else { 
+                $chap = formation::find($id_chap);
+                if ($active->sous_titre=="fini") {
+
+                    $chapitre = formation::with('session')->where('id', $id_chap)->first();
+                    $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
+    
+                    return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
+                
+                } else {
+                  $active->sous_titre = "";
+                    $active->save();
+                        $chap = formation::find($id_chap);
+                        $chap->sous_titre = "active";
+                        $chap->save();
+                        // dd($chap);
+                        $chapitre = formation::with('session')->where('id', $id_chap)->first();
+                        $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
+        
+                        return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
+                    
+                }               
             }
         }
     }
@@ -208,10 +212,10 @@ class FormationController extends Controller
             ]);
         }
 
-        $chapitre = formation::with('session')->where('session_id', $id)->orderBy('titre', "asc")->first();
-        $chapitre->sous_titre = 'active';
+        $chapitre = formation::with('session')->where('session_id', $id)->orderBy('titre',"asc")->first();
+        $chapitre->sous_titre='active';
         $chapitre->save();
-        $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
+        $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
         // $chapitres = formation::with('session')->whereBelongsTo($chapitre, 'session')->get();
         //  dd($chapitres->sortBy('titre'));
         return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
@@ -261,7 +265,7 @@ class FormationController extends Controller
         $detail = formation::with('session')->where('session_id', $id)->first();
         $chapitres = formation::where('session_id', $id)->get();
         $formateur = session::with('formateur')->where('id', $id)->get();
-        // dd($detail);
+// dd($detail);
 
         return view('client.pages.confirmLive', compact('detail', 'chapitres', 'formateur'));
     }
