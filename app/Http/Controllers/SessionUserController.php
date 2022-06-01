@@ -16,6 +16,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdatesessionUserRequest;
+use App\Models\paiement;
 
 class SessionUserController extends Controller
 {
@@ -86,6 +87,29 @@ class SessionUserController extends Controller
                 $request->cpm_phone_prefixe . "/" . $request->cpm_language . "/" . $request->cpm_version . "/" . $request->cpm_payment_config . "/" .
                 $request->cpm_page_action . "/" . $response_body['data']['status'] . "/" . $response_body['code'];
 
+                paiement::create([
+                    "user_id" =>$retour->user_id,
+                    "session_id" =>$retour->session_id,
+                    "type" =>$retour->operateur,
+                    "moyenPaiement" =>$retour->operateur,
+                    "transaction_id" =>$retour->reference,
+                    "token" =>$retour->token,
+                    "message" =>$retour->message,
+                    "description" =>$retour->description,
+                    "montant" =>$request->cpm_amount.$request->cpm_currency,
+                    "telephone" =>$request->cel_phone_num,
+                    "signature" =>$request->signature,
+                    "prefix" =>$request->cpm_phone_prefixe,
+                    "langue" =>$request->cpm_language,
+                    "version" =>$request->cpm_version,
+                    "configuration" =>$request->cpm_payment_config,
+                    "action" =>$request->cpm_page_action,
+                    "status" =>$response_body['data']['status'],
+                    "code" =>$response_body['code'],
+                    "reponse" =>$reponse,
+                ]);
+
+                
             if ((int)$response_body["code"] === 00 && $response_body["message"] == "SUCCES") {
 
                 $retour->etat = 'Payer';
@@ -122,10 +146,6 @@ class SessionUserController extends Controller
                 $message = ["message" => "Paiement fait avec succès", "mail" => "Vous recevrez un mail de notification", "status" => "Réussi"];
                 $operateur = $retour->operateur;
                 $data = $response_body;
-
-                $desc = session::find($retour->session_id);            
-                $user = User::find(Auth::user()->id);
-                Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc));
                 
                 return view('client.pages.notify', compact('data', 'message', 'operateur'));
             } else {

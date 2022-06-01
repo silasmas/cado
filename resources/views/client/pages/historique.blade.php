@@ -16,13 +16,14 @@
                                 <div class="row">
                                     <div class="col-sm-3">Date</div>
                                     <div class="col-sm-3">Prix total</div>
-                                    <div class="col-sm-4">Moyen de paiement</div>
+                                    <div class="col-sm-2">Type de paiement</div>
+                                    <div class="col-sm-2">Etat</div>
                                     <div class="col-sm-2">Actions</div>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    @forelse ($paie as $p)
+                    @forelse ($historique as $p)
                     <li class="purchase-history-items mb-2">
                         <div class="row">
                             <div class="col-sm-6">
@@ -39,14 +40,17 @@
                                         {{ \Carbon\Carbon::parse($p->date)->isoFormat('LLL') }}
                                     </div>
                                     <div class="col-sm-3 price"><b>
-                                         {{ $p->monaie=='USD'?"$":"FC" }}
-                                         {{ $p->prix }}
+                                         {{-- {{ $p->monaie=='USD'?"$":"FC" }} --}}
+                                         {{ $p->montant }}
                                         </b></div>
-                                    <div class="col-sm-4 payment-type">
+                                    <div class="col-sm-2 payment-type">
                                         {{ $p->operateur }}
                                     </div>
+                                    <div class="col-sm-2 payment-type">
+                                       <label class="badge {{ $p->status=="SUCCES"?"badge-succes":"badge-danger" }}">{{ $p->status }}</label>
+                                    </div>
                                     <div class="col-sm-2">
-                                        <a href="javascript:;" target="_blank" class="btn btn-receipt">Facture</a>
+                                        <a href="javascript:;" target="_blank" class="btn btn-receipt">Details</a>
                                     </div>
                                 </div>
                             </div>

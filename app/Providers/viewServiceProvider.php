@@ -49,7 +49,7 @@ class ViewServiceProvider extends ServiceProvider
               ->join('sessions','sessions.id','session_users.session_id')              
               ->where([['sessions.live',true],['session_users.etat','Payer'],['users.id',Auth::user()->id]])
               ->get();
-          
+           
               $live=session::with('formateur')->where([['live',true],['isform',false]])->get();
             //   dd($userForm->session);
                  $view->with('live',$live);

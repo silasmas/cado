@@ -53,9 +53,16 @@ class FormationController extends Controller
     }
     public function historique()
     {
-
-        $titre = "Mon historique d'achats";
-        return view('client.pages.historique', compact('titre'));
+    $historique=User::with('session')
+    ->selectRaw('session_users.etat,session_users.operateur,
+    session_users.updated_at as date,paiements.*,sessions.titre')
+    ->join('session_users','session_users.user_id','users.id')
+    ->join('sessions','sessions.id','session_users.session_id')              
+    ->join('paiements','paiements.user_id','users.id')              
+    ->where([['session_users.etat','Payer'],['users.id',Auth::user()->id]])
+    ->get();
+    // dd($historique);
+        return view('client.pages.historique', compact('historique'));
     }
     public function couple()
     {
