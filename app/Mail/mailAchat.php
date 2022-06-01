@@ -31,6 +31,6 @@ class mailAchat extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->data['objet'])->view('emails.achat');
+        return $this->markdown('emails.achat')->subject($this->data['objet']);
     }
 }
