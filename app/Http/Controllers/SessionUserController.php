@@ -128,7 +128,7 @@ class SessionUserController extends Controller
                 $data = $response_body;
 
                 $desc = session::find($retour->formation_id);
-                dd($desc);
+                dd($retour);
                 $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
                 $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
                 : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
