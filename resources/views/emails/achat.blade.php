@@ -3,11 +3,11 @@
 
 @if ($session->live == true && $session->isform == false)
 @component('mail::panel')
-{{ "La réservation du live "}}<b>{{ $session->titre }}</b>{{ "est faite avec succès. Verfifiez votre compte pour plus de details"  }}
+{{ "La réservation du live "}}<b>{{ $session->titre }}</b>{{ " est faite avec succès. Verfifiez votre compte pour plus de details"  }}
 @endcomponent
 @else
 @component('mail::panel')
-{{ "L'achat de la Formation "}}<b>{{ $session->titre }}</b>{{ "" }} {{ "est fait avec succès Verfifiez votre compte pour plus de details"  }}
+{{ "L'achat de la Formation "}}<b>{{ $session->titre }}</b> {{ " à réussit. Verfifiez votre compte pour le suivre."  }}
 @endcomponent  
 @endif
 
