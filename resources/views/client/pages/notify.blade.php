@@ -31,7 +31,7 @@
                         class="card-body {{ $data['data']['status'] == 'ACCEPTED' ? 'text-success' : 'text-danger' }}">
                         <h2 class="card-title">{{ $message['message'] }}</h2>
                         @if ( $data['data']['status'] == 'ACCEPTED')
-                        <p class="card-text">{{  $message['mail'] }}</p>                            
+                        <p class="card-text">{{$message['message'] }}</p>                            
                         @endif
                         <p class="card-text">{{  $message['status'] }}</p>
                         <hr>
