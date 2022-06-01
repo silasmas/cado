@@ -17,9 +17,9 @@
                                 <div class="col-sm-6 hidden-xxs hidden-xs">
                                     <div class="row">
                                         <div class="col-sm-3">Date</div>
-                                        <div class="col-sm-3">Prix total</div>
-                                        <div class="col-sm-2">Type de paiement</div>
-                                        <div class="col-sm-2">Etat</div>
+                                        <div class="col-sm-1">Total</div>
+                                        <div class="col-sm-3">Type de paiement</div>
+                                        <div class="col-sm-3">Etat</div>
                                         <div class="col-sm-2">Actions</div>
                                     </div>
                                 </div>
@@ -43,14 +43,14 @@
                                             <div class="col-sm-3 date">
                                                 {{ \Carbon\Carbon::parse($p->date)->isoFormat('LLL') }}
                                             </div>
-                                            <div class="col-sm-3 price"><b>
+                                            <div class="col-sm-1 price"><b>
                                                     {{-- {{ $p->monaie=='USD'?"$":"FC" }} --}}
                                                     {{ $p->montant }}
                                                 </b></div>
-                                            <div class="col-sm-2 payment-type">
+                                            <div class="col-sm-3 payment-type">
                                                 {{ $p->operateur }}
                                             </div>
-                                            <div class="col-sm-2 payment-type ">
+                                            <div class="col-sm-3 payment-type ">
                                                 {{ $p->status }}
                                                 {{-- <span class="badge {{ $p->status == 'ACCEPTED' ? 'badge-succes' : 'badge-danger' }}">{{ $p->status }}</span> --}}
                                             </div>
