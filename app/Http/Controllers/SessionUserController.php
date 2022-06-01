@@ -21,6 +21,15 @@ class SessionUserController extends Controller
 {
     public function status()
     {
+
+        $desc = session::find($retour->formation_id);
+                $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
+                $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
+                : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
+        
+                $data = ['objet' => $d." retour", "message" => $m];
+                $user = User::find(Auth::user()->id);
+                Mail::to()->send(new mailAchat($user, $data));
         $st = self::verifyStatus('6.2Qy4KxwwJQ');
         dd($st);
     }
@@ -119,13 +128,14 @@ class SessionUserController extends Controller
                 $data = $response_body;
 
                 $desc = session::find($retour->formation_id);
+                dd($desc);
                 $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
                 $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
                 : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
         
-                $data = ['objet' => $d." retour", "message" => $m];
+                $dat = ['objet' => $d." retour", "message" => $m];
                 $user = User::find(Auth::user()->id);
-                Mail::to()->send(new mailAchat($user, $data));
+                Mail::to()->send(new mailAchat($user, $dat));
                 return view('client.pages.notify', compact('data', 'message', 'operateur'));
             } else {
                 $data = $response_body;
