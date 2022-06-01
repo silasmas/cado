@@ -68,6 +68,8 @@ Route::middleware(['auth'])->group( function (){
     })->name('allFormation');
   
 
+    Route::get('teststatus', [SessionUserController::class,'status'])->name('teststatus');
+
     Route::get('dashboard', [FormationController::class,'index'])->name('dashboard');
     Route::get('listelives', [FormationController::class,'lives'])->name('listelives');
 

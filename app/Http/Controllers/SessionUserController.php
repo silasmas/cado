@@ -17,6 +17,10 @@ use App\Http\Requests\UpdatesessionUserRequest;
 
 class SessionUserController extends Controller
 {
+    public function status(){
+        $st=self::verifyStatus('6.2Qy4KxwwJQ');
+        dd($st);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -67,7 +71,7 @@ class SessionUserController extends Controller
              * * */
             $reponse = $request->cpm_amount . "/" . $request->cpm_currency . "/" . $request->signature . "/" . $request->cel_phone_num . "/" .
                 $request->cpm_phone_prefixe . "/" . $request->cpm_language . "/" . $request->cpm_version . "/" . $request->cpm_payment_config . "/" .
-                $request->cpm_page_action . "/" . $response_body['data']['status'] . "/" . $response_body['data']['code'];
+                $request->cpm_page_action . "/" . $response_body['data']['status'] . "/" . $response_body['code'];
 
             if ((int)$response_body["code"] === 00 && $response_body["message"] == "SUCCES") {
 
