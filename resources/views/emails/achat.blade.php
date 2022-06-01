@@ -1,5 +1,5 @@
 @component('mail::message')
-# Bienvenue {{$user->prenom.' '.$user->name}}
+# Félicitation {{$user->prenom.' '.$user->name}}
 
 {{ $data['message'] }}
 
@@ -9,7 +9,7 @@ Cliquez sur le boutton ci-dessous pour revenir sur le site.
 @endcomponent
 <br>
 @component('mail::button', ['url' => config('app.url')])
-Aller sur {{config('app.name')}}
+Retour sur le site {{config('app.name')}}
 @endcomponent
 
 Merci,<br>

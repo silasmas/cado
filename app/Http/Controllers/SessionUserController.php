@@ -66,6 +66,11 @@ class SessionUserController extends Controller
     public function notify(Request $request)
     {
         $retour = sessionUser::where("reference", $request->cpm_trans_id)->first();
+        $desc = session::find($retour->formation_id);
+        $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
+        $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
+        : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
+
         if ($retour) {
             $response_body = self::verifyStatus($request->cpm_trans_id);
             /**
@@ -84,7 +89,7 @@ class SessionUserController extends Controller
                 $retour->niveau = 'commencer';
                 $retour->updated_at = $request->cpm_trans_date;
                 $retour->save();
-                $data = ['objet' => "", "message" => ""];
+                $data = ['objet' => $d, "message" => $m];
                 $user = User::find(Auth::user()->id);
                 Mail::to()->send(new mailAchat($user, $data));
                 return dd($response_body['data']['status']);
@@ -279,6 +284,7 @@ class SessionUserController extends Controller
     {
         $desc = session::find($request->formation_id);
         $d = $desc->live == true && $desc->isform == false ? "Réservation du live " . $desc->titre : "Achat de la Formation";
+        // dd($desc->isform==true?"oui":"non");
         if ($request->channels == "MOBILE_MONEY") {
             $cinetpay_data =  [
                 "amount" => $request->prix,
