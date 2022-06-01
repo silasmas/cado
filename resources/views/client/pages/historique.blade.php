@@ -48,7 +48,7 @@
                                                     {{ $p->montant }}
                                                 </b></div>
                                             <div class="col-sm-3 payment-type">
-                                                {{ $p->operateur }}
+                                                {{ $p->operateur=="MOBILE_MONEY"?"Mobile":"Carte" }}
                                             </div>
                                             <div class="col-sm-3 payment-type {{ $p->status == 'ACCEPTED' ? 'badge-sub-success' : 'badge-sub-warning' }}">
                                                 {{-- <span class="badge  text-11px"></span> --}}
