@@ -47,7 +47,7 @@
                                                     {{-- {{ $p->monaie=='USD'?"$":"FC" }} --}}
                                                     {{ $p->montant }}
                                                 </b></div>
-                                            <div class="col-sm-3 payment-type text-end">
+                                            <div class="col-sm-3 payment-type text-center">
                                                 {{ $p->operateur=="MOBILE_MONEY"?"Mobile":"Carte" }}
                                             </div>
                                             <div class="col-sm-3 payment-type {{ $p->status == 'ACCEPTED' ? 'badge-sub-success' : 'badge-sub-warning' }}">
