@@ -50,9 +50,8 @@
                                             <div class="col-sm-2 payment-type">
                                                 {{ $p->operateur }}
                                             </div>
-                                            <div class="col-sm-2 payment-type">
-                                                <label
-                                                    class="badge {{ $p->status == 'ACCEPTED' ? 'badge-succes' : 'badge-danger' }}">{{ $p->status }}</label>
+                                            <div class="col-sm-2 payment-type ">
+                                                <span class="badge {{ $p->status == 'ACCEPTED' ? 'badge-succes' : 'badge-danger' }}">{{ $p->status }}</span>
                                             </div>
                                             <div class="col-sm-2">
                                                 <a href="javascript:;" target="_blank" class="btn btn-receipt">Details</a>
