@@ -129,8 +129,8 @@ class SessionUserController extends Controller
 
                 $desc = session::find($retour->session_id);
                 $d = $desc->live == true && $desc->isform == false ? "Réservation du live": "Achat de la Formation";
-                $m = $desc->live == true && $desc->isform == false ? "Réservation du live <b>".$desc->titre."</b> Verfifier votre compte pour plus de details"
-                : "L'achat de la Formation <b>".$desc->titre."</b> Verfifier votre compte pour plus de details";
+                $m = $desc->live == true && $desc->isform == false ? "Réservation du live ".$desc->titre." Verfifier votre compte pour plus de details"
+                : "L'achat de la Formation ".$desc->titre." Verfifier votre compte pour plus de details";
         
                 $dat = ['objet' => $d." retour", "message" => $m];
                 $user = User::find(Auth::user()->id);
