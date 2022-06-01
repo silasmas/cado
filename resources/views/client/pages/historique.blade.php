@@ -1,83 +1,86 @@
-@extends('client.templates.main_template',['titre'=>"Mes formation"])
+@extends('client.templates.main_template', ['titre' => 'Mes formation'])
 
 
 @section('content')
-@include("client.pages.sousMenu")
+    @include('client.pages.sousMenu')
 
-<section class="purchase-history-list-area">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <ul class="purchase-history-list">
-                    <li class="purchase-history-list-header">
-                        <div class="row">
-                            <div class="col-sm-6"><h4 class="purchase-history-list-title">Conférence</h4></div>
-                            <div class="col-sm-6 hidden-xxs hidden-xs">
+    <section class="purchase-history-list-area">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <ul class="purchase-history-list">
+                        <li class="purchase-history-list-header">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h4 class="purchase-history-list-title">Conférence</h4>
+                                </div>
+                                <div class="col-sm-6 hidden-xxs hidden-xs">
+                                    <div class="row">
+                                        <div class="col-sm-3">Date</div>
+                                        <div class="col-sm-3">Prix total</div>
+                                        <div class="col-sm-2">Type de paiement</div>
+                                        <div class="col-sm-2">Etat</div>
+                                        <div class="col-sm-2">Actions</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @forelse ($historique as $p)
+                            <li class="purchase-history-items mb-2">
                                 <div class="row">
-                                    <div class="col-sm-3">Date</div>
-                                    <div class="col-sm-3">Prix total</div>
-                                    <div class="col-sm-2">Type de paiement</div>
-                                    <div class="col-sm-2">Etat</div>
-                                    <div class="col-sm-2">Actions</div>
+                                    <div class="col-sm-6">
+                                        <div class="purchase-history-course-img">
+                                            <img src="{{ asset('assets/images/form/' . $p->cover) }}"
+                                                class="img-fluid" />
+                                        </div>
+                                        <a class="purchase-history-course-title"
+                                            href="{{ route('detailFormation', ['id' => $p->id]) }}">
+                                            {{ $p->titre }}
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 purchase-history-detail">
+                                        <div class="row">
+                                            <div class="col-sm-3 date">
+                                                {{ \Carbon\Carbon::parse($p->date)->isoFormat('LLL') }}
+                                            </div>
+                                            <div class="col-sm-3 price"><b>
+                                                    {{-- {{ $p->monaie=='USD'?"$":"FC" }} --}}
+                                                    {{ $p->montant }}
+                                                </b></div>
+                                            <div class="col-sm-2 payment-type">
+                                                {{ $p->operateur }}
+                                            </div>
+                                            <div class="col-sm-2 payment-type">
+                                                <label
+                                                    class="badge {{ $p->status == 'ACCEPTED' ? 'badge-succes' : 'badge-danger' }}">{{ $p->status }}</label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <a href="javascript:;" target="_blank" class="btn btn-receipt">Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </li>
-                    @forelse ($historique as $p)
-                    <li class="purchase-history-items mb-2">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="purchase-history-course-img">
-                                    <img src="{{ asset('assets/images/form/'.$p->cover) }}" class="img-fluid" />
-                                </div>
-                                <a class="purchase-history-course-title" href="{{ route('detailFormation', ['id'=>$p->id]) }}">
-                                   {{ $p->titre }}
-                                </a>
-                            </div>
-                            <div class="col-sm-6 purchase-history-detail">
+                            </li>
+                        @empty
+                            <li class="purchase-history-items mb-2">
                                 <div class="row">
-                                    <div class="col-sm-3 date">
-                                        {{ \Carbon\Carbon::parse($p->date)->isoFormat('LLL') }}
-                                    </div>
-                                    <div class="col-sm-3 price"><b>
-                                         {{-- {{ $p->monaie=='USD'?"$":"FC" }} --}}
-                                         {{ $p->montant }}
-                                        </b></div>
-                                    <div class="col-sm-2 payment-type">
-                                        {{ $p->operateur }}
-                                    </div>
-                                    <div class="col-sm-2 payment-type">
-                                       <label class="badge {{ $p->status=="SUCCES"?"badge-succes":"badge-danger" }}">{{ $p->status }}</label>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <a href="javascript:;" target="_blank" class="btn btn-receipt">Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>  
-                    @empty
-                    <li class="purchase-history-items mb-2">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="empty-box text-center">
-                                    <p class="text-danger">Votre historique est vide.
+                                    <div class="col-sm-12">
+                                        <div class="empty-box text-center">
+                                            <p class="text-danger">Votre historique est vide.
 
-                                    </p>
-                                    <a href="{{ route('dashboard') }}">Voir les formations</a>
+                                            </p>
+                                            <a href="{{ route('dashboard') }}">Voir les formations</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </li>  
-                    @endforelse
-                    
-                    
-                </ul>
+                            </li>
+                        @endforelse
+
+
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<nav></nav>
-
+    </section>
+    <nav></nav>
 @endsection
-
