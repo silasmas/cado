@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\mailAchat;
 use App\Models\session;
 use App\Rules\PhoneNumber;
 use App\Models\sessionUser;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -17,8 +19,9 @@ use App\Http\Requests\UpdatesessionUserRequest;
 
 class SessionUserController extends Controller
 {
-    public function status(){
-        $st=self::verifyStatus('6.2Qy4KxwwJQ');
+    public function status()
+    {
+        $st = self::verifyStatus('6.2Qy4KxwwJQ');
         dd($st);
     }
     /**
@@ -81,6 +84,9 @@ class SessionUserController extends Controller
                 $retour->niveau = 'commencer';
                 $retour->updated_at = $request->cpm_trans_date;
                 $retour->save();
+                $data = ['objet' => "", "message" => ""];
+                $user = User::find(Auth::user()->id);
+                Mail::to()->send(new mailAchat($user, $data));
                 return dd($response_body['data']['status']);
             } else {
                 $retour->reponse = $reponse;
@@ -92,32 +98,6 @@ class SessionUserController extends Controller
         } else {
             return dd($retour);
         }
-        // if ($retour) {
-
-        //     $response_body = self::verifyStatus($request);
-        //     if ((int)$response_body["code"] === 201) {
-        //         $retour->etat = 'Payer';
-
-        //         $retour->save();
-
-        //     } else {
-        //         // $retour->etat = "En attente";
-        //         $retour->reponse = $response_body['data']['payment_method'];
-        //         $retour->message = $response_body['message'];
-        //         $retour->save();
-        //         $operateur = $retour->operateur;
-        //         $data = $response_body;
-        //         return view('client.pages.notify', compact('data', 'operateur'));
-        //     }
-        // } else {
-
-        //     $response_body = self::verifyStatus($request);
-        //     $data = $response_body;
-        //     $etat = "Erreur d'enregistrement";
-        //     $operateur = $retour->operateur;
-        //     //  dd($response_body."retour erreur");
-        //     return view('client.pages.notify', compact('data', "etat", "operateur"));
-        // }
     }
     public function retour(Request $request)
     {
@@ -127,7 +107,7 @@ class SessionUserController extends Controller
             $response_body = self::verifyStatus($request->transaction_id);
             if ((int)$response_body["code"] === 00 && $response_body["message"] == "SUCCES") {
 
-                $message = ["message" => "Paiement fait avec succès", "status" => "Réussi"];
+                $message = ["message" => "Paiement fait avec succès", "mail" => "Vous recevrez un mail de notification", "status" => "Réussi"];
                 $operateur = $retour->operateur;
                 $data = $response_body;
                 return view('client.pages.notify', compact('data', 'message', 'operateur'));
@@ -143,41 +123,6 @@ class SessionUserController extends Controller
             $message = self::message($response_body);
             return view('client.pages.notify', compact('data', "message"));
         }
-
-
-        //  dd($request->transaction_id);
-
-        // if ($retour) {
-
-        //     $response_body = self::verifyStatus($request);
-        //     // dd($response_body);
-        //     if ((int)$response_body["code"] === 201 || $response_body["message"] == "SUCCES") {
-        //         $retour->etat = 'Payer';
-        //         $retour->reponse = $response_body['data']['payment_method'];
-        //         $retour->message = $response_body['message'];
-        //         $retour->niveau = 'commencer';
-        //         $retour->save();
-        //         $operateur = $retour->operateur;
-        //         $data = $response_body;
-        //         return view('client.pages.notify', compact('data', 'operateur'));
-        //     } else {
-        //         // $retour->etat = "En attente";
-        //         $retour->reponse = $response_body['data']['payment_method'];
-        //         $retour->message = $response_body['message'];
-        //         $retour->save();
-        //         $operateur = $retour->operateur;
-        //         $data = $response_body;
-        //         return view('client.pages.notify', compact('data', 'operateur'));
-        //     }
-        // } else {
-
-        //     $response_body = self::verifyStatus($request);
-        //     $data = $response_body;
-        //     $etat = "Erreur d'enregistrement";
-        //     $operateur = $retour->operateur;
-        //     //  dd($response_body."retour erreur");
-        //     return view('client.pages.notify', compact('data', "etat", "operateur"));
-        // }
     }
     public function message($body)
     {
@@ -332,7 +277,8 @@ class SessionUserController extends Controller
     }
     public function initInfo($request, $transaction_id)
     {
-
+        $desc = session::find($request->formation_id);
+        $d = $desc->live == true && $desc->isform == false ? "Réservation du live " . $desc->titre : "Achat de la Formation";
         if ($request->channels == "MOBILE_MONEY") {
             $cinetpay_data =  [
                 "amount" => $request->prix,
@@ -340,20 +286,20 @@ class SessionUserController extends Controller
                 "apikey" => env("CINETPAY_APIKEY"),
                 "site_id" => env("CINETPAY_SERVICD_ID"),
                 "transaction_id" => $transaction_id,
-                "description" => "Achat formation",
+                "description" => $d,
                 "return_url" => env("RETURN_URL"),
                 "notify_url" => env("NOTIFY_URL"),
                 'channels' => $request["channels"],
             ];
             return $cinetpay_data;
         } else {
-            $state="";
+            $state = "";
             switch ($request["customer_country"]) {
                 case 'CA':
-                   $state= $request["customer_state"];
+                    $state = $request["customer_state"];
                     break;
                 case 'US':
-                   $state= $request["customer_state2"];
+                    $state = $request["customer_state2"];
                     break;
             }
 
@@ -363,7 +309,7 @@ class SessionUserController extends Controller
                 "apikey" => env("CINETPAY_APIKEY"),
                 "site_id" => env("CINETPAY_SERVICD_ID"),
                 "transaction_id" => $transaction_id,
-                "description" => "Achat formation",
+                "description" => $d,
                 "return_url" => env("RETURN_URL"),
                 "notify_url" => env("NOTIFY_URL"),
                 'channels' => $request["channels"],
@@ -475,7 +421,7 @@ class SessionUserController extends Controller
                     // return response()->json(['reponse' => false,'msg' => "Veuillez completer votre profil afin de continuer votre paiement"]);
                 } else {
                     //  dd($request->customer_state2);
-                     if($request->customer_country == "US"){
+                    if ($request->customer_country == "US") {
                         $request->validate([
                             'channels' => ['required', 'string', 'max:255'],
                             'customer_country' => ['required', 'string', 'max:255'],
@@ -484,9 +430,9 @@ class SessionUserController extends Controller
                             'customer_address' => ['required', 'string', 'max:255'],
                             'customer_city' => ['required', 'string', 'max:255'],
                         ]);
-                     }
+                    }
                     if ($request->customer_country == "CA") {
-  
+
                         $request->validate([
                             'channels' => ['required', 'string', 'max:255'],
                             'customer_country' => ['required', 'string', 'max:255'],

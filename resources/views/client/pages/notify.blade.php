@@ -30,6 +30,9 @@
                     <div
                         class="card-body {{ $data['data']['status'] == 'ACCEPTED' ? 'text-success' : 'text-danger' }}">
                         <h2 class="card-title">{{ $message['message'] }}</h2>
+                        @if ( $data['data']['status'] == 'ACCEPTED')
+                        <p class="card-text">{{  $message['email'] }}</p>                            
+                        @endif
                         <p class="card-text">{{  $message['status'] }}</p>
                         <hr>
                         <p>Montant :{{ $data['data']['amount'] . $data['data']['currency'] }}</p>
