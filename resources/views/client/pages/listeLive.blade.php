@@ -75,7 +75,7 @@
                                                         @if ($l->type == 'payant')
                                                             @if ($livep->pluck('id')->contains($l->id))
                                                                 <div class="col-6">
-                                                                    <a href="{{ route('viewLive', ['id' => $fav->id]) }}">
+                                                                    <a href="{{ route('viewLive', ['id' => $l->id]) }}">
                                                                         <button onclick="handleCartItems(this)"
                                                                             class="">
                                                                             <span
