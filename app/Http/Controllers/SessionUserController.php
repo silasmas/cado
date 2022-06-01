@@ -28,7 +28,7 @@ class SessionUserController extends Controller
         $cinetpay_verify =  [
             "apikey" => env("CINETPAY_APIKEY"),
             "site_id" => env("CINETPAY_SERVICD_ID"),
-            "transaction_id" => $request->transaction_id,
+            "transaction_id" => $request,
         ];
         $response = Http::asJson()->post($url, $cinetpay_verify);
         $response_body = json_decode($response->body(), JSON_THROW_ON_ERROR | true, 512, JSON_THROW_ON_ERROR);
@@ -120,7 +120,7 @@ class SessionUserController extends Controller
         $retour = sessionUser::where([["token", $request->token], ["reference", $request->transaction_id]])->first();
         $login = self::verifyLogin($request->transaction_id);
         if ($retour) {
-            $response_body = self::verifyStatus($request);
+            $response_body = self::verifyStatus($request->transaction_id);
             if ((int)$response_body["code"] === 00 && $response_body["message"] == "SUCCES") {
 
                 $message = ["message" => "Paiement fait avec succès", "status" => "Réussi"];
@@ -133,7 +133,7 @@ class SessionUserController extends Controller
                 return view('client.pages.notify', compact('data', "message"));
             }
         } else {
-            $response_body = self::verifyStatus($request);
+            $response_body = self::verifyStatus($request->transaction_id);
             $data = $response_body;
             $etat = "Erreur d'enregistrement";
             $message = self::message($response_body);
