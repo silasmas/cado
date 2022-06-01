@@ -51,8 +51,7 @@
                                                 {{ $p->operateur }}
                                             </div>
                                             <div class="col-sm-3 payment-type ">
-                                                {{ $p->status }}
-                                                {{-- <span class="badge {{ $p->status == 'ACCEPTED' ? 'badge-succes' : 'badge-danger' }}">{{ $p->status }}</span> --}}
+                                                <span class="badge {{ $p->status == 'ACCEPTED' ? 'badge-sub-success' : 'badge-sub-warning' }} text-11px">{{ $p->status }}</span>
                                             </div>
                                             <div class="col-sm-2">
                                                 <a href="javascript:;" target="_blank" class="btn btn-receipt">Details</a>
