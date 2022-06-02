@@ -147,6 +147,9 @@ class SessionUserController extends Controller
                 $operateur = $retour->operateur;
                 $data = $response_body;
                 
+                $desc = session::find($retour->session_id);            
+                $user = User::find(Auth::user()->id);
+                Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc));
                 return view('client.pages.notify', compact('data', 'message', 'operateur'));
             } else {
                 $data = $response_body;
