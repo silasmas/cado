@@ -21,7 +21,7 @@
                         <div class="course-meta">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <span class=""><i class="fas fa-play-circle"></i>{{ $f->live==true && $f->isform==false?"LIVE":$f->formation->count()." Chap." }}</span>
+                                    <span class=""><i class="fas fa-play-circle"></i>{{ $f->live==true && $f->isform==false?"LIVE":$f->formation->count()." Chapitres(s)" }}</span>
                                     <span class=""><i class="far fa-clock"></i> {{ \Carbon\Carbon::parse($f->date_fin)->isoFormat('LLL') }} </span>
                                     <span class=""><i class="fas fa-closed-captioning"></i>Français</span>
                                     {{-- <button class="brn-compare-sm"
