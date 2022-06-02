@@ -70,5 +70,10 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('allform',$form);
              $view->with('actuelCado',$actuelCado);
         });
+        View::composer('client.pages.allform', function ($view) {
+            $forms=session::with('formateur',"user")->get();
+        //  dd($forms->user);
+            $view->with('allforms',$forms);
+        });
     }
 }

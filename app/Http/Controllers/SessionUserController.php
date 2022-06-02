@@ -512,9 +512,15 @@ class SessionUserController extends Controller
      * @param  \App\Models\sessionUser  $sessionUser
      * @return \Illuminate\Http\Response
      */
-    public function show(sessionUser $sessionUser)
+    public function allform()
     {
-        //
+        $titre="verticale";
+        return view("client.pages.allform",compact('titre'));
+    }
+    public function horizontale()
+    {
+        $titre="horizontale";
+        return view("client.pages.allform",compact('titre'));
     }
 
     /**

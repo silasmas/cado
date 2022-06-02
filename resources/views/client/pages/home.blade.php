@@ -318,7 +318,7 @@
                 </div>
             </div>
             @if ($allform->count() > 0)
-                <a href="#" class="btn btn-plus">Toutes les conférences <i class="bi bi-arrow-right"></i></a>
+                <a href="{{ route('allform') }}" class="btn btn-plus">Voir toutes les conférences <i class="bi bi-arrow-right"></i></a>
             @endif
         </div>
     </section>
@@ -514,7 +514,7 @@
                 </div>
             </div>
             @if ($couples->count() > 0)
-                <a href="#" class="btn btn-plus">Voir plus <i class="bi bi-arrow-right"></i></a>
+                <a href="{{ route('allform') }}" class="btn btn-plus">Voir toutes les conférences <i class="bi bi-arrow-right"></i></a>
             @endif
         </div>
     </section>

@@ -71,6 +71,8 @@ Route::middleware(['auth'])->group( function (){
   
 
     Route::get('teststatus', [SessionUserController::class,'status'])->name('teststatus');
+    Route::get('allform', [SessionUserController::class,'allform'])->name('allform');
+    Route::get('horizontale', [SessionUserController::class,'horizontale'])->name('horizontale');
 
     Route::get('dashboard', [FormationController::class,'index'])->name('dashboard');
     Route::get('listelives', [FormationController::class,'lives'])->name('listelives');
