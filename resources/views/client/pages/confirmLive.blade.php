@@ -218,10 +218,9 @@
                                 @else
                                     @if ($fre->pivot->etat == 'Payer')
                                         <div class="buy-btns">
-                                            <a class="btn btn-buy-now"
-                                                href="{{ route('formationBy', ['id' => $detail->session->id]) }}">
+                                            <span style="cursor: pointer" class="btn btn-buy-now">
                                                 Réservation réussi
-                                            </a>
+                                            </span>
                                         </div>
                                     @else
                                         <div class="buy-btns">
