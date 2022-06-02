@@ -51,7 +51,7 @@ class ViewServiceProvider extends ServiceProvider
               ->get();
            
               $live=session::with('formateur')->where([['live',true],['isform',false]])->get();
-            //   dd($userForm->session);
+            //   dd($live);
                  $view->with('live',$live);
                  $view->with('livep',$livePaie);
                  $view->with('userForm',$userForm);

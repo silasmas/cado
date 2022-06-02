@@ -9,11 +9,12 @@ use App\Rules\PhoneNumber;
 use App\Models\sessionUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Validation\Rules\Password;
-use App\Http\Requests\StoreformationRequest;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateformationRequest;
-
+use Illuminate\Validation\Rules;
 class FormationController extends Controller
 {
     /**
@@ -31,7 +32,17 @@ class FormationController extends Controller
     public function profil()
     {
         $titre = "Mon Profil";
-        return view('client.pages.profil', compact('titre'));
+        return view('client.pages.templateProfil', compact('titre'));
+    }
+    public function compte()
+    {
+        $titre = "Mon Compte";
+        return view('client.pages.templateProfil', compact('titre'));
+    }
+    public function photo()
+    {
+        $titre = "Ma Photo";
+        return view('client.pages.templateProfil', compact('titre'));
     }
     public function panier()
     {
@@ -80,6 +91,33 @@ class FormationController extends Controller
     {
         return view('client.pages.listeLive');
     }
+    public function editphoto(Request $request)
+    {
+        $por = Validator::make($request->all(),[
+            'photo' => 'required|sometimes|image',
+        ]);
+        if($por->passes()){
+
+            $file = $request->file('photo');
+
+            $filenameImg = time() . '.' . $file->getClientOriginalName();
+           $file->move('storage/profil', $filenameImg);
+            if ($request->photo) {
+                $user=User::find(Auth::user()->id);
+                $user->photo=$filenameImg;
+                $user->save();
+                event(new Registered($user));
+                $msg = ["msg" => "La photo est mis à jour avec succès", "type" => "success"];
+                return back()->with('message',$msg);
+            } else {
+                $msg = ["msg" => "Erreur mis à jour avec succès", "type" => "danger"];
+                return response()->json('message',$msg);
+            }
+    
+        }else{
+            return back()->with(['message'=>$por->errors()->first()]);
+          }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -87,6 +125,31 @@ class FormationController extends Controller
      * @param  \App\Http\Requests\StoreformationRequest  $request
      * @return \Illuminate\Http\Response
      */
+    public function editCompte(Request $request)
+    {
+        $valid = Validator::make($request->all(), [
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'oldpassword' => ['required', Rules\Password::defaults()],
+        ]);
+        // dd($valid);
+        if (!$valid->fails()) {
+            $u = User::where("id", Auth::user()->id)->first();
+            if (Hash::check($request->oldpassword, $u->password)) {
+                $u->email = $request->email;
+                $u->password = Hash::make($request->password);
+                $u->save();
+                if ($u) {
+                    return response()->json(['reponse' => true, 'msg' => "Compte mis à jour avec succès"]);
+                } else {
+                    return response()->json(['reponse' => false, 'msg' => "Erreur de mis à jour"]);
+                }
+            } else {
+                return response()->json(['reponse' => false, 'msg' => "Ancien mot de passe incorrect"]);
+            }
+        } else {
+            return response()->json(['reponse' => false, 'type' => "velidate", 'msg' => $valid->errors()->all()]);
+        }
+    }
     public function editProfil(Request $request)
     {
 
@@ -114,76 +177,75 @@ class FormationController extends Controller
             event(new Registered($u));
 
             Auth::login($u);
-            return back()->with('message', "Profil mis à jour avec succès");
+            $msg = ["msg" => "Profil mis à jour avec succès", "type" => "success"];
+            return back()->with('message', $msg);
         } else {
-            return back()->with('message', "Erreur");
+            $msg = ["msg" => "Erreur de mise à jour du profil", "type" => "danger"];
+            return back()->with('message', $msg);
         }
     }
     public function viewChapitre($id_chap)
     {
         $active = formation::where("sous_titre", "active")->first();
         //  dd($active===null?"vide":"oui");
-        if ($active===null) {
+        if ($active === null) {
             $fini = formation::where("sous_titre", "fini")->get();
             //  dd($active===null?"vide":"oui");
-            if ($fini===null) {
+            if ($fini === null) {
                 $chap = formation::find($id_chap);
                 $chap->sous_titre = "active";
                 $chap->save();
                 $chapitre = formation::with('session')->where('id', $chap->id)->first();
-                $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
+                $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
                 // $chapitres = formation::with('session')->whereBelongsTo($chapitre->session_id, 'session')->get();
                 return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-            } else {   
-               // dd($fini->pluck('id')->contains($id_chap));
-                if($fini->pluck('id')->contains($id_chap)){
+            } else {
+                // dd($fini->pluck('id')->contains($id_chap));
+                if ($fini->pluck('id')->contains($id_chap)) {
                     $chapitre = formation::with('session')->where('id', $id_chap)->first();
-                    $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
-    
+                    $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
+
                     return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                }else{
+                } else {
                     $chap = formation::find($id_chap);
                     $chap->sous_titre = "active";
                     $chap->save();
                     $chapitre = formation::with('session')->where('id', $chap->id)->first();
-                    $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
+                    $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
                     // $chapitres = formation::with('session')->whereBelongsTo($chapitre->session_id, 'session')->get();
                     return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                }           
+                }
             }
-        } else {            
-            if ($active->id == $id_chap || $active->sous_titre=="fini") {
-                   
+        } else {
+            if ($active->id == $id_chap || $active->sous_titre == "fini") {
+
+                $chap = formation::find($id_chap);
+                $chap->sous_titre = "active";
+                $chap->save();
+                $chapitre = formation::with('session')->where('id', $id_chap)->first();
+                $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
+
+                return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
+            } else {
+                $chap = formation::find($id_chap);
+                if ($active->sous_titre == "fini") {
+
+                    $chapitre = formation::with('session')->where('id', $id_chap)->first();
+                    $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
+
+                    return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
+                } else {
+                    $active->sous_titre = "";
+                    $active->save();
                     $chap = formation::find($id_chap);
                     $chap->sous_titre = "active";
                     $chap->save();
+                    // dd($chap);
                     $chapitre = formation::with('session')->where('id', $id_chap)->first();
-                    $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
-    
-                    return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                
-            } else { 
-                $chap = formation::find($id_chap);
-                if ($active->sous_titre=="fini") {
+                    $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
 
-                    $chapitre = formation::with('session')->where('id', $id_chap)->first();
-                    $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
-    
                     return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                
-                } else {
-                  $active->sous_titre = "";
-                    $active->save();
-                        $chap = formation::find($id_chap);
-                        $chap->sous_titre = "active";
-                        $chap->save();
-                        // dd($chap);
-                        $chapitre = formation::with('session')->where('id', $id_chap)->first();
-                        $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
-        
-                        return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
-                    
-                }               
+                }
             }
         }
     }
@@ -212,10 +274,10 @@ class FormationController extends Controller
             ]);
         }
 
-        $chapitre = formation::with('session')->where('session_id', $id)->orderBy('titre',"asc")->first();
-        $chapitre->sous_titre='active';
+        $chapitre = formation::with('session')->where('session_id', $id)->orderBy('titre', "asc")->first();
+        $chapitre->sous_titre = 'active';
         $chapitre->save();
-        $chapitres = formation::with('session')->where('session_id',$chapitre->session_id)->get();
+        $chapitres = formation::with('session')->where('session_id', $chapitre->session_id)->get();
         // $chapitres = formation::with('session')->whereBelongsTo($chapitre, 'session')->get();
         //  dd($chapitres->sortBy('titre'));
         return view('client.pages.lecturForm', compact('chapitre', 'chapitres'));
@@ -265,7 +327,7 @@ class FormationController extends Controller
         $detail = formation::with('session')->where('session_id', $id)->first();
         $chapitres = formation::where('session_id', $id)->get();
         $formateur = session::with('formateur')->where('id', $id)->get();
-// dd($detail);
+        // dd($detail);
 
         return view('client.pages.confirmLive', compact('detail', 'chapitres', 'formateur'));
     }

@@ -371,8 +371,13 @@
                     <div class="user-box menu-icon-box">
                         <div class="icon">
                             <a href="javascript::">
+                                @if (Auth::user()->photo==null)
                                 <img src="{{ asset('assets/images/uploads/user_image/placeholder.png') }}"
-                                    alt="placeholder" class="img-fluid" />
+                                    alt="placeholder" class="img-fluid" />                                    
+                                @else
+                                <img src="{{ asset("storage/profil/".Auth::user()->photo)}}"
+                                alt="placeholder" class="img-fluid" /> 
+                                @endif
                             </a>
                         </div>
                         <div class="dropdown user-dropdown corner-triangle top-right">
@@ -381,8 +386,13 @@
                                     <a href="">
                                         <div class="clearfix">
                                             <div class="user-image float-start">
+                                                @if (Auth::user()->photo==null)
                                                 <img src="{{ asset('assets/images/uploads/user_image/placeholder.png') }}"
-                                                    alt="user_image" />
+                                                    alt="placeholder" class="img-fluid" />                                    
+                                                @else
+                                                <img src="{{ asset("storage/profil/".Auth::user()->photo)}}"
+                                                alt="placeholder" class="img-fluid" /> 
+                                                @endif
                                             </div>
                                             <div class="user-details">
                                                 <div class="user-name">

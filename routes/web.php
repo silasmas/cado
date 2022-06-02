@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group( function (){
 
 
     Route::get('profil', [FormationController::class,'profil'])->name('profil');
+    Route::get('compte', [FormationController::class,'compte'])->name('compte');
+    Route::get('photo', [FormationController::class,'photo'])->name('photo');
     Route::get('panier', [FormationController::class,'panier'])->name('panier');
 
     Route::get('formationBy/{id}', [FormationController::class,'show'])->name('formationBy');
@@ -77,6 +79,8 @@ Route::middleware(['auth'])->group( function (){
     Route::post('/paie', [SessionUserController::class,'store'])->name('paie');
 
     Route::post('/editProfil', [FormationController::class,'editProfil'])->name('editProfil');
+    Route::post('/editCompte', [FormationController::class,'editCompte'])->name('editCompte');
+    Route::post('/photo', [FormationController::class,'editphoto'])->name('photo');
 
     // Route::get('/retour',[FormationController::class,'panier'])->name('retour');
     // Route::post('/retour', [SessionUserController::class,'retour'])->name('retour');
