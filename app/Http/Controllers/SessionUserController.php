@@ -121,14 +121,16 @@ class SessionUserController extends Controller
 
                 $desc = session::find($retour->session_id);            
                 $user = User::find(Auth::user()->id);
-                Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc));
+                Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc,'success'));
 
                 return dd($response_body['data']['status']);
             } else {
                 $retour->reponse = $reponse;
                 $retour->message = $response_body['message'];
                 $retour->save();
-
+                $desc = session::find($retour->session_id);            
+                $user = User::find(Auth::user()->id);
+                Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc,"error"));
                 return dd($response_body['data']['status']);
             }
         } else {

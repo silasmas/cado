@@ -13,15 +13,17 @@ class mailAchat extends Mailable
 {
     use Queueable, SerializesModels;
     public User $user;
+    public $type="";
     public session $session;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, session $session)
+    public function __construct(User $user, session $session,$type)
     {
         $this->user=$user;
+        $this->type=$type;
         $this->session=$session;
     }
 
