@@ -19,7 +19,7 @@
                 {{ ' à échoué. Verfifiez votre compte pour plus de details.' }}
             @endif
 
-        {{-- @endif --}}
+        @endif
     {{-- @endcomponent --}}
 </p>
     <p>
