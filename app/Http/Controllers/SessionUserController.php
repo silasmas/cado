@@ -128,6 +128,7 @@ class SessionUserController extends Controller
                 $retour->reponse = $reponse;
                 $retour->message = $response_body['message'];
                 $retour->save();
+                
                 $desc = session::find($retour->session_id);            
                 $user = User::find(Auth::user()->id);
                 Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc,"error"));
@@ -151,12 +152,16 @@ class SessionUserController extends Controller
                 
                 $desc = session::find($retour->session_id);            
                 $user = User::find(Auth::user()->id);
-               $m= Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc));
+               $m= Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc,"success"));
             //  dd($m);
                return view('client.pages.notify', compact('data', 'message', 'operateur'));
             } else {
                 $data = $response_body;
                 $message = self::message($response_body);
+
+                $desc = session::find($retour->session_id);            
+                $user = User::find(Auth::user()->id);
+                Mail::to(Auth::user()->email)->send(new mailAchat($user,$desc,"error"));
                 return view('client.pages.notify', compact('data', "message"));
             }
         } else {
