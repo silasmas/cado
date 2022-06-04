@@ -1,31 +1,28 @@
 @component('mail::message')
-@if ($type=="success")
-# Félicitation {{ $user->prenom . ' ' . $user->name }}
-
-@if ($session->live == true && $session->isform == false)
-    @component('mail::panel')
-        {{ 'La réservation du live ' }}<b>{{ $session->titre }}</b>{{ ' est faite avec succès. Verfifiez votre compte pour plus de details' }}
-    @endcomponent
-@else
-    @component('mail::panel')
-        {{ "L'achat de la Formation " }}<b>{{ $session->titre }}</b>
-        {{ ' à réussit. Verfifiez votre compte pour le suivre.' }}
-    @endcomponent
-@endif
-@else
-# Bonjour, {{ $user->prenom . ' ' . $user->name }}
-
-@if ($session->live == true && $session->isform == false)
-    @component('mail::panel')
-        {{ 'La réservation du live ' }}<b>{{ $session->titre }}</b>{{ ' a échoué. Verfifiez votre compte pour plus de details' }}
-    @endcomponent
-@else
-    @component('mail::panel')
-        {{ "L'achat de la Formation " }}<b>{{ $session->titre }}</b>
-        {{ ' à échoué. Verfifiez votre compte pour plus de details.' }}
-    @endcomponent
-@endif
-@endif
+# {{ $type == 'success' ?"Félicitation ":"Bonjjour "}} {{ $user->prenom . ' ' . $user->name }}
+    @if ($type == 'success')
+        @if ($session->live == true && $session->isform == false)
+            @component('mail::panel')
+                {{ 'La réservation du live ' }}<b>{{ $session->titre }}</b>{{ ' est faite avec succès. Verfifiez votre compte pour plus de details' }}
+            @endcomponent
+        @else
+            @component('mail::panel')
+                {{ "L'achat de la Formation " }}<b>{{ $session->titre }}</b>
+                {{ ' à réussit. Verfifiez votre compte pour le suivre.' }}
+            @endcomponent
+        @endif
+    @else
+        @if ($session->live == true && $session->isform == false)
+            @component('mail::panel')
+                {{ 'La réservation du live ' }}<b>{{ $session->titre }}</b>{{ ' a échoué. Verfifiez votre compte pour plus de details' }}
+            @endcomponent
+        @else
+            @component('mail::panel')
+                {{ "L'achat de la Formation " }}<b>{{ $session->titre }}</b>
+                {{ ' à échoué. Verfifiez votre compte pour plus de details.' }}
+            @endcomponent
+        @endif
+    @endif
 
     <p>
         Bénéficiez des nos coachings dans diverse domaine.
