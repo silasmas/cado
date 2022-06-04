@@ -526,6 +526,17 @@ class SessionUserController extends Controller
         $titre="horizontale";
         return view("client.pages.allform",compact('titre'));
     }
+    public function formBy($id)
+    {
+        $tab=explode("&",$id);
+      if ($tab[0]=="horizontale"||$tab[0]=="verticale") {
+        return  back();
+      } else {
+        $form=session::with('formateur',"user")->where($tab[0],$tab[1])->get();
+      $ta=["f"=>$form,"select"=>$tab];
+        return  back()->with('formBy', $ta);
+      }           
+    }
 
     /**
      * Show the form for editing the specified resource.

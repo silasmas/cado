@@ -30,29 +30,47 @@
                                     <ul>
                                         <li class="">
                                             <div class="text-15px fw-700">
-                                                <input type="radio" id="category_all" name="sub_category"
-                                                    class="categories custom-radio" value="all" checked />
-                                                <label for="category_all">Toutes les catégories</label>
-                                                <span class="float-end">(14)</span>
-                                            </div>
-                                        </li>
-                                        <li class="mt-3">
-                                            <div class="text-15px fw-700">
-                                                <input type="radio" id="category-2" name="sub_category"
-                                                    class="categories custom-radio" value="web-design" />
-                                                <label for="category-2">CADO</label>
-                                                <span class="float-end">(3)</span>
-                                            </div>
-                                        </li>
-                                        <li class="mt-3">
-                                            <div class="text-15px fw-700">
-                                                <input type="radio" id="category-2" name="sub_category"
-                                                    class="categories custom-radio" value="web-design" />
-                                                <label for="category-2">COUPLE</label>
-                                                <span class="float-end">(3)</span>
+                                                <a href="">
+                                                    <input type="radio" id="category_all" name="sub_category" class="categories custom-radio" value="all" 
+                                                    {{ session()->has("formBy")?"":"checked" }} 
+                                                    onclick="event.preventDefault(); $(location).attr('href', 'formBy/{{$titre}}&CADO');"/>
+                                                    <label for="category_all">Toutes conférences</label>
+                                                    <span class="float-end">({{$allforms->count() }})</span>
+                                                
+                                                </a>
                                             </div>
                                         </li>
                                     </ul>
+                                </div>
+                                <hr />
+                                <div class="filter_type px-4">
+                                    <div class="form-group">
+                                        <h5 class="fw-700 mb-3">Contexte</h5>
+                                        <ul>
+                                            <li>                                                
+                                                <div class="">
+                                                        <input type="radio" id="category-2" name="sub_category"
+                                                            class="categories custom-radio" value="CADO"
+                                                             {{ session()->has("formBy")&& session()->get("formBy")["select"][0]=="context"&&session()->get("formBy")["select"][1]=="CADO"?"checked":"" }}
+                                                            onclick="event.preventDefault(); $(location).attr('href', 'formBy/context&CADO');"/>
+                                                        <label for="category-2">
+                                                                CADO
+                                                            </label>
+                                                            <span class="float-end">({{ $count["CADO"] }})</span>                                                           
+                                                        
+                                                </div>
+                                                <div class="">
+                                                        <input type="radio" id="category-3" name="sub_category"
+                                                        {{ session()->has("formBy")&& session()->get("formBy")["select"][0]=="context"&&session()->get("formBy")["select"][1]=="COUPLE"?"checked":"" }}
+                                                            class="categories custom-radio" value="COUPLE" 
+                                                            onclick="event.preventDefault(); $(location).attr('href', 'formBy/context&COUPLE');"/>
+                                                            
+                                                        <label for="category-3">COUPLE</label>
+                                                        <span class="float-end">({{ $count["COUPLE"] }})</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <hr />
                                 <div class="filter_type px-4">
@@ -61,16 +79,20 @@
                                         <ul>
                                             <li>                                                
                                                 <div class="">
-                                                    <input type="radio" id="price_free" name="price"
-                                                        class="prices custom-radio" value="free" />
-                                                    <label for="price_free">Gratuit</label>
-                                                    <span class="float-end">(3)</span>
+                                                        <input type="radio" id="category-4" name="sub_category"
+                                                            class="categories custom-radio" value="Gratuit" 
+                                                            {{ session()->has("formBy")&& session()->get("formBy")["select"][0]=="type"&&session()->get("formBy")["select"][1]=="free"?"checked":"" }}
+                                                            onclick="event.preventDefault(); $(location).attr('href', 'formBy/type&free');"/>
+                                                        <label for="category-4">Gratuit</label>
+                                                        <span class="float-end">({{ $count3["free"] }})</span>
                                                 </div>
                                                 <div class="">
-                                                    <input type="radio" id="price_paid" name="price"
-                                                        class="prices custom-radio" value="paid" />
-                                                    <label for="price_paid">Payant</label>
-                                                    <span class="float-end">(3)</span>
+                                                        <input type="radio" id="category-5" name="sub_category"
+                                                            class="categories custom-radio" value="paid" 
+                                                            {{ session()->has("formBy")&& session()->get("formBy")["select"][0]=="type"&&session()->get("formBy")["select"][1]=="Payant"?"checked":"" }}
+                                                            onclick="event.preventDefault(); $(location).attr('href', 'formBy/type&Payant');"/>
+                                                        <label for="category-5">Payant</label>
+                                                        <span class="float-end">({{ $count3["payant"] }})</span>
                                                 </div>
                                             </li>
                                         </ul>
@@ -82,16 +104,20 @@
                                     <ul>
                                         <li>
                                             <div class="">
-                                                <input type="radio" id="beginner" name="level" class="level custom-radio"
-                                                    value="beginner" />
+                                                <input type="radio" id="beginner" name="sub_category" class="level custom-radio"
+                                                    value="beginner" 
+                                                    {{ session()->has("formBy")&& session()->get("formBy")["select"][0]=="live"&&session()->get("formBy")["select"][1]=="1"?"checked":"" }}
+                                                    onclick="event.preventDefault(); $(location).attr('href', 'formBy/live&1');"/>
                                                 <label for="beginner">Live</label>
-                                                <span class="float-end">(3)</span>
+                                                <span class="float-end">({{ $count2["1"] }})</span>
                                             </div>
                                             <div class="">
-                                                <input type="radio" id="advanced" name="level" class="level custom-radio"
-                                                    value="advanced" />
+                                                <input type="radio" id="advanced" name="sub_category" class="level custom-radio"
+                                                    value="advanced" 
+                                                    {{ session()->has("formBy")&& session()->get("formBy")["select"][0]=="isform"&&session()->get("formBy")["select"][1]=="1"?"checked":"" }}
+                                                    onclick="event.preventDefault(); $(location).attr('href', 'formBy/isform&1');"/>
                                                 <label for="advanced">Formation</label>
-                                                <span class="float-end">(3)</span>
+                                                <span class="float-end">({{ $for["1"] }})</span>
                                             </div>                                            
                                         </li>
                                     </ul>

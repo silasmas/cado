@@ -60,19 +60,20 @@ Route::middleware(['auth'])->group( function (){
     Route::get('removeCard/{id}', [FavorieController::class,'removeCard'])->name('removeCard');
     Route::get('addCard/{id}', [FavorieController::class,'addCard'])->name('addCard');
     Route::get('deleteFavorie/{id}', [FavorieController::class,'deleteFavorie'])->name('deleteFavorie');
-
+    
     Route::get('/inscription', function () {
         return view('pages/welcome');
     })->name('inscription');
-
+    
     Route::get('/allFormation', function () {
         return view('pages/allFormation');
     })->name('allFormation');
-  
+    
 
     Route::get('teststatus', [SessionUserController::class,'status'])->name('teststatus');
     Route::get('allform', [SessionUserController::class,'allform'])->name('allform');
     Route::get('horizontale', [SessionUserController::class,'horizontale'])->name('horizontale');
+    Route::get('formBy/{id}', [SessionUserController::class,'formBy'])->name('formBy');
 
     Route::get('dashboard', [FormationController::class,'index'])->name('dashboard');
     Route::get('listelives', [FormationController::class,'lives'])->name('listelives');

@@ -2,7 +2,7 @@
     @include('client.parties.barAllform')
     <div class="category-course-list">
         <ul>
-            @forelse ($allforms as $f)
+            @forelse (session()->has('formBy')>0?session()->get('formBy')['f']:$allforms as $f)
             <li>
                 <div class="course-box-2">
                     <div class="course-image">
@@ -12,10 +12,10 @@
                         </a>
                     </div>
                     <div class="course-details">
-                        <a href="{{ route('detailFormation', ['id' => $f->id]) }}" class="course-title">{{ $f->titre }}</a>
+                        <a href="{{ route('detailFormation', ['id' => $f->id]) }}" class="course-title">{{$f->titre}}</a>
 
                         <div class="course-subtitle d-none d-md-block">
-                        {{ $f->description }}
+                        {{ Str::limit($f->description) }}
                         </div>
 
                         <div class="course-meta">
@@ -28,9 +28,13 @@
                                         onclick="event.stopPropagation(); $(location).attr('href', 'compare.html');">
                                         <i class="fas fa-balance-scale"></i> Compare
                                     </button> --}}
-                                    <br><span class="badge badge-sub-warning text-11px">
+                                    <br>
+                                    <span class="badge badge-sub-warning text-11px">
                                         {{ $f->live==true && $f->isform==false?"LIVE":"FORMATION" }}
                                     </span>
+                                        <span class="brn-compare-sm">
+                                            {{ $f->context }}
+                                        </span>
                                 </div>
                             </div>
 

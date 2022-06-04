@@ -2,7 +2,7 @@
     @include('client.parties.barAllform')
     <div class="category-course-list">
         <div class="row">
-            @forelse ($allforms as $f)
+            @forelse (session()->has("formBy")?session()->get('formBy')['f']:$allforms as $f)
                 <div class="col-md-6 col-xl-4">
                 <div class="course-box-wrap">
                     <a href="{{ route('detailFormation', ['id' => $f->id]) }}" class="has-popover">
@@ -41,7 +41,11 @@
                                             {{ $f->live==true && $f->isform==false?"LIVE":"FORMATION" }}
                                         </span>
                                     </div>
-                                   
+                                    <div class="col-6 text-end">
+                                        <span class="brn-compare-sm">
+                                            {{ $f->context }}
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <hr class="divider-1" />

@@ -8,7 +8,7 @@
             <button class="btn py-1 px-2 mx-2 {{ $titre=="verticale"?"btn-light":"btn-danger" }}">
                 <i class="fas fa-list"></i></button>
         </a>
-        <span class="text-12px fw-700 text-muted">{{ $allforms->count(). " Conférence(s) trouvées" }}</span>
+        <span class="text-12px fw-700 text-muted">{{  session()->has('formBy')?session()->get('formBy')['f']->count():$allforms->count() }} Conférence(s) trouvées</span>
     </div>
    
 </div>

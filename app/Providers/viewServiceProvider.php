@@ -72,8 +72,25 @@ class ViewServiceProvider extends ServiceProvider
         });
         View::composer('client.pages.allform', function ($view) {
             $forms=session::with('formateur',"user")->get();
-        //  dd($forms->user);
+            $form=session::get();
+              $f=$form->countBy(function($i){
+                  return $i->context;
+              });
+              $ff=$form->countBy(function($i){
+                  return $i->live;
+              });
+              $fff=$form->countBy(function($i){
+                  return $i->type;
+              });
+              $fo=$form->countBy(function($i){
+                  return $i->isform;
+              });
+        //   dd($f);
             $view->with('allforms',$forms);
+            $view->with('count',$f);
+            $view->with('count2',$ff);
+            $view->with('count3',$fff);
+            $view->with('for',$fo);
         });
     }
 }
