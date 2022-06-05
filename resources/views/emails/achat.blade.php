@@ -1,7 +1,6 @@
 @component('mail::message')
-# {{ $type == 'success' ? 'Félicitation ' : 'Bonjjour ' }} {{ $user->prenom . ' ' . $user->name }}
+# {{ $type == 'success' ? 'Félicitation ' : 'Bonjour ' }} {{ $user->prenom . ' ' . $user->name }}
      
-Votre inscription à bien été validé!!
 
 @component('mail::panel')
 @if ($type == 'success')
