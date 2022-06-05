@@ -5,16 +5,18 @@
 @component('mail::panel')
 @if ($type == 'success')
             @if ($session->live == true && $session->isform == false)
-                 'La réservation du live *{{ $session->titre }}*  est faite avec succès. Verfifiez votre compte pour plus de details
+                 'La réservation du live <b>{{ $session->titre }}</b> est faite avec succès. Verfifiez votre compte pour plus de details
+                 'La réservation du live <b>{{ $session->titre }}</b> est faite avec succès. Verfifiez votre compte pour plus de details
             @else
-                L'achat de la Formation *{{ $session->titre }}* à réussit.
+                L'achat de la Formation <b>{{ $session->titre }}</b> à réussit.
                  Verfifiez votre compte pour le suivre.
             @endif
         @else 
             @if ($session->live == true && $session->isform == false)
-                La réservation du live {{ $session->titre }} a échoué. Verfifiez votre compte pour plus de details
+                 'La réservation du live <b>{{ $session->titre }}</b> est faite avec succès. Verfifiez votre compte pour plus de details
+                 La réservation du live <b>{{ $session->titre }}</b> a échoué. Verfifiez votre compte pour plus de details
             @else
-                L'achat de la Formation  *{{ $session->titre }}* à échoué. 
+                L'achat de la Formation  <b>{{ $session->titre }}</b> à échoué. 
                  Verfifiez votre compte pour plus de details.
             @endif
 
