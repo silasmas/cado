@@ -1,7 +1,10 @@
 @component('mail::message')
-    # {{ $type == 'success' ? 'Félicitation ' : 'Bonjjour ' }} {{ $user->prenom . ' ' . $user->name }}
-    @component('mail::panel')
-         @if ($type == 'success')
+# {{ $type == 'success' ? 'Félicitation ' : 'Bonjjour ' }} {{ $user->prenom . ' ' . $user->name }}
+     
+Votre inscription à bien été validé!!
+
+@component('mail::panel')
+@if ($type == 'success')
             @if ($session->live == true && $session->isform == false)
                  'La réservation du live *{{ $session->titre }}*  est faite avec succès. Verfifiez votre compte pour plus de details
             @else
@@ -17,16 +20,16 @@
             @endif
 
         @endif
-    @endcomponent
+@endcomponent
 
 Bénéficiez des nos coachings dans diverse domaine.
 
 Cliquez sur le boutton ci-dessous pour revenir sur le site.
+<br>
+@component('mail::button', ['url' => config('app.url')])
+Retour sur le site {{config('app.name')}}
+@endcomponent
 
-    @component('mail::button', ['url' => config('app.url')])
-        Retour sur le site {{ config('app.name') }}
-    @endcomponent
-
-    Merci,<br>
-    {{ config('app.name') }}
+Merci,<br>
+{{ config('app.name') }}
 @endcomponent

@@ -1,10 +1,14 @@
 <?php
 
+use App\Models\User;
+use App\Mail\mailAchat;
+use App\Models\session;
+use Illuminate\Mail\Markdown;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FavorieController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\SessionUserController;
-use App\Models\User;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +72,11 @@ Route::middleware(['auth'])->group( function (){
     Route::get('/allFormation', function () {
         return view('pages/allFormation');
     })->name('allFormation');
+    Route::get('/mail', function () {
+        $user=User::find(Auth::user()->id);
+        $session=session::first();
+        return new mailAchat($user,$session,"success");
+    })->name('mail');
     
 
     Route::get('teststatus', [SessionUserController::class,'status'])->name('teststatus');
