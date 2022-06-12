@@ -126,12 +126,17 @@
                                                                             </button>
                                                                         </a>
                                                                     @else
-                                                                        <button type="button" id="{{ $fav->id }}"
-                                                                            class="addedToCart"
-                                                                            onclick="addToCard(this)">
-                                                                            @lang('general.autre.addPanier')
-                                                                            <i class="fas fa-shopping-cart"></i>
-                                                                        </button>
+                                                                    @if ($panier->pluck('etat')->contains("Payer"))
+                                                                    
+                                                                    @else
+                                                                        
+                                                                    <button type="button" id="{{ $fav->id }}"
+                                                                        class="addedToCart"
+                                                                        onclick="addToCard(this)">
+                                                                        @lang('general.autre.addPanier')
+                                                                        <i class="fas fa-shopping-cart"></i>
+                                                                    </button>
+                                                                    @endif
                                                                     @endif
                                                                 @else
                                                                     <button type="button" id="{{ $fav->id }}"

@@ -33,11 +33,9 @@ class ViewServiceProvider extends ServiceProvider
             if(!Auth::guest()){
                 $userForm=User::with('session')->where("id",Auth::user()->id)->first();
               $panier=User::with('session')->selectRaw('session_users.etat,session_users.operateur,
-              session_users.niveau,sessions.*,formateurs.*')
+              session_users.niveau,sessions.*')
               ->join('session_users','session_users.user_id','users.id')
-              ->join('sessions','sessions.id','session_users.session_id')                
-              ->join('formateur_sessions','formateur_sessions.session_id','sessions.id')              
-              ->join('formateurs','formateurs.id','formateur_sessions.formateur_id')            
+              ->join('sessions','sessions.id','session_users.session_id')                      
               ->where([['session_users.etat','En attente'],['users.id',Auth::user()->id]])
               ->get();
               $p=Auth::user()->session;
