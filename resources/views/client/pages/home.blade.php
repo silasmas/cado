@@ -57,18 +57,18 @@
                                                                 {{ " ($" . $actuel->prix . ')' }}</button>
                                                         @else
                                                             @if ($panier->pluck('id')->contains($actuel->id))
-                                                            <a href="{{ route('panier') }}" id="{{ $actuel->id }}"
-                                                                class="">
-                                                                <button class="btn btn-1 scrollTop">
-                                                                    @lang('general.autre.seePanier')
-                                                                    <i class="fas fa-shopping-cart"></i>
-                                                                </button>
-                                                            </a>
+                                                                <a href="{{ route('panier') }}" id="{{ $actuel->id }}"
+                                                                    class="">
+                                                                    <button class="btn btn-1 scrollTop">
+                                                                        @lang('general.autre.seePanier')
+                                                                        <i class="fas fa-shopping-cart"></i>
+                                                                    </button>
+                                                                </a>
                                                             @else
-                                                            <button id="{{ $actuel->id }}" onclick="addToCard(this)"
-                                                                class="btn btn-1 scrollTop">AJouter au panier
-                                                                <i class="fas fa-shopping-cart"></i>
-                                                                {{ " ($" . $actuel->prix . ')' }}</button>
+                                                                <button id="{{ $actuel->id }}" onclick="addToCard(this)"
+                                                                    class="btn btn-1 scrollTop">AJouter au panier
+                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                    {{ " ($" . $actuel->prix . ')' }}</button>
                                                             @endif
                                                         @endif
                                                     @else
@@ -176,32 +176,25 @@
                                             <div class="d-block">
 
                                                 <div class="floating-user d-inline-block">
-                                                    @if ($form->formateur->count() > 1)
-                                                        @foreach ($form->formateur as $fr)
+                                                    @foreach ($form->formateur as $fr)
+                                                        @if ($loop->first)
                                                             <img style="margin-left: 0px; width: 30px; "
                                                                 class="position-absolute"
                                                                 src="{{ asset('assets/images/form/' . $fr->photo) }}"
                                                                 alt="user_image" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"
                                                                 title="{{ $fr->prenom . ' ' . $fr->nom }}"
-                                                                onclick="return check_action(this,'instructor.html');" />
+                                                                onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $fr->id]) }}');" />
+                                                        @else
                                                             <img style="margin-left: 17px; width: 30px;"
                                                                 class="position-absolute"
                                                                 src="{{ asset('assets/images/form/' . $fr->photo) }}"
                                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 title="{{ $fr->prenom . ' ' . $fr->nom }}"
-                                                                onclick="return check_action(this,'instructor.html');" />
-                                                        @endforeach
-                                                    @else
-                                                        @foreach ($form->formateur as $fr)
-                                                            <img style="margin-left: 17px; width: 30px;"
-                                                                class="position-absolute"
-                                                                src="{{ asset('assets/images/form/' . $fr->photo) }}"
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="{{ $fr->prenom . ' ' . $fr->nom }}"
-                                                                onclick="return check_action(this,'instructor.html');" />
-                                                        @endforeach
-                                                    @endif
+                                                                onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $fr->id]) }}');" />
+                                                        @endif
+                                                    @endforeach
+                                                    {{-- @endif --}}
 
                                                 </div>
                                                 <p class="text-right price d-inline-block float-end">
@@ -318,7 +311,8 @@
                 </div>
             </div>
             @if ($allform->count() > 0)
-                <a href="{{ route('allform') }}" class="btn btn-plus">Voir toutes les conférences <i class="bi bi-arrow-right"></i></a>
+                <a href="{{ route('allform') }}" class="btn btn-plus">Voir toutes les conférences <i
+                        class="bi bi-arrow-right"></i></a>
             @endif
         </div>
     </section>
@@ -374,33 +368,24 @@
                                             <div class="d-block">
 
                                                 <div class="floating-user d-inline-block">
-                                                    @if ($form->formateur->count() > 1)
-                                                        @foreach ($form->formateur as $fr)
+                                                    @foreach ($form->formateur as $fr)
+                                                        @if ($loop->first)
                                                             <img style="margin-left: 0px; width: 30px; "
                                                                 class="position-absolute"
                                                                 src="{{ asset('assets/images/form/' . $fr->photo) }}"
                                                                 alt="user_image" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"
                                                                 title="{{ $fr->prenom . ' ' . $fr->nom }}"
-                                                                onclick="return check_action(this,'instructor.html');" />
+                                                                onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $fr->id]) }}');" />
+                                                        @else
                                                             <img style="margin-left: 17px; width: 30px;"
                                                                 class="position-absolute"
                                                                 src="{{ asset('assets/images/form/' . $fr->photo) }}"
                                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 title="{{ $fr->prenom . ' ' . $fr->nom }}"
-                                                                onclick="return check_action(this,'instructor.html');" />
-                                                        @endforeach
-                                                    @else
-                                                        @foreach ($form->formateur as $fr)
-                                                            <img style="margin-left: 17px; width: 30px;"
-                                                                class="position-absolute"
-                                                                src="{{ asset('assets/images/form/' . $fr->photo) }}"
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="{{ $fr->prenom . ' ' . $fr->nom }}"
-                                                                onclick="return check_action(this,'instructor.html');" />
-                                                        @endforeach
-                                                    @endif
-
+                                                                onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $fr->id]) }}');" />
+                                                        @endif
+                                                    @endforeach
                                                 </div>
                                                 <p class="text-right price d-inline-block float-end">
                                                     @if ($form->type == 'payant')
@@ -514,7 +499,8 @@
                 </div>
             </div>
             @if ($couples->count() > 0)
-                <a href="{{ route('allform') }}" class="btn btn-plus">Voir toutes les conférences <i class="bi bi-arrow-right"></i></a>
+                <a href="{{ route('allform') }}" class="btn btn-plus">Voir toutes les conférences <i
+                        class="bi bi-arrow-right"></i></a>
             @endif
         </div>
     </section>
@@ -547,7 +533,7 @@
                                         of the Edustar Top Instructors and all my premium co...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                                         -->
+                                                                             -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">
@@ -575,7 +561,7 @@
                                         Engineering from Santa Clara University and years of exper...</p>
 
                                     <!--                                                                           <span class="badge badge-sub-warning text-12px my-1 py-2"></span>
-                                                                         -->
+                                                                             -->
                                 </a>
 
                                 <p class="top-instructor-arrow my-3">

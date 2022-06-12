@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FavorieController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\SessionUserController;
+use App\Http\Controllers\FormateurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,8 @@ Route::middleware(['auth'])->group( function (){
     Route::get('allform', [SessionUserController::class,'allform'])->name('allform');
     Route::get('horizontale', [SessionUserController::class,'horizontale'])->name('horizontale');
     Route::get('formBy/{id}', [SessionUserController::class,'formBy'])->name('formBy');
+    
+    Route::get('formateur/{id}', [FormateurController::class,'show'])->name('formateur');
 
     Route::get('dashboard', [FormationController::class,'index'])->name('dashboard');
     Route::get('listelives', [FormationController::class,'lives'])->name('listelives');

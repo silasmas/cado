@@ -51,14 +51,22 @@
                                 <div class="col-md-3 col-xl-4">
                                     <div class="course-box-wrap">
                                         <a href="{{ route('viewLive', ['id' => $l->id]) }}" class="has-popover">
-                                            <div class="course-box">                                                
-                                                    <div class="course-image">
-                                                        <img src="{{ asset('assets/images/form/' . $l->cover) }}" alt=""
-                                                            class="img-fluid" />
-                                                    </div>
+                                            <div class="course-box">
+                                                <div class="course-image">
+                                                    <img src="{{ asset('assets/images/form/' . $l->cover) }}" alt=""
+                                                        class="img-fluid" />
+                                                </div>
                                                 <div class="course-details">
                                                     <h5 class="title">{{ $l->titre }}</h5>
-                                                    <br>
+                                                    
+                                                    <div class="rating">
+                                                        <div class="d-inline-block">
+                                                            {{-- <span class="text-dark ms-1 text-15px">(5)</span> --}}
+                                                            <span class="text-dark text-12px text-muted">
+                                                                {{ Str::limit($l->description, 80, '...') }}    
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                     <div class="d-flex text-dark">
                                                         <div class="">
                                                             <i class="far fa-clock text-14px"></i>
@@ -87,7 +95,7 @@
                                                                 @if ($panier != null)
                                                                     @if ($panier->pluck('id')->contains($l->id))
                                                                         <div class="col-6" style="cursor: pointer;"
-                                                                        onclick="event.preventDefault(); event.stopPropagation(); $(location).attr('href', '{{ route('panier') }}');">
+                                                                            onclick="event.preventDefault(); event.stopPropagation(); $(location).attr('href', '{{ route('panier') }}');">
                                                                             <span class="badge badge-sub-warning text-11px">
                                                                                 @lang('general.autre.seePanier')
                                                                                 <i class="fas fa-shopping-cart"></i>
@@ -153,13 +161,23 @@
                                                     <div class="d-block">
                                                         <div class="floating-user d-inline-block">
                                                             @forelse ($l->formateur as $f)
-                                                                <img style="margin-left: 0px;" class="position-absolute"
-                                                                    src="{{ asset('assets/images/form/' . $f->photo) }}"
-                                                                    width="30px" data-bs-toggle="tooltip"
-                                                                    data-bs-placement="top"
-                                                                    title="{{ $f->prenom . ' ' . $f->nom }}"
-                                                                    onclick="event.stopPropagation(); $(location).attr('href', 'instructor.html');" />
-    
+                                                                @if ($loop->first)
+                                                                    <img style="margin-left: 0px;" class="position-absolute"
+                                                                        src="{{ asset('assets/images/form/' . $f->photo) }}"
+                                                                        width="30px" data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="{{ $f->prenom . ' ' . $f->nom }}"
+                                                                        onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $f->id]) }}');" />
+                                                                @else
+                                                                    <img style="margin-left: 17px;"
+                                                                        class="position-absolute"
+                                                                        src="{{ asset('assets/images/form/' . $f->photo) }}"
+                                                                        width="30px" data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top"
+                                                                        title="{{ $f->prenom . ' ' . $f->nom }}"
+                                                                        onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $f->id]) }}');" />
+                                                                @endif
+
                                                             @empty
                                                             @endforelse
                                                         </div>

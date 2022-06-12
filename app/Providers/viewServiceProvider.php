@@ -32,11 +32,19 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('client.pages.*', function ($view) {
             if(!Auth::guest()){
                 $userForm=User::with('session')->where("id",Auth::user()->id)->first();
-              $panier=User::with('session')->selectRaw('session_users.etat,session_users.operateur,session_users.niveau,sessions.*')
+              $panier=User::with('session')->selectRaw('session_users.etat,session_users.operateur,
+              session_users.niveau,sessions.*,formateurs.*')
               ->join('session_users','session_users.user_id','users.id')
-              ->join('sessions','sessions.id','session_users.session_id')              
+              ->join('sessions','sessions.id','session_users.session_id')                
+              ->join('formateur_sessions','formateur_sessions.session_id','sessions.id')              
+              ->join('formateurs','formateurs.id','formateur_sessions.formateur_id')            
               ->where([['session_users.etat','En attente'],['users.id',Auth::user()->id]])
               ->get();
+              $p=Auth::user()->session;
+             $pr=$p->filter(function ($value, $key) {
+                return $value->pivot->etat == "En attente";
+            });
+            //  dd($pr);
               $panierPaie=User::with('session')->selectRaw('session_users.etat,session_users.operateur,
               session_users.niveau,session_users.updated_at as date,sessions.*')
               ->join('session_users','session_users.user_id','users.id')
@@ -51,12 +59,13 @@ class ViewServiceProvider extends ServiceProvider
               ->get();
            
               $live=session::with('formateur')->where([['live',true],['isform',false]])->get();
-            //   dd($live);
+             
                  $view->with('live',$live);
                  $view->with('livep',$livePaie);
                  $view->with('userForm',$userForm);
                  $view->with('panier',$panier);
                  $view->with('paie',$panierPaie);
+                 $view->with('pr',$pr);
                  $view->with('mesformations',$userForm->session);
             }
         }); 

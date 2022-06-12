@@ -171,13 +171,13 @@
                                 <div class="row justify-content-center">
 
                                     <div class="col-md-4 top-instructor-img w-sm-100">
-                                        <a href="instructor.html">
+                                        <a href="{{ route('formateur', ['id'=>$f->id]) }}">
                                             <img src="{{ asset('assets/images/form/' . $f->photo) }}" width="100%" />
                                         </a>
                                     </div>
 
                                     <div class="col-md-8 top-instructor-details text-center text-md-start">
-                                        <h4 class="mb-1 fw-600 v"><a class="text-decoration-none" href="">
+                                        <h4 class="mb-1 fw-600 v"><a class="text-decoration-none" href="{{ route('formateur', ['id'=>$f->id]) }}">
                                                 {{ $f->prenom . ' ' . $f->nom }}
                                             </a></h4>
                                         <p class="fw-500 text-14px w-100"></p>

@@ -46,16 +46,15 @@
                         </div><br>
                     @endif
                     @if ($errors->all())
-                    @foreach ($errors->all() as $e)
-                        
-                    <div class="col-md-12 col-md-offset-3">
-                        <div class="alert alert-danger alert-dismissable">
-                            {{ $e }}
-                            {{-- Merci de remplire touts les champs obligatoire afin de continuer le paiement par carte
+                        @foreach ($errors->all() as $e)
+                            <div class="col-md-12 col-md-offset-3">
+                                <div class="alert alert-danger alert-dismissable">
+                                    {{ $e }}
+                                    {{-- Merci de remplire touts les champs obligatoire afin de continuer le paiement par carte
                             bancaire SVP! --}}
-                        </div>
-                    </div><br>
-                    @endforeach
+                                </div>
+                            </div><br>
+                        @endforeach
                     @endif
 
                     <div class="in-cart-box">
@@ -68,7 +67,7 @@
                                     <li>
                                         <div class="cart-course-wrapper">
                                             <div class="image d-none d-md-block">
-                                                <a href="course-details.html">
+                                                <a href="{{ route('detailFormation', ['id' => $session->id]) }}">
                                                     <img src="{{ asset('assets/images/form/' . $session->cover) }}" alt=""
                                                         class="img-fluid" />
                                                 </a>
@@ -79,11 +78,33 @@
                                                 </a>
 
                                                 <div class="course-subtitle text-13px mt-2">
-                                                    {{ $session->description }}
+                                                    {{ Str::limit($session->description, 100, '...') }}
                                                 </div>
 
                                                 <div class="floating-user d-inline-block mt-2">
                                                     {{ $session->context }}
+                                                </div>
+
+                                                <div class="floating-user d-inline-block mt-2">
+                                                    {{-- @foreach ($session->formateur as $fr)
+                                                        @if ($loop->first)
+                                                            <img style="margin-left: 0px; width: 30px; "
+                                                                class="position-absolute"
+                                                                src="{{ asset('assets/images/form/' . $fr->photo) }}"
+                                                                alt="user_image" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
+                                                                title="{{ $fr->prenom . ' ' . $fr->nom }}"
+                                                                onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $fr->id]) }}');" />
+                                                        @else
+                                                            <img style="margin-left: 17px; width: 30px;"
+                                                                class="position-absolute"
+                                                                src="{{ asset('assets/images/form/' . $fr->photo) }}"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="{{ $fr->prenom . ' ' . $fr->nom }}"
+                                                                onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $fr->id]) }}');" />
+                                                        @endif
+                                                    @endforeach --}}
+
                                                 </div>
                                             </div>
                                             <div class="move-remove text-center">
@@ -170,7 +191,7 @@
                                                 </small>
                                             @endif
                                         </div>
-                                  
+
                                         <div class="mb-3">
                                             <label for="exampleInputEmail1" class="form-label">
                                                 Code postal (obligatoire) :</label>
@@ -181,20 +202,20 @@
                                                     <strong>{{ $errors->first('customer_zip_code') }}</strong>
                                                 </small>
                                             @endif
-                                        <div class="state" id="state" style="display: none">
+                                            <div class="state" id="state" style="display: none">
                                             </div>
                                             <div class="mb-3" id="us">
                                                 <label for="exampleInputEmail1" class="form-label">votre Etat</label>
-                                              @include('client.pages.etatUs')
+                                                @include('client.pages.etatUs')
                                             </div>
                                             <div class="mb-3" id="ca">
                                                 <label for="exampleInputEmail1" class="form-label">votre Etat</label>
-                                              @include('client.pages.etatCa')
+                                                @include('client.pages.etatCa')
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 ">
                                             <label for="login-email">Adresse (obligatoire)</label>
-                                            <div class="input-group" >
+                                            <div class="input-group">
                                                 <textarea name="customer_address" id="" cols="30" rows="5" class="form-control carte2" placeholder="Adresse">
                                              {{ old('customer_address') }}
                                             </textarea>
@@ -224,37 +245,37 @@
         });
 
         function switch_state(val) {
-           switch (val) {
-               case "US":
-               document.getElementById('state').style.display = "block";
-                document.getElementById('us').style.display = "block";
-                document.getElementById('ca').style.display = "none";
+            switch (val) {
+                case "US":
+                    document.getElementById('state').style.display = "block";
+                    document.getElementById('us').style.display = "block";
+                    document.getElementById('ca').style.display = "none";
 
-                document.querySelector('select.carteca').removeAttribute('required');
-                 document.querySelector('select.carteus').setAttribute('required', "true");
+                    document.querySelector('select.carteca').removeAttribute('required');
+                    document.querySelector('select.carteus').setAttribute('required', "true");
 
-                   break;
-               case "CA":
-               document.getElementById('state').style.display = "block";
+                    break;
+                case "CA":
+                    document.getElementById('state').style.display = "block";
 
-                document.querySelector('select.carteus').removeAttribute('required');
-                document.querySelector('select.carteca').setAttribute('required', "true");
-               
-                document.getElementById('ca').style.display = "block";
-                document.getElementById('us').style.display = "none";
-                
-                   break;
-           
-               default:
-               document.getElementById('state').style.display = "none";
-                document.getElementById('us').style.display = "none";
-                document.getElementById('ca').style.display = "none";
+                    document.querySelector('select.carteus').removeAttribute('required');
+                    document.querySelector('select.carteca').setAttribute('required', "true");
 
-                document.querySelector('select.carteus').removeAttribute('required');
-                document.querySelector('select.carteca').removeAttribute('required'); 
-                document.querySelector('input.carte3').removeAttribute('required'); 
-                   break;
-           }         
+                    document.getElementById('ca').style.display = "block";
+                    document.getElementById('us').style.display = "none";
+
+                    break;
+
+                default:
+                    document.getElementById('state').style.display = "none";
+                    document.getElementById('us').style.display = "none";
+                    document.getElementById('ca').style.display = "none";
+
+                    document.querySelector('select.carteus').removeAttribute('required');
+                    document.querySelector('select.carteca').removeAttribute('required');
+                    document.querySelector('input.carte3').removeAttribute('required');
+                    break;
+            }
 
         }
 
@@ -274,7 +295,7 @@
                 case "CREDIT_CARD":
                     document.getElementById('carte').style.display = "block";
                     var el = document.querySelectorAll('input.carte2');
-                   document.querySelector('textarea.carte2').setAttribute('required', "true");
+                    document.querySelector('textarea.carte2').setAttribute('required', "true");
                     document.querySelector('select.carte2').setAttribute('required', "true");
                     el.forEach(element => {
                         element.setAttribute('required', "true");

@@ -20,7 +20,7 @@
                             @csrf
                             <div class="form-group row g-5 g-lg-5">
                                 <div class="col-lg-12">
-                                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email"
+                                    <input type="text" name="email" class="form-control" value="{{ old('email')||old('phone') }}" placeholder="Email ou Téléphone"
                                      autofocus required data-parsley-minlength="3" data-parsley-trigger="change">
                                     <div class="icon">
                                        @
