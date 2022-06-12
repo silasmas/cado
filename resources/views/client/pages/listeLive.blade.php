@@ -102,7 +102,10 @@
                                                                             </span>
                                                                         </div>
                                                                     @else
-                                                                        <div class="col-4"></div>
+                                                                    @if ($panier->pluck('etat')->contains("Payer"))
+                                                                    
+                                                                    @else
+                                                                    <div class="col-4"></div>
                                                                         <div class="col-8 text-end">
                                                                             <button class="brn-compare-sm"
                                                                                 onclick="addToCard(this)"
@@ -111,6 +114,8 @@
                                                                                 <i class="fas fa-shopping-cart"></i>
                                                                             </button>
                                                                         </div>
+                                                                    @endif
+                                                                        
                                                                     @endif
                                                                 @else
                                                                     <div class="col-4"></div>
