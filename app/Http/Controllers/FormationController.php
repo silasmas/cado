@@ -41,7 +41,7 @@ class FormationController extends Controller
     }
     public function photo()
     {
-        $titre = "Ma Photo";
+        $titre = "Photo";
         return view('client.pages.templateProfil', compact('titre'));
     }
     public function panier()

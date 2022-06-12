@@ -11,7 +11,7 @@
 
                     <li class="{{ $titre=="Mon historique d'achats"?"active":"" }}"><a href="{{ route('historique') }}">Historique d'achat</a></li>
 
-                    <li class="{{ $titre=="Mon Profil"|| $titre=="Mon Compte"|| $titre=="Mon Photo"?"active":"" }}"><a href="{{ route('profil') }}">Profil</a></li>
+                    <li class="{{ $titre=="Mon Profil"|| $titre=="Mon Compte"|| $titre=="Photo"?"active":"" }}"><a href="{{ route('profil') }}">Profil</a></li>
                 </ul>
             </div>
         </div>

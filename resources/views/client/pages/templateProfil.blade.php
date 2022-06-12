@@ -31,7 +31,7 @@
                                     <li data-filter="compte" class="{{ $titre == 'Mon Compte' ? 'active' : '' }}">
                                         <a href="{{ route('compte') }}">Mon compte</a>
                                     </li>
-                                    <li data-filter="photo" class="{{ $titre == 'Ma Photo' ? 'active' : '' }}">
+                                    <li data-filter="photo" class="{{ $titre == 'Photo' ? 'active' : '' }}">
                                         <a href="{{ route('photo') }}">Photo</a>
                                     </li>
                                 </ul>
@@ -43,7 +43,7 @@
                                     @include('client.pages.profil')
                                 @break
 
-                                @case('Ma Photo')
+                                @case('Photo')
                                     @include('client.pages.photo')
                                 @break
 
