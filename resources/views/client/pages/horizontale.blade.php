@@ -42,12 +42,21 @@
                                 <div class="col-md-12">
                                     <div class="floating-user d-inline-block">
                                         @forelse ($f->formateur as $fr)
+                                        @if  ($loop->first)
                                         <img style="margin-left: 0px;" class="position-absolute"
                                             src="{{ asset('assets/images/form/' . $fr->photo) }}"
                                             width="30px" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="{{ $fr->prenom." ".$fr->nom }}"
-                                            onclick="event.stopPropagation(); $(location).attr('href', 'instructor.html');" />
-                                            @empty
+                                            onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $fr->id]) }}');" />
+                                            
+                                        @else
+                                        <img style="margin-left: 17px;" class="position-absolute"
+                                        src="{{ asset('assets/images/form/' . $fr->photo) }}"
+                                        width="30px" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="{{ $fr->prenom." ".$fr->nom }}"
+                                        onclick="event.preventDefault(); $(location).attr('href', '{{ route('formateur', ['id' => $fr->id]) }}');" />
+                                        
+                                        @endif                                            @empty
                                             
                                             @endforelse
                                         </div>

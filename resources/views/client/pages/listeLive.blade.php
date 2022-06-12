@@ -75,7 +75,9 @@
                                                         </div>
                                                         <div class="ms-3">
                                                             <i class="far fa-list-alt text-14px"></i>
-                                                            <span class="text-muted text-12px">15 Lectures</span>
+                                                            <span class="text-muted text-12px">
+                                                                {{ $l->context }}
+                                                            </span>
                                                         </div>
                                                     </div>
 
