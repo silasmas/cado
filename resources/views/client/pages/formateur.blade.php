@@ -88,7 +88,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-lg-12 col-xl-10">
-            <h3 class="course-carousel-title mb-4 px-2">Courses</h3>
+            <h3 class="course-carousel-title mb-4 px-2">Mes conférences</h3>
             <div class="course-carousel">
                 @forelse ($formateur->session as $s)
                 <div class="course-box-wrap">
